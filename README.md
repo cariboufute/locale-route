@@ -7,10 +7,10 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Note:** Replace ```Frédéric Chiasson``` ```cariboufute``` ```http://fredericchiasson.com``` ```frederic.chiasson@gmail.com``` ```cariboufute``` ```locale-route``` ```A testable route package with localization for Laravel 5``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can run `$ php prefill.php` in the command line to make all replacements at once. Delete the file prefill.php as well.
+LocaleRoute is a package to make testable localized routes with Laravel 5. It comes from the need to have localized routes that are fully testable.
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+LocaleRoute tries to keep its syntax as similar as possible to original Laravel routing syntax, so that the learning curve should be as easy as possible.
+
 
 ## Install
 
@@ -22,10 +22,7 @@ $ composer require cariboufute/locale-route
 
 ## Usage
 
-``` php
-$skeleton = new cariboufute\locale-route();
-echo $skeleton->echoPhrase('Hello, League!');
-```
+*To be filled soon*
 
 ## Change log
 
@@ -43,7 +40,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 ## Security
 
-If you discover any security related issues, please email frederic.chiasson@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email info@fredericchiasson.com instead of using the issue tracker.
 
 ## Credits
 
