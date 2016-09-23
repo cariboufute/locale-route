@@ -11,6 +11,7 @@ LocaleRoute is a package to make testable localized routes with Laravel 5. It co
 
 LocaleRoute tries to keep its syntax as similar as possible to original Laravel routing syntax, so that the learning curve should be as easy as possible.
 
+**This package is under construction, so it is not usable yet for any project. Please be patient...**
 
 ## Install
 
