@@ -4,7 +4,7 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use Illuminate\Routing\Router;
 use Illuminate\Translation\Translator;
-use CaribouFute\LocaleRoute\Http\Middleware\SetLocale;
+use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use Config;
 
 class Router
@@ -20,94 +20,110 @@ class Router
 
     public function get($uris, $action = null)
     {
-        $this->makeRoutes('get', $uris, $action);
+        $this->makeMethodUris('get', $uris, $action);
     }
 
     public function post($uris, $action = null)
     {
-        $this->makeRoutes('post', $uris, $action);
+        $this->makeMethodUris('post', $uris, $action);
     }
 
     public function put($uris, $action = null)
     {
-        $this->makeRoutes('put', $uris, $action);
+        $this->makeMethodUris('put', $uris, $action);
     }
 
     public function patch($uris, $action = null)
     {
-        $this->makeRoutes('patch', $uris, $action);
+        $this->makeMethodUris('patch', $uris, $action);
     }
 
     public function delete($uris, $action = null)
     {
-        $this->makeRoutes('delete', $uris, $action);
+        $this->makeMethodUris('delete', $uris, $action);
     }
 
     public function options($uris, $action = null)
     {
-        $this->makeRoutes('options', $uris, $action);
+        $this->makeMethodUris('options', $uris, $action);
     }
 
-    public function getRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('get', $route, $action);
-    }
-
-    public function postRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('post', $route, $action);
-    }
-
-    public function putRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('put', $route, $action);
-    }
-
-    public function patchRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('patch', $route, $action);
-    }
-
-    public function deleteRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('delete', $route, $action);
-    }
-
-    public function optionsRoute($route, $action)
-    {
-        $this->makeLocaleRoutes('options', $route, $action);
-    }
-
-    public function makeRoutes($method, $uris, $action = null)
+    public function makeMethodUris($method, $uris, $action = null)
     {
         foreach ($uris as $locale => $uri) {
-            $localeAction = $this->makeLocaleAction($locale, $action);
-            $this->makeRoute($method, $locale, $uri, $localeAction);
+            $this->makeMethodUri($method, $locale, $uri, $action);
         }
+    }
+
+    protected function makeMethodUri($method, $locale, $uri, $action)
+    {
+        $localeAction = $this->makeLocaleAction($locale, $action);
+        $this->makeIlluminateRoute($method, $locale, $uri, $localeAction);
     }
 
     protected function makeLocaleAction($locale, $action)
     {
         $localeAction = $action;
 
-        if (isset($action['as']) && is_array($action['as'])) {
+        if ($this->actionHasLocaleArrayForRoute($action)) {
             $localeAction['as'] = $action['as'][$locale];
         }
 
         return $localeAction;
     }
 
-    protected function makeRoute($method, $locale, $uri, $action)
+    protected function actionHasLocaleArrayForRoute($action)
     {
-        $localeUri = $locale . '/' . $uri;
-        $setLocaleName = SetLocale::class . ':' . $locale;
+        return isset($action['as']) && is_array($action['as']);
+    }
+
+    protected function makeIlluminateRoute($method, $locale, $uri, $action)
+    {
+        $localeUri = $this->getLocaleUri($locale, $uri);
+        $setLocaleName = SetSessionLocale::class . ':' . $locale;
 
         return $this->router
                     ->$method($localeUri, $action)
                     ->middleware($setLocaleName);
     }
 
-    public function makeLocaleRoutes($method, $route, $action)
+    protected function getLocaleUri($locale, $uri)
+    {
+        return Config::get('localeroute.add_locale_to_uri') ? $locale . '/' . $uri : $uri;
+    }
+
+    public function getRoute($route, $action)
+    {
+        $this->makeMethodRoutes('get', $route, $action);
+    }
+
+    public function postRoute($route, $action)
+    {
+        $this->makeMethodRoutes('post', $route, $action);
+    }
+
+    public function putRoute($route, $action)
+    {
+        $this->makeMethodRoutes('put', $route, $action);
+    }
+
+    public function patchRoute($route, $action)
+    {
+        $this->makeMethodRoutes('patch', $route, $action);
+    }
+
+    public function deleteRoute($route, $action)
+    {
+        $this->makeMethodRoutes('delete', $route, $action);
+    }
+
+    public function optionsRoute($route, $action)
+    {
+        $this->makeMethodRoutes('options', $route, $action);
+    }
+
+
+    public function makeMethodRoutes($method, $route, $action)
     {
         $locales = Config::get('localeroute.locales');
 
@@ -115,7 +131,7 @@ class Router
             $localeRoute = $locale . '.' . $route;
             $uri = $this->translator->get('routes.' . $route, [], $locale);
             $action = $this->addLocaleRouteToAction($locale, $route, $action);
-            $this->makeRoute($method, $locale, $uri, $action);
+            $this->makeIlluminateRoute($method, $locale, $uri, $action);
         }
     }
 

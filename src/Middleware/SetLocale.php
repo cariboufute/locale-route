@@ -1,6 +1,6 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Http\Middleware;
+namespace CaribouFute\LocaleRoute\Middleware;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
 use Closure;
@@ -22,9 +22,9 @@ class SetLocale
      * @param  string  $role
      * @return mixed
      */
-    public function handle($request, Closure $next, $locale)
+    public function handle($request, Closure $next)
     {
-        $this->sessionLocale->set($locale);
+        app()->setLocale($this->sessionLocale->get());
 
         return $next($request);
     }

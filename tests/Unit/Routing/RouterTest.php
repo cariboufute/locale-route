@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Router;
 
-use CaribouFute\LocaleRoute\Http\Middleware\SetLocale;
+use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -65,10 +65,10 @@ class RouterTest extends TestCase
         $this->translator->shouldReceive('get')->with('routes.route', [], 'en')->once()->andReturn($enUrl);
 
         $this->router->shouldReceive($method)->with('fr/' . $frUrl, ['as' => 'fr.' . $route, 'uses' => $action])->once()->andReturn($frRouteInstance);
-        $frRouteInstance->shouldReceive('middleware')->with(SetLocale::class . ':fr')->once();
+        $frRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':fr')->once();
 
         $this->router->shouldReceive($method)->with('en/' . $enUrl, ['as' => 'en.' . $route, 'uses' => $action])->once()->andReturn($enRouteInstance);
-        $enRouteInstance->shouldReceive('middleware')->with(SetLocale::class . ':en')->once();
+        $enRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':en')->once();
 
         $localeRouteMethod = $method . 'Route';
         $this->localeRouter->$localeRouteMethod($route, $action);
@@ -118,10 +118,10 @@ class RouterTest extends TestCase
         $enRouteInstance = Mockery::mock(Route::class);
 
         $this->router->shouldReceive($method)->with('fr/' . $frRoute, $action)->once()->andReturn($frRouteInstance);
-        $frRouteInstance->shouldReceive('middleware')->with(SetLocale::class . ':fr')->once();
+        $frRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':fr')->once();
 
         $this->router->shouldReceive($method)->with('en/' . $enRoute, $action)->once()->andReturn($enRouteInstance);
-        $enRouteInstance->shouldReceive('middleware')->with(SetLocale::class . ':en')->once();
+        $enRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':en')->once();
 
         $this->localeRouter->$method($routeArray, $action);
     }
