@@ -16,6 +16,7 @@ class RouterTest extends TestCase
     {
         parent::setUp();
         $this->router = Mockery::mock(Router::class)->makePartial();
+
         $this->translator = Mockery::mock(Translator::class)->makePartial();
         $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->translator])->makePartial();
     }
@@ -124,5 +125,4 @@ class RouterTest extends TestCase
 
         $this->localeRouter->$method($routeArray, $action);
     }
-
 }

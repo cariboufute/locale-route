@@ -11,6 +11,7 @@ class Router
 {
     protected $router;
 
+
     public function __construct(Router $router, Translator $translator)
     {
         $this->router = $router;
