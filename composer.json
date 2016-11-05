@@ -25,9 +25,9 @@
         "squizlabs/php_codesniffer": "^2.3"
     },
     "autoload": {
-        "files": {
+        "files": [
             "src/helpers.php"
-        },
+        ],
         "psr-4": {
             "CaribouFute\\LocaleRoute\\": "src"
         }
