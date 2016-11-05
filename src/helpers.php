@@ -1,8 +1,6 @@
 <?php
 
-use 
-
-if (! function_exists('locale_route')) {
+if (!function_exists('locale_route')) {
     /**
      * Generate the URL to a named route.
      *
