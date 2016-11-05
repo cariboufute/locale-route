@@ -3,6 +3,7 @@
 namespace CaribouFute\LocaleRoute;
 
 use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
+use CaribouFute\LocaleRoute\Routing\Url as LocaleUrl;
 use Illuminate\Support\ServiceProvider;
 
 class LocaleRouteServiceProvider extends ServiceProvider
@@ -18,6 +19,7 @@ class LocaleRouteServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('locale-route', LocaleRouter::class);
+        $this->app->bind('locale-url', LocaleUrl::class);
         config('config/localeroute.php');
     }
 }

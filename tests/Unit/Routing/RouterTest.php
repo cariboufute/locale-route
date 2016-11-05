@@ -4,6 +4,7 @@ namespace Tests\Unit\Router;
 
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
+use CaribouFute\LocaleRoute\Routing\Url as Url;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Translation\Translator;
@@ -16,9 +17,9 @@ class RouterTest extends TestCase
     {
         parent::setUp();
         $this->router = Mockery::mock(Router::class)->makePartial();
-
         $this->translator = Mockery::mock(Translator::class)->makePartial();
-        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->translator])->makePartial();
+        $this->uri = Mockery::mock(Url::class)->makePartial();
+        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->translator, $this->uri])->makePartial();
     }
 
     public function testGetRoute()

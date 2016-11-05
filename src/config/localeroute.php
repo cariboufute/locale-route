@@ -15,5 +15,5 @@ return [
      * false    => '/route'
      * Default is true.
      */
-    'add_locale_to_uri' => true,
+    'add_locale_to_url' => true,
 ];
