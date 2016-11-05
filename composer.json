@@ -17,14 +17,17 @@
         }
     ],
     "require": {
-        "illuminate/support": "~5.1",
-        "php" : "~5.6|~7.0"
+        "php" : "~7.0",
+        "laravel/framework": "5.3.*"
     },
     "require-dev": {
         "phpunit/phpunit" : "~4.0||~5.0",
         "squizlabs/php_codesniffer": "^2.3"
     },
     "autoload": {
+        "files": {
+            "src/helpers.php"
+        },
         "psr-4": {
             "CaribouFute\\LocaleRoute\\": "src"
         }
