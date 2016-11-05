@@ -11,6 +11,6 @@ if (!function_exists('locale_route')) {
      */
     function locale_route($locale = null, $name = null, $parameters = [], $absolute = true)
     {
-        return app('locale-url')->route($name, $parameters, $absolute);
+        return app('locale-url')->localeRoute($name, $parameters, $absolute);
     }
 }
