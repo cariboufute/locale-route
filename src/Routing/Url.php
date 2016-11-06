@@ -31,7 +31,7 @@ class Url
     public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
     {
         $locale = $locale ?? App::getLocale();
-        $name = $name ?? Route::currentRouteName();
+        $name = $name ?? $this->router->currentRouteName();
 
         $localeRoute = $this->switchRouteLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
