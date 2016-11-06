@@ -4,6 +4,8 @@ namespace Tests\Unit\Routing;
 
 use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Config;
+use Illuminate\Translation\Translator;
+use Mockery;
 use Orchestra\Testbench\TestCase;
 
 class UrlLocalizerTest extends TestCase
@@ -16,7 +18,8 @@ class UrlLocalizerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->url = new UrlLocalizer;
+        $this->translator = Mockery::mock(Translator::class);
+        $this->url = new UrlLocalizer($this->translator);
     }
 
     public function testGetRouteUrl()
