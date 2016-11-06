@@ -153,7 +153,7 @@ You can also use the Laravel translator to put all your locale URLs in ```resour
 ``` php
 //routes/web.php
 
-LocaleRoute::get('route', 'Controller@getAction');
+LocaleRoute::get('route', 'Controller@routeAction');
 ```
 
 ``` php
