@@ -9,10 +9,16 @@ use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Translation\Translator;
 use Mockery;
-use TestCase;
+use Orchestra\Testbench\TestCase;
 
 class UrlTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('localeroute.locales', ['fr', 'en']);
+        $app['config']->set('localeroute.add_locale_to_url', true);
+    }
+
     public function setUp()
     {
         parent::setUp();

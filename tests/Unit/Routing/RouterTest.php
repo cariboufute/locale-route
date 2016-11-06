@@ -8,10 +8,16 @@ use CaribouFute\LocaleRoute\Routing\Url as Url;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Mockery;
-use TestCase;
+use Orchestra\Testbench\TestCase;
 
 class RouterTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('localeroute.locales', ['fr', 'en']);
+        $app['config']->set('localeroute.add_locale_to_url', true);
+    }
+
     public function setUp()
     {
         parent::setUp();

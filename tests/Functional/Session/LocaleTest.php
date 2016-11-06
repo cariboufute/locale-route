@@ -4,8 +4,8 @@ namespace Tests\Functional\Session;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
 use Config;
+use Orchestra\Testbench\TestCase;
 use Session;
-use TestCase;
 
 class LocaleTest extends TestCase
 {
