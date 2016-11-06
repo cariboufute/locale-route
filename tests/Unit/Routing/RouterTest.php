@@ -7,7 +7,6 @@ use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
 use CaribouFute\LocaleRoute\Routing\Url as Url;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
-use Illuminate\Translation\Translator;
 use Mockery;
 use TestCase;
 
@@ -17,37 +16,36 @@ class RouterTest extends TestCase
     {
         parent::setUp();
         $this->router = Mockery::mock(Router::class)->makePartial();
-        $this->translator = Mockery::mock(Translator::class)->makePartial();
-        $this->uri = Mockery::mock(Url::class)->makePartial();
-        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->translator, $this->uri])->makePartial();
+        $this->url = Mockery::mock(Url::class)->makePartial();
+        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->url])->makePartial();
     }
 
-    public function testGetRoute()
+    public function testGet()
     {
         $this->makeRouteTest('get');
     }
 
-    public function testPostRoute()
+    public function testPost()
     {
         $this->makeRouteTest('post');
     }
 
-    public function testPutRoute()
+    public function testPut()
     {
         $this->makeRouteTest('put');
     }
 
-    public function testPatchRoute()
+    public function testPatch()
     {
         $this->makeRouteTest('patch');
     }
 
-    public function testDeleteRoute()
+    public function testDelete()
     {
         $this->makeRouteTest('delete');
     }
 
-    public function testOptionsRoute()
+    public function testOptions()
     {
         $this->makeRouteTest('options');
     }
@@ -55,75 +53,23 @@ class RouterTest extends TestCase
     protected function makeRouteTest($method)
     {
         $route = 'route';
-        $frUrl = 'urlfr';
-        $enUrl = 'urlen';
+        $frUrl = 'fr/urlfr';
+        $enUrl = 'en/urlen';
         $action = 'ActionController@action';
 
         $frRouteInstance = Mockery::mock(Route::class);
         $enRouteInstance = Mockery::mock(Route::class);
 
-        $this->translator->shouldReceive('get')->with('routes.route', [], 'fr')->once()->andReturn($frUrl);
-        $this->translator->shouldReceive('get')->with('routes.route', [], 'en')->once()->andReturn($enUrl);
+        $this->url->shouldReceive('getRouteUrl')->with('fr', $route, [])->once()->andReturn($frUrl);
+        $this->url->shouldReceive('getRouteUrl')->with('en', $route, [])->once()->andReturn($enUrl);
 
-        $this->router->shouldReceive($method)->with('fr/' . $frUrl, ['as' => 'fr.' . $route, 'uses' => $action])->once()->andReturn($frRouteInstance);
+        $this->router->shouldReceive($method)->with($frUrl, ['as' => 'fr.' . $route, 'uses' => $action])->once()->andReturn($frRouteInstance);
         $frRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':fr')->once();
 
-        $this->router->shouldReceive($method)->with('en/' . $enUrl, ['as' => 'en.' . $route, 'uses' => $action])->once()->andReturn($enRouteInstance);
+        $this->router->shouldReceive($method)->with($enUrl, ['as' => 'en.' . $route, 'uses' => $action])->once()->andReturn($enRouteInstance);
         $enRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':en')->once();
 
-        $localeRouteMethod = $method . 'Route';
+        $localeRouteMethod = $method;
         $this->localeRouter->$localeRouteMethod($route, $action);
-    }
-
-    public function testGet()
-    {
-        $this->makeUrlTest('get');
-    }
-
-    public function testPost()
-    {
-        $this->makeUrlTest('post');
-    }
-
-    public function testPut()
-    {
-        $this->makeUrlTest('put');
-    }
-
-    public function testPatch()
-    {
-        $this->makeUrlTest('patch');
-    }
-
-    public function testDelete()
-    {
-        $this->makeUrlTest('delete');
-    }
-
-    public function testOptions()
-    {
-        $this->makeUrlTest('options');
-    }
-
-    protected function makeUrlTest($method)
-    {
-        $frRoute = 'route1';
-        $enRoute = 'route2';
-        $action = 'ActionController@action';
-        $routeArray = [
-            'fr' => $frRoute,
-            'en' => $enRoute,
-        ];
-
-        $frRouteInstance = Mockery::mock(Route::class);
-        $enRouteInstance = Mockery::mock(Route::class);
-
-        $this->router->shouldReceive($method)->with('fr/' . $frRoute, $action)->once()->andReturn($frRouteInstance);
-        $frRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':fr')->once();
-
-        $this->router->shouldReceive($method)->with('en/' . $enRoute, $action)->once()->andReturn($enRouteInstance);
-        $enRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':en')->once();
-
-        $this->localeRouter->$method($routeArray, $action);
     }
 }

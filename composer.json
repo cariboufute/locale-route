@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CaribouFute\\LocaleRoute\\": "tests"
+            "Tests\\CaribouFute\\LocaleRoute\\": "tests"
         }
     },
     "scripts": {

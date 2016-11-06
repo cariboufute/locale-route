@@ -7,6 +7,7 @@ use CaribouFute\LocaleRoute\Routing\Url;
 use Config;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Translation\Translator;
 use Mockery;
 use TestCase;
 
@@ -15,9 +16,28 @@ class UrlTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
         $this->illuminateUrl = Mockery::mock(UrlGenerator::class);
         $this->router = Mockery::mock(Router::class);
-        $this->url = new Url($this->illuminateUrl, $this->router);
+        $this->translator = Mockery::mock(Translator::class);
+
+        $this->url = new Url($this->illuminateUrl, $this->router, $this->translator);
+    }
+
+    public function testLocales()
+    {
+        $locales = 'locales';
+        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn($locales);
+
+        $this->assertSame($locales, $this->url->locales());
+    }
+
+    public function testAddLocaleConfig()
+    {
+        $config = true;
+        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn($config);
+
+        $this->assertSame($config, $this->url->addLocaleConfig());
     }
 
     public function testAddLocaleWithConfigAddLocaleToUrlToTrue()
