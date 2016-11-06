@@ -1,4 +1,4 @@
-# locale-route
+# LocaleRoute, for localized testable routes in Laravel
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
