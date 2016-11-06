@@ -2,19 +2,17 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
-use Illuminate\Routing\Router;
-use Illuminate\Translation\Translator;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Url;
 use Config;
+use Illuminate\Routing\Router as IlluminateRouter;
 
 class Router
 {
     protected $router;
     protected $url;
 
-
-    public function __construct(Router $router, Url $url)
+    public function __construct(IlluminateRouter $router, Url $url)
     {
         $this->router = $router;
         $this->url = $url;
@@ -50,8 +48,6 @@ class Router
         $this->makeMethodRoutes('options', $route, $action, $urls);
     }
 
-
-
     public function makeMethodRoutes($method, $route, $action, array $urls = [])
     {
         $locales = Config::get('localeroute.locales');
@@ -68,14 +64,13 @@ class Router
         $this->makeIlluminateRoute($method, $locale, $url, $localeAction);
     }
 
-
     public function addLocaleRouteToAction($locale, $route, $action)
     {
         $localeRoute = $this->url->addLocaleToRouteName($locale, $route);
 
         if (is_array($action)) {
             $action['as'] = $localeRoute;
-        } else { 
+        } else {
             $action = ['as' => $localeRoute, 'uses' => $action];
         }
 
@@ -87,7 +82,7 @@ class Router
         $middlewareCommand = SetSessionLocale::class . ':' . $locale;
 
         return $this->router
-                    ->$method($url, $action)
-                    ->middleware($middlewareCommand);
+            ->$method($url, $action)
+            ->middleware($middlewareCommand);
     }
 }
