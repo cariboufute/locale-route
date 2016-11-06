@@ -188,7 +188,7 @@ locale_route(null, 'index');                //gets the index route URL in the cu
 locale_route('en');                         //gets the current URL in English
 ```
 
-For the last two situations, there is clearer helper functions.
+For the last two situations, there are clearer helper functions.
 
 #### other_route
 
