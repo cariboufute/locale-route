@@ -3,10 +3,11 @@
 namespace Tests\Unit\Router;
 
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
-use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
-use CaribouFute\LocaleRoute\Routing\Url as Url;
+use CaribouFute\LocaleRoute\Routing\RouteLocalizer;
+use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router;
+use Illuminate\Routing\Router as IlluminateRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
@@ -14,16 +15,20 @@ class RouterTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('localeroute.locales', ['fr', 'en']);
+        $this->locales = ['fr', 'en', 'es'];
+        $app['config']->set('localeroute.locales', $this->locales);
         $app['config']->set('localeroute.add_locale_to_url', true);
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->router = Mockery::mock(Router::class)->makePartial();
-        $this->url = Mockery::mock(Url::class)->makePartial();
-        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->url])->makePartial();
+
+        $this->illuminateRouter = Mockery::mock(IlluminateRouter::class)->makePartial();
+        $this->routeLocalizer = Mockery::mock(RouteLocalizer::class);
+        $this->url = Mockery::mock(UrlLocalizer::class)->makePartial();
+
+        $this->localeRouter = Mockery::mock(Router::class, [$this->illuminateRouter, $this->routeLocalizer, $this->url])->makePartial();
     }
 
     public function testGet()
@@ -59,23 +64,20 @@ class RouterTest extends TestCase
     protected function makeRouteTest($method)
     {
         $route = 'route';
-        $frUrl = 'fr/urlfr';
-        $enUrl = 'en/urlen';
         $action = 'ActionController@action';
+        $urls = [];
+        $routeObjects = [];
 
-        $frRouteInstance = Mockery::mock(Route::class);
-        $enRouteInstance = Mockery::mock(Route::class);
+        foreach ($this->locales as $locale) {
+            $urls[$locale] = $locale . '/url' . $locale;
+            $routeObjects[$locale] = Mockery::mock(Route::class);
 
-        $this->url->shouldReceive('getRouteUrl')->with('fr', $route, [])->once()->andReturn($frUrl);
-        $this->url->shouldReceive('getRouteUrl')->with('en', $route, [])->once()->andReturn($enUrl);
+            $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
+            $this->url->shouldReceive('getRouteUrl')->with($locale, $route, [])->once()->andReturn($urls[$locale]);
+            $this->illuminateRouter->shouldReceive($method)->with($urls[$locale], ['as' => $locale . '.' . $route, 'uses' => $action])->once()->andReturn($routeObjects[$locale]);
+            $routeObjects[$locale]->shouldReceive('middleware')->with(SetSessionLocale::class . ':' . $locale)->once();
+        }
 
-        $this->router->shouldReceive($method)->with($frUrl, ['as' => 'fr.' . $route, 'uses' => $action])->once()->andReturn($frRouteInstance);
-        $frRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':fr')->once();
-
-        $this->router->shouldReceive($method)->with($enUrl, ['as' => 'en.' . $route, 'uses' => $action])->once()->andReturn($enRouteInstance);
-        $enRouteInstance->shouldReceive('middleware')->with(SetSessionLocale::class . ':en')->once();
-
-        $localeRouteMethod = $method;
-        $this->localeRouter->$localeRouteMethod($route, $action);
+        $this->localeRouter->$method($route, $action);
     }
 }

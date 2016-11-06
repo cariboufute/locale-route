@@ -26,11 +26,11 @@ class RouteLocalizerTest extends TestCase
     {
         parent::setUp();
 
-        $this->illuminateUrl = Mockery::mock(UrlGenerator::class);
+        $this->url = Mockery::mock(UrlGenerator::class);
         $this->router = Mockery::mock(Router::class);
         $this->translator = Mockery::mock(Translator::class);
 
-        $this->localizer = new RouteLocalizer($this->illuminateUrl, $this->router, $this->translator);
+        $this->localizer = Mockery::mock(RouteLocalizer::class, [$this->url, $this->router, $this->translator])->makePartial();
     }
 
     public function testLocales()
@@ -39,6 +39,60 @@ class RouteLocalizerTest extends TestCase
         Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn($locales);
 
         $this->assertSame($locales, $this->localizer->locales());
+    }
+
+    public function testLocaleRouteWithNoParamsReturnsCurrentUrl()
+    {
+        $locale = 'fr';
+        $route = 'route';
+        $localeRoute = $locale . '.' . $route;
+        $localeUrl = 'fr/route_fr';
+
+        App::shouldReceive('getLocale')->once()->andReturn($locale);
+        $this->router->shouldReceive('currentRouteName')->once()->andReturn($localeRoute);
+        $this->localizer->shouldReceive('switchLocale')->with($locale, $localeRoute)->once()->andReturn($localeRoute);
+        $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
+
+        $this->assertSame($localeUrl, $this->localizer->localeRoute());
+    }
+
+    public function testLocaleRouteWithLocaleReturnsCurrentUrlWithLocale()
+    {
+        $currentLocale = 'en';
+        $locale = 'fr';
+        $route = 'route';
+        $currentLocaleRoute = $currentLocale . '.' . $route;
+        $localeRoute = $locale . '.' . $route;
+        $currentUrl = 'en/route_en';
+        $localeUrl = 'fr/route_fr';
+
+        $this->router->shouldReceive('currentRouteName')->once()->andReturn($currentLocaleRoute);
+        $this->localizer->shouldReceive('switchLocale')->with($locale, $currentLocaleRoute)->once()->andReturn($localeRoute);
+        $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
+
+        $this->assertSame($localeUrl, $this->localizer->localeRoute($locale));
+    }
+
+    public function testLocaleRouteWithLocaleAndRoute()
+    {
+        $locale = 'fr';
+        $route = 'route';
+        $localeRoute = $locale . '.' . $route;
+        $localeUrl = 'fr/route_fr';
+
+        $this->localizer->shouldReceive('switchLocale')->with($locale, $route)->once()->andReturn($localeRoute);
+        $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
+
+        $this->assertSame($localeUrl, $this->localizer->localeRoute($locale, $route));
+    }
+
+    public function testSwitchLocale()
+    {
+        $sourceRoute = 'en.route';
+        $locale = 'fr';
+        $destRoute = $locale . '.route';
+
+        $this->assertSame($destRoute, $this->localizer->switchLocale($locale, $sourceRoute));
     }
 
     public function testRemoveLocaleKeepsSameRouteWhenNotInConfigLocales()
@@ -55,32 +109,26 @@ class RouteLocalizerTest extends TestCase
         $this->assertSame('route', $this->localizer->removeLocale($route));
     }
 
-    public function testLocaleRouteWithNoParamsReturnsCurrentUrl()
+    public function testGetLocalePrefixReturnsEmptyStringWhenNotConfigLocale()
     {
-        $locale = 'fr';
-        $route = 'route';
-        $localeRoute = $locale . '.' . $route;
-        $localeUrl = 'fr/route_fr';
+        $route = 'es.route';
 
-        App::shouldReceive('getLocale')->once()->andReturn($locale);
-        $this->router->shouldReceive('currentRouteName')->once()->andReturn($localeRoute);
-        $this->illuminateUrl->shouldReceive('route')->with('fr.route', [], true)->once()->andReturn($localeUrl);
-
-        $this->assertSame($localeUrl, $this->localizer->localeRoute());
+        $this->assertSame('', $this->localizer->getLocalePrefix($route));
     }
 
-    public function testLocaleRouteWithLocaleReturnsCurrentUrlWithLocale()
+    public function testGetLocalePrefixReturnsConfigLocale()
     {
-        $currentLocale = 'en';
-        $locale = 'fr';
-        $route = 'route';
-        $currentLocaleRoute = $currentLocale . '.' . $route;
-        $currentUrl = 'en/route_en';
-        $localeUrl = 'fr/route_fr';
+        $route = 'en.route';
 
-        $this->router->shouldReceive('currentRouteName')->once()->andReturn($currentLocaleRoute);
-        $this->illuminateUrl->shouldReceive('route')->with('fr.route', [], true)->once()->andReturn($localeUrl);
-
-        $this->assertSame($localeUrl, $this->localizer->localeRoute($locale));
+        $this->assertSame('en.', $this->localizer->getLocalePrefix($route));
     }
+
+    public function testAddLocale()
+    {
+        $route = 'route';
+        $locale = 'lc';
+
+        $this->assertSame($locale . '.' . $route, $this->localizer->addLocale($locale, $route));
+    }
+
 }

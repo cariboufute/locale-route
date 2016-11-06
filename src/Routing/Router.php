@@ -3,70 +3,73 @@
 namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
-use CaribouFute\LocaleRoute\Routing\Url;
+use CaribouFute\LocaleRoute\Routing\RouteLocalizer;
+use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Config;
 use Illuminate\Routing\Router as IlluminateRouter;
 
 class Router
 {
-    protected $router;
-    protected $url;
+    protected $illuminateRouter;
+    protected $routeLocalizer;
+    protected $urlLocalizer;
 
-    public function __construct(IlluminateRouter $router, Url $url)
+    public function __construct(IlluminateRouter $illuminateRouter, RouteLocalizer $routeLocalizer, UrlLocalizer $urlLocalizer)
     {
-        $this->router = $router;
-        $this->url = $url;
+        $this->illuminateRouter = $illuminateRouter;
+        $this->routeLocalizer = $routeLocalizer;
+        $this->urlLocalizer = $urlLocalizer;
     }
 
     public function get($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('get', $route, $action, $urls);
+        $this->makeRoutes('get', $route, $action, $urls);
     }
 
     public function post($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('post', $route, $action, $urls);
+        $this->makeRoutes('post', $route, $action, $urls);
     }
 
     public function put($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('put', $route, $action, $urls);
+        $this->makeRoutes('put', $route, $action, $urls);
     }
 
     public function patch($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('patch', $route, $action, $urls);
+        $this->makeRoutes('patch', $route, $action, $urls);
     }
 
     public function delete($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('delete', $route, $action, $urls);
+        $this->makeRoutes('delete', $route, $action, $urls);
     }
 
     public function options($route, $action, array $urls = [])
     {
-        $this->makeMethodRoutes('options', $route, $action, $urls);
+        $this->makeRoutes('options', $route, $action, $urls);
     }
 
-    public function makeMethodRoutes($method, $route, $action, array $urls = [])
+    public function makeRoutes($method, $route, $action, array $urls = [])
     {
         $locales = Config::get('localeroute.locales');
 
         foreach ($locales as $locale) {
-            $this->makeMethodRoute($locale, $method, $route, $action, $urls);
+            $this->makeRoute($locale, $method, $route, $action, $urls);
         }
     }
 
-    public function makeMethodRoute($locale, $method, $route, $action, array $urls = [])
+    public function makeRoute($locale, $method, $route, $action, array $urls = [])
     {
         $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
-        $url = $this->url->getRouteUrl($locale, $route, $urls);
-        $this->makeIlluminateRoute($method, $locale, $url, $localeAction);
+        $url = $this->urlLocalizer->getRouteUrl($locale, $route, $urls);
+        $this->makeLaravelRoute($method, $locale, $url, $localeAction);
     }
 
     public function addLocaleRouteToAction($locale, $route, $action)
     {
-        $localeRoute = $this->url->addLocaleToRouteName($locale, $route);
+        $localeRoute = $this->routeLocalizer->addLocale($locale, $route);
 
         if (is_array($action)) {
             $action['as'] = $localeRoute;
@@ -77,12 +80,12 @@ class Router
         return $action;
     }
 
-    protected function makeIlluminateRoute($method, $locale, $url, $action)
+    protected function makeLaravelRoute($method, $locale, $url, $action)
     {
-        $middlewareCommand = SetSessionLocale::class . ':' . $locale;
+        $middleware = SetSessionLocale::class . ':' . $locale;
 
-        return $this->router
+        return $this->illuminateRouter
             ->$method($url, $action)
-            ->middleware($middlewareCommand);
+            ->middleware($middleware);
     }
 }

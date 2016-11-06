@@ -28,13 +28,13 @@ class RouteLocalizer
         $locale = $locale ?? App::getLocale();
         $name = $name ?? $this->router->currentRouteName();
 
-        $localeRoute = $this->switchRouteLocale($locale, $name);
+        $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
 
         return $localeUrl;
     }
 
-    public function switchRouteLocale($locale, $route)
+    public function switchLocale($locale, $route)
     {
         $unlocaleRoute = $this->removeLocale($route);
         $localeRoute = $this->addLocale($locale, $unlocaleRoute);
@@ -44,13 +44,13 @@ class RouteLocalizer
 
     public function removeLocale($route)
     {
-        $localePrefix = $this->getRouteNameLocalePrefix($route);
+        $localePrefix = $this->getLocalePrefix($route);
         $unlocaleRoute = str_replace($localePrefix, '', $route);
 
         return $unlocaleRoute;
     }
 
-    protected function getRouteNameLocalePrefix(string $route)
+    public function getLocalePrefix(string $route)
     {
         foreach ($this->locales() as $locale) {
             $localePrefix = $locale . '.';
