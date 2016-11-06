@@ -4,3 +4,10 @@ php:
   - '7.0'
   - hhvm
   - nightly
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  
+script:
+  - vendor/bin/phpunit
