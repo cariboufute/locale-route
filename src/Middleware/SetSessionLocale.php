@@ -18,8 +18,8 @@ class SetSessionLocale
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role
+     * @param  \Closure     $next
+     * @param  string       $locale
      * @return mixed
      */
     public function handle($request, Closure $next, $locale)
