@@ -23,7 +23,7 @@ LocaleRoute has a syntax close to the original Laravel routing methods, so the i
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route
+composer require cariboufute/locale-route 1.0.0-alpha
 ```
 
 Add the service provider in ```config/app.php```.
