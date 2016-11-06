@@ -78,7 +78,7 @@ class UrlTest extends TestCase
         $localeUrl = 'fr/route_fr';
 
         App::shouldReceive('getLocale')->once()->andReturn($locale);
-        $this->router->shouldReceive('currentRoute')->once()->andReturn($localeRoute);
+        $this->router->shouldReceive('currentRouteName')->once()->andReturn($localeRoute);
         $this->illuminateUrl->shouldReceive('route')->with('fr.route')->once()->andReturn($localeUrl);
 
         $this->assertSame($localeUrl, $this->url->localeRoute());
@@ -93,7 +93,7 @@ class UrlTest extends TestCase
         $currentUrl = 'en/route_en';
         $localeUrl = 'fr/route_fr';
 
-        $this->router->shouldReceive('currentRoute')->once()->andReturn($currentLocaleRoute);
+        $this->router->shouldReceive('currentRouteName')->once()->andReturn($currentLocaleRoute);
         $this->illuminateUrl->shouldReceive('route')->with('fr.route')->once()->andReturn($localeUrl);
 
         $this->assertSame($localeUrl, $this->url->localeRoute($locale));
