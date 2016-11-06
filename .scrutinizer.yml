@@ -1,0 +1,18 @@
+# .scrutinizer.yml
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+build:
+    environment:
+        php:
+            version: 7.0
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=some-file'
+                coverage:
+                    file: 'coverage'
+                    format: 'clover'
