@@ -19,6 +19,11 @@ class UrlLocalizerTest extends TestCase
         $this->url = new UrlLocalizer;
     }
 
+    public function testGetRouteUrl()
+    {
+        //TODO
+    }
+
     public function testAddLocaleConfig()
     {
         $config = true;
