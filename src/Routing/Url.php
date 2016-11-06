@@ -28,13 +28,13 @@ class Url
         return Config::get('localeroute.add_locale_to_url') ? str_replace($locale . '/', '', $uri) : $uri;
     }
 
-    public function localeRoute($locale = null, $route = null)
+    public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
     {
         $locale = $locale ?? App::getLocale();
-        $route = $route ?? $this->router->currentRoute();
+        $name = $name ?? Route::currentRouteName();
 
-        $localeRoute = $this->switchRouteLocale($locale, $route);
-        $localeUrl = $this->url->route($localeRoute);
+        $localeRoute = $this->switchRouteLocale($locale, $name);
+        $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
 
         return $localeUrl;
     }
@@ -49,7 +49,22 @@ class Url
 
     protected function removeLocaleFromRouteName($route)
     {
-        return preg_replace('#\w{2,}\.(.*)#', '$1', $route);
+        $localePrefix = $this->getRouteNameLocalePrefix($route);
+        $unlocaleRoute = str_replace($localePrefix, '', $route);
+
+        return $unlocaleRoute;
+    }
+
+    protected function getRouteNameLocalePrefix(string $route)
+    {
+        foreach (Config::get('localeroute.locales') as $locale) {
+            $localePrefix = $locale . '.';
+            if (strpos($route, $localePrefix) === 0) {
+                return $localePrefix;
+            }
+        }
+
+        return '';
     }
 
     protected function addLocaleToRouteName($locale, $route)
