@@ -32,24 +32,16 @@ Add the service provider in ```config/app.php```.
 
 ``` php
 'providers' => [
-
         //...
-
-        /*
-         * Package Service Providers...
-         */
         CaribouFute\LocaleRoute\LocaleRouteServiceProvider::class,
-        //
-
+        //...
     ],
 ```
 Then add the aliases still in ```config/app.php```.
 
 ``` php
 'aliases' => [
-
         //...
-
         'LocaleRoute' => CaribouFute\LocaleRoute\Facades\LocaleRoute::class,
         'LocaleUrl' => CaribouFute\LocaleRoute\Facades\LocaleUrl::class,
     ],
