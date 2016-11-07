@@ -193,7 +193,7 @@ other_route('article', ['id' => 1]); //gets the article route URL with parameter
 
 #### other_locale
 
-Calls the same route URL in another locale. We just replace the route name by the locale. Perfect for the language selector.
+Calls the same route URL in another locale. For the syntax, we just replace the route name by the locale. Perfect for language selectors.
 ``` php
 //other_locale($locale, $parameters)
 
