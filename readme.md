@@ -15,6 +15,10 @@ For an example of LocaleRoute implementation, please check my [locale-route-exam
 
 **This package is now on alpha stage. It should be functional. Please check it but test it throughoutly before using it in production.**
 
+## Change log
+
+Please see [changelog](changelog.md) for more information what has changed recently and what will be added soon.
+
 ## Requirements
 
 - PHP 7
@@ -225,10 +229,6 @@ Calls the same route URL in another locale. For the syntax, we just replace the 
 other_locale('es');            //gets the same URL in Spanish.
 other_locale('en', ['id' => 1]); //gets the same URL in English with parameter 'id' to 1.
 ```
-
-## Change log
-
-Please see [changelog](changelog.md) for more information what has changed recently and what will be added soon.
 
 ## Contributing
 
