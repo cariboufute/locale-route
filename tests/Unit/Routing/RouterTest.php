@@ -80,4 +80,33 @@ class RouterTest extends TestCase
 
         $this->localeRouter->$method($route, $action);
     }
+
+    public function testGroupWithNoHasAttribute()
+    {
+        $attributes = ['prefix' => 'url', 'middleware' => 'auth'];
+        $callback = function () {};
+
+        foreach ($this->locales as $locale) {
+            $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
+            $this->routeLocalizer->shouldReceive('addLocale')->with($locale, '')->once()->andReturn($locale . '.');
+            $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
+        }
+
+        $this->localeRouter->group($attributes, $callback);
+    }
+
+    public function testGroupWithHasAttribute()
+    {
+        $route = 'route';
+        $attributes = ['as' => $route, 'prefix' => 'url', 'middleware' => 'auth'];
+        $callback = function () {};
+
+        foreach ($this->locales as $locale) {
+            $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
+            $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
+            $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
+        }
+
+        $this->localeRouter->group($attributes, $callback);
+    }
 }
