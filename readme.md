@@ -15,6 +15,11 @@ For an example of LocaleRoute implementation, please check my [locale-route-exam
 
 **This package is now on alpha stage. It should be functional. Please check it but test it throughoutly before using it in production.**
 
+### To-do list
+
+- Add ```LocaleRoute::group```
+
+
 ## Requirements
 
 - PHP 7
