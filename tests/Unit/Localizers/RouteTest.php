@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Routing;
+namespace Tests\Unit\Localizers;
 
 use App;
-use CaribouFute\LocaleRoute\Routing\RouteLocalizer;
+use CaribouFute\LocaleRoute\Localizers\Route as RouteLocalizer;
 use Config;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
@@ -11,7 +11,7 @@ use Illuminate\Translation\Translator;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
-class RouteLocalizerTest extends TestCase
+class RouteTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {

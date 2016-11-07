@@ -14,11 +14,6 @@ class UrlLocalizer
         $this->translator = $translator;
     }
 
-    public function addLocaleConfig()
-    {
-        return Config::get('localeroute.add_locale_to_url');
-    }
-
     public function getRouteUrl($locale, $route, array $urls = [])
     {
         $unlocaleUrl = isset($urls[$locale]) ? $urls[$locale] : $this->translator->get('routes.' . $route, [], $locale);
@@ -34,5 +29,10 @@ class UrlLocalizer
     public function removeLocale($locale, $url)
     {
         return $this->addLocaleConfig() ? str_replace($locale . '/', '', $url) : $url;
+    }
+
+    public function addLocaleConfig()
+    {
+        return Config::get('localeroute.add_locale_to_url');
     }
 }

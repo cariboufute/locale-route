@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Router;
 
+use CaribouFute\LocaleRoute\Localizers\Route as RouteLocalizer;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
-use CaribouFute\LocaleRoute\Routing\RouteLocalizer;
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router as IlluminateRouter;
+use Illuminate\Routing\Router as LaravelRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
@@ -24,11 +24,11 @@ class RouterTest extends TestCase
     {
         parent::setUp();
 
-        $this->illuminateRouter = Mockery::mock(IlluminateRouter::class)->makePartial();
+        $this->laravelRouter = Mockery::mock(LaravelRouter::class)->makePartial();
         $this->routeLocalizer = Mockery::mock(RouteLocalizer::class);
         $this->url = Mockery::mock(UrlLocalizer::class)->makePartial();
 
-        $this->localeRouter = Mockery::mock(Router::class, [$this->illuminateRouter, $this->routeLocalizer, $this->url])->makePartial();
+        $this->localeRouter = Mockery::mock(Router::class, [$this->laravelRouter, $this->routeLocalizer, $this->url])->makePartial();
     }
 
     public function testGet()
@@ -74,7 +74,7 @@ class RouterTest extends TestCase
 
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
             $this->url->shouldReceive('getRouteUrl')->with($locale, $route, [])->once()->andReturn($urls[$locale]);
-            $this->illuminateRouter->shouldReceive($method)->with($urls[$locale], ['as' => $locale . '.' . $route, 'uses' => $action])->once()->andReturn($routeObjects[$locale]);
+            $this->laravelRouter->shouldReceive($method)->with($urls[$locale], ['as' => $locale . '.' . $route, 'uses' => $action])->once()->andReturn($routeObjects[$locale]);
             $routeObjects[$locale]->shouldReceive('middleware')->with(SetSessionLocale::class . ':' . $locale)->once();
         }
 

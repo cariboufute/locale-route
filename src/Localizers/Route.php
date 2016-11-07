@@ -1,26 +1,21 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Routing;
+namespace CaribouFute\LocaleRoute\Localizers;
 
 use App;
 use Config;
-use Illuminate\Routing\Router as IlluminateRouter;
+use Illuminate\Routing\Router as LaraveRouter;
 use Illuminate\Routing\UrlGenerator;
 
-class RouteLocalizer
+class Route
 {
     protected $url;
     protected $router;
 
-    public function __construct(UrlGenerator $url, IlluminateRouter $router)
+    public function __construct(UrlGenerator $url, LaraveRouter $router)
     {
         $this->url = $url;
         $this->router = $router;
-    }
-
-    public function locales()
-    {
-        return Config::get('localeroute.locales');
     }
 
     public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
@@ -61,6 +56,11 @@ class RouteLocalizer
         }
 
         return '';
+    }
+
+    public function locales()
+    {
+        return Config::get('localeroute.locales');
     }
 
     public function addLocale($locale, $route)
