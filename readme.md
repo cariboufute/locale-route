@@ -43,9 +43,11 @@ Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```
 ],
 ```
 
-In your ```app/Http/Middleware/Kernel.app``` file, add the ```SetLocale``` middleware in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route and will keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
+In your ```app/Http/Kernel.app``` file, add the ```SetLocale``` middleware in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route and will keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
 
 ``` php
+// app/Http/Kernel.app
+
 protected $middlewareGroups = [
     'web' => [
         //...
