@@ -228,7 +228,7 @@ other_locale('en', ['id' => 1]); //gets the same URL in English with parameter '
 
 ## Change log
 
-Please see [changelog](changelog.md) for more information what has changed recently.
+Please see [changelog](changelog.md) for more information what has changed recently and what will be added soon.
 
 ## Contributing
 
