@@ -1,11 +1,11 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Routing;
+namespace CaribouFute\LocaleRoute\Localizers;
 
 use Config;
 use Illuminate\Translation\Translator;
 
-class UrlLocalizer
+class Url
 {
     protected $translator;
 
@@ -16,7 +16,7 @@ class UrlLocalizer
 
     public function getRouteUrl($locale, $route, array $urls = [])
     {
-        $unlocaleUrl = isset($urls[$locale]) ? $urls[$locale] : $this->translator->get('routes.' . $route, [], $locale);
+        $unlocaleUrl = $urls[$locale] ?? $this->translator->get('routes.' . $route, [], $locale);
         $url = $this->addLocale($locale, $unlocaleUrl);
         return $url;
     }

@@ -3,8 +3,8 @@
 namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Localizers\Route as RouteLocalizer;
+use CaribouFute\LocaleRoute\Localizers\Url as UrlLocalizer;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
-use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Config;
 use Illuminate\Routing\Router as LaravelRouter;
 

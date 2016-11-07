@@ -3,9 +3,9 @@
 namespace Tests\Unit\Router;
 
 use CaribouFute\LocaleRoute\Localizers\Route as RouteLocalizer;
+use CaribouFute\LocaleRoute\Localizers\Url as UrlLocalizer;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Router;
-use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as LaravelRouter;
 use Mockery;

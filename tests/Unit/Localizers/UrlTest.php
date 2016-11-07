@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Routing;
+namespace Tests\Unit\Localizers;
 
-use CaribouFute\LocaleRoute\Routing\UrlLocalizer;
+use CaribouFute\LocaleRoute\Localizers\Url as UrlLocalizer;
 use Config;
 use Illuminate\Translation\Translator;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
-class UrlLocalizerTest extends TestCase
+class UrlTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
