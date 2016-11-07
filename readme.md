@@ -165,7 +165,7 @@ return [
 ```
 ### Grouping
 
-You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```)prefixes defined in the group attributes
+You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```) prefixes defined in the group attributes
 
 **Important:** Please note that you *must* use normal ```Route``` methods instead of their ```LocaleRoute``` counterparts (like ```Route::get``` instead of ```LocaleRoute::get```) inside a ```LocaleRoute::group```, to avoid duplications of locale adding to routes and URLs.
 
