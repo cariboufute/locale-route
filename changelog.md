@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- *LocaleRoute::resource* method
+
 ### Changed
 - *other_locale* will keep current parameters by default
-- *LocaleRoute::resource* method
 
 ## [1.0.0-alpha] - 2016-11-07
 ### Added
