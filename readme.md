@@ -28,7 +28,7 @@ First install the package through Composer by typing this line in the terminal a
 composer require cariboufute/locale-route 1.0.0-alpha
 ```
 
-Add the service provider in ```config/app.php```.
+Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
 'providers' => [
@@ -36,18 +36,14 @@ Add the service provider in ```config/app.php```.
         CaribouFute\LocaleRoute\LocaleRouteServiceProvider::class,
         //...
     ],
-```
-Then add the aliases still in ```config/app.php```.
 
-``` php
 'aliases' => [
         //...
         'LocaleRoute' => CaribouFute\LocaleRoute\Facades\LocaleRoute::class,
-        'LocaleUrl' => CaribouFute\LocaleRoute\Facades\LocaleUrl::class,
     ],
 ```
 
-In your ```app/Http/Middleware/Kernel.app``` file, add this line in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route. This permits to keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
+In your ```app/Http/Middleware/Kernel.app``` file, add the ```SetLocale``` middleware in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route and will keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
 
 ``` php
 protected $middlewareGroups = [
