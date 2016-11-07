@@ -181,9 +181,9 @@ LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
 /*
 Will give these routes :
 
-[fr.article.index]  => GET "/fr/article" => ArticleController::index()
+[fr.article.index]  => GET "/fr/article"        => ArticleController::index()
 [fr.article.create] => GET "/fr/article/create" => ArticleController::create()
-[fr.article.store]  => POST "/fr/article" => ArticleController::store()
+[fr.article.store]  => POST "/fr/article"       => ArticleController::store()
 */
 ```
 
