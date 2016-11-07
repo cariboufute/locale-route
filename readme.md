@@ -187,7 +187,6 @@ Will give these routes :
 */
 ```
 
-```
 ### Fetching URLs
 
 ```LocaleRoute``` gives three helper functions to help you get your URLs quickly. They are close to the Laravel ```route``` helper function.
