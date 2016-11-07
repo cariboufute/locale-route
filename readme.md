@@ -18,7 +18,7 @@ For an example of LocaleRoute implementation, please check my [locale-route-exam
 ### To-do list
 
 - Add ```LocaleRoute::group```
-
+- Keep same parameters for ```other_locale``` as default
 
 ## Requirements
 
