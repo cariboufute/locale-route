@@ -163,7 +163,31 @@ return [
     'route' => 'url_fr',
 ]
 ```
+### Grouping
 
+You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel.
+
+**Important:** Please note that you *must* use normal ```Route``` methods instead of their ```LocaleRoute``` counterparts (like ```Route::get``` instead of ```LocaleRoute::get```) inside a ```LocaleRoute::group```, to avoid duplications of locale adding to routes and URLs.
+
+``` php
+//web.php or routes.php
+
+LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
+    Route::get('/', ['as' => 'index', 'ArticleController@index']);
+    Route::get('/create', ['as' => 'create', 'ArticleController@create']);
+    Route::post('/', ['as' => 'store', 'ArticleController@store']); 
+});
+
+/*
+Will give these routes :
+
+[fr.article.index]  => GET "/fr/article" => ArticleController::index()
+[fr.article.create] => GET "/fr/article/create" => ArticleController::create()
+[fr.article.store]  => POST "/fr/article" => ArticleController::store()
+*/
+```
+
+```
 ### Fetching URLs
 
 ```LocaleRoute``` gives three helper functions to help you get your URLs quickly. They are close to the Laravel ```route``` helper function.
