@@ -2,8 +2,8 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
-use CaribouFute\LocaleRoute\Localizers\Route as RouteLocalizer;
-use CaribouFute\LocaleRoute\Localizers\Url as UrlLocalizer;
+use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
+use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use Config;
 use Illuminate\Routing\Router as LaravelRouter;
@@ -14,7 +14,7 @@ class Router
     protected $routeLocalizer;
     protected $urlLocalizer;
 
-    public function __construct(LaravelRouter $laravelRouter, RouteLocalizer $routeLocalizer, UrlLocalizer $urlLocalizer)
+    public function __construct(LaravelRouter $laravelRouter, LocaleRoute $routeLocalizer, LocaleUrl $urlLocalizer)
     {
         $this->laravelRouter = $laravelRouter;
         $this->routeLocalizer = $routeLocalizer;

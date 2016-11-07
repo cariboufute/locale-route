@@ -1,27 +1,27 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Localizers;
+namespace CaribouFute\LocaleRoute\Locale;
 
 use App;
 use Config;
-use Illuminate\Routing\Router as LaraveRouter;
+use Illuminate\Routing\Router as LaravelRouter;
 use Illuminate\Routing\UrlGenerator;
 
 class Route
 {
     protected $url;
-    protected $router;
+    protected $laravelRouter;
 
-    public function __construct(UrlGenerator $url, LaraveRouter $router)
+    public function __construct(UrlGenerator $url, LaravelRouter $laravelRouter)
     {
         $this->url = $url;
-        $this->router = $router;
+        $this->laravelRouter = $laravelRouter;
     }
 
     public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
     {
         $locale = $locale ?? App::getLocale();
-        $name = $name ?? $this->router->currentRouteName();
+        $name = $name ?? $this->laravelRouter->currentRouteName();
 
         $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);

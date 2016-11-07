@@ -1,6 +1,6 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Localizers;
+namespace CaribouFute\LocaleRoute\Locale;
 
 use Config;
 use Illuminate\Translation\Translator;
