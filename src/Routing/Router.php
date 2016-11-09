@@ -138,4 +138,12 @@ class Router
         return $attributes;
     }
 
+    public function resource($name, $controller, array $options = [])
+    {
+        foreach ($this->locales() as $locale) {
+            $localeName = $this->localeRoute->addLocale($locale, $name);
+            $this->laravelRouter->resource($localeName, $controller, $options);
+        }
+    }
+
 }

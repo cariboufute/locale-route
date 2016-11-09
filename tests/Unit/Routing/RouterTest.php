@@ -109,4 +109,20 @@ class RouterTest extends TestCase
 
         $this->localeRouter->group($attributes, $callback);
     }
+
+    public function testResource()
+    {
+        $name = 'article';
+        $controller = 'Controller';
+        $options = ['options' => 'yé'];
+
+        foreach ($this->locales as $locale) {
+            $localeName = $locale . '.' . $name;
+            $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $name)->andReturn($localeName);
+            $this->laravelRouter->shouldReceive('resource')->with($localeName, $controller, $options);
+        }
+
+        $this->localeRouter->resource($name, $controller, $options);
+
+    }
 }
