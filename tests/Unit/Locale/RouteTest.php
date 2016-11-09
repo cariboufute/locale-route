@@ -5,6 +5,7 @@ namespace Tests\Unit\Locale;
 use App;
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
 use Config;
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Translation\Translator;
@@ -25,6 +26,8 @@ class RouteTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->route = Mockery::mock(Route::class);
 
         $this->url = Mockery::mock(UrlGenerator::class);
         $this->router = Mockery::mock(Router::class);
@@ -48,8 +51,11 @@ class RouteTest extends TestCase
         $localeRoute = $locale . '.' . $route;
         $localeUrl = 'fr/route_fr';
 
+        $this->route->shouldReceive('getName')->once()->andReturn($localeRoute);
+        $this->route->shouldReceive('parameters')->once()->andReturn([]);
+
         App::shouldReceive('getLocale')->once()->andReturn($locale);
-        $this->router->shouldReceive('currentRouteName')->once()->andReturn($localeRoute);
+        $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->localizer->shouldReceive('switchLocale')->with($locale, $localeRoute)->once()->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
 
@@ -66,7 +72,10 @@ class RouteTest extends TestCase
         $currentUrl = 'en/route_en';
         $localeUrl = 'fr/route_fr';
 
-        $this->router->shouldReceive('currentRouteName')->once()->andReturn($currentLocaleRoute);
+        $this->route->shouldReceive('getName')->once()->andReturn($currentLocaleRoute);
+        $this->route->shouldReceive('parameters')->once()->andReturn([]);
+
+        $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->localizer->shouldReceive('switchLocale')->with($locale, $currentLocaleRoute)->once()->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
 
@@ -80,6 +89,10 @@ class RouteTest extends TestCase
         $localeRoute = $locale . '.' . $route;
         $localeUrl = 'fr/route_fr';
 
+        $this->route->shouldReceive('getName')->once()->andReturn($localeRoute);
+        $this->route->shouldReceive('parameters')->once()->andReturn([]);
+
+        $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->localizer->shouldReceive('switchLocale')->with($locale, $route)->once()->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
 

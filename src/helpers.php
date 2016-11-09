@@ -11,9 +11,9 @@ if (!function_exists('locale_route')) {
      * @param  bool    $absolute
      * @return string
      */
-    function locale_route($locale = null, $name = null, $parameters = [], $absolute = true)
+    function locale_route($locale = null, $name = null, $parameters = null, $absolute = true)
     {
-        return app('locale-url')->localeRoute($locale, $name, $parameters, $absolute);
+        return app('locale-route-url')->localeRoute($locale, $name, $parameters, $absolute);
     }
 
     /**
@@ -24,9 +24,9 @@ if (!function_exists('locale_route')) {
      * @param  bool    $absolute
      * @return string
      */
-    function other_locale($locale, $parameters = [], $absolute = true)
+    function other_locale($locale, $parameters = null, $absolute = true)
     {
-        return app('locale-url')->localeRoute($locale, null, $parameters, $absolute);
+        return app('locale-route-url')->localeRoute($locale, null, $parameters, $absolute);
     }
 
     /**
@@ -37,8 +37,8 @@ if (!function_exists('locale_route')) {
      * @param  bool    $absolute
      * @return string
      */
-    function other_route($name, $parameters = [], $absolute = true)
+    function other_route($name, $parameters = null, $absolute = true)
     {
-        return app('locale-url')->localeRoute(null, $name, $parameters, $absolute);
+        return app('locale-route-url')->localeRoute(null, $name, $parameters, $absolute);
     }
 }
