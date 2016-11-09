@@ -215,18 +215,18 @@ Will give the resources routes in all locales:
 
 */
 
-Route::resource('article', 'PhotoController', ['only' => [
+Route::resource('article', 'ArticleController', ['only' => [
     'index', 'show'
 ]]);
 
 /*
 Will give:
 
-[fr.photo.index]  => GET "/fr/photo"        => PhotoController::index()
-[fr.photo.show] => GET "/fr/photo/{id}"     => PhotoController::show()
+[fr.article.index]  => GET "/fr/article"        => ArticleController::index()
+[fr.article.show] => GET "/fr/article/{id}"     => ArticleController::show()
 
-[en.photo.index]  => GET "/en/photo"        => PhotoController::index()
-[en.photo.show] => GET "/en/photo/{id}"     => PhotoController::show()
+[en.article.index]  => GET "/en/article"        => ArticleController::index()
+[en.article.show] => GET "/en/article/{id}"     => ArticleController::show()
 */
 ```
 
