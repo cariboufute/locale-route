@@ -216,8 +216,10 @@ Calls another route URL in the same locale. The syntax is the same as Laravel ``
 ``` php
 //other_route($route, $parameters)
 
-other_route('route');            //gets the route URL in the current locale.
-other_route('article', ['id' => 1]); //gets the article route URL with parameter 'id' to 1 in the current locale
+other_route('route');                   //gets the route URL in the current locale.
+other_route('article', ['id' => 1]);    //gets the article route URL in the current locale with parameter 'id' to 1 in the current locale
+other_route('article')                  //gets the article route URL in the current locale with current parameters.
+other_route('article', [])              //gets the article route URL in the current locale with no parameters, when there are parameters in the current route.
 ```
 
 #### other_locale
@@ -226,8 +228,10 @@ Calls the same route URL in another locale. For the syntax, we just replace the 
 ``` php
 //other_locale($locale, $parameters)
 
-other_locale('es');            //gets the same URL in Spanish.
-other_locale('en', ['id' => 1]); //gets the same URL in English with parameter 'id' to 1.
+other_locale('es');                     //gets the same URL in Spanish.
+other_locale('en', ['id' => 1]);        //gets the same URL in English with parameter 'id' to 1.
+other_locale('fr')                      //gets the same URL in French with current parameters.
+other_locale('de', [])                  //gets the same URL in German with no parameters, when there are parameters in the current route.
 ```
 
 ## Contributing
