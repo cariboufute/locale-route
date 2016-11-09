@@ -201,7 +201,7 @@ This is the basic helper function. It calls the URL according to the locale, rou
 ``` php
 //locale_route($locale, $route, $parameters)
 
-locale_route('fr', 'route');            //gets the French route URL.
+locale_route('fr', 'route');                //gets the French route URL.
 locale_route('es', 'article', ['id' => 1]); //gets the Spanish article route URL with parameter 'id' set to 1
 locale_route(null, 'index');                //gets the index route URL in the current locale
 locale_route('en');                         //gets the current URL in English
