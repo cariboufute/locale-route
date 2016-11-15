@@ -65,7 +65,7 @@ protected $middlewareGroups = [
 Finally install the config file of the package by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-artisan vendor:publish
+php artisan vendor:publish --provider "CaribouFute\LocaleRoute\LocaleRouteServiceProvider"
 ```
 
 Then you should have a ```config/localeroute.php``` installed.
