@@ -29,7 +29,7 @@ if (!function_exists('other_locale')) {
      */
     function other_locale($locale, $parameters = null, $absolute = true)
     {
-        return app('locale-route-url')->localeRoute($locale, null, $parameters, $absolute);
+        return locale_route($locale, null, $parameters, $absolute);
     }
 }
 
@@ -44,6 +44,6 @@ if (!function_exists('other_route')) {
      */
     function other_route($name, $parameters = null, $absolute = true)
     {
-        return app('locale-route-url')->localeRoute(null, $name, $parameters, $absolute);
+        return locale_route(null, $name, $parameters, $absolute);
     }
 }
