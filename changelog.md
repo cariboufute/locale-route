@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### To add
 - Complete missing unit and functional tests for complete code coverage.
 
+## [1.0.0-beta2] – 2016-11-15
+### Added
+
+- Adding middleware option
+
 ## [1.0.0-beta] – 2016-11-12
 ### Changed
 

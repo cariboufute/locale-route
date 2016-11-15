@@ -66,9 +66,11 @@ class Router
 
     public function makeRoute($locale, $method, $route, $action, array $urls = [])
     {
-        $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
         $url = $this->localeUrl->getRouteUrl($locale, $route, $urls);
-        $this->makeLaravelRoute($method, $locale, $url, $localeAction);
+        $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
+        $middleware = $this->addSetSessionLocaleMiddleware($locale, $urls['middleware'] ?? []);
+
+        $this->makeLaravelRoute($method, $locale, $url, $localeAction, $middleware);
     }
 
     public function addLocaleRouteToAction($locale, $route, $action)
@@ -79,10 +81,8 @@ class Router
         return $action;
     }
 
-    protected function makeLaravelRoute($method, $locale, $url, $action)
+    protected function makeLaravelRoute($method, $locale, $url, $action, $middleware)
     {
-        $middleware = $this->makeSetSessionLocale($locale);
-
         return $this->laravelRouter
             ->$method($url, $action)
             ->middleware($middleware);
@@ -104,7 +104,7 @@ class Router
     {
         $attributes = $this->addLocaleAs($locale, $attributes);
         $attributes = $this->addLocalePrefix($locale, $attributes);
-        $attributes = $this->addSetSessionLocaleMiddleware($locale, $attributes);
+        $attributes = $this->addSetSessionLocaleMiddlewareToAttributes($locale, $attributes);
 
         $this->laravelRouter->group($attributes, $callback);
     }
@@ -128,14 +128,20 @@ class Router
         return $attributes;
     }
 
-    protected function addSetSessionLocaleMiddleware($locale, array $attributes)
+    protected function addSetSessionLocaleMiddlewareToAttributes($locale, array $attributes)
     {
-        $middlewares = $attributes['middleware'] ?? [];
-        $middlewares = is_string($middlewares) ? [$middlewares] : $middlewares;
-        $middlewares[] = $this->makeSetSessionLocale($locale);
-        $attributes['middleware'] = $middlewares;
+        $middleware = $attributes['middleware'] ?? [];
+        $attributes['middleware'] = $this->addSetSessionLocaleMiddleware($locale, $middleware);
 
         return $attributes;
+    }
+
+    protected function addSetSessionLocaleMiddleware($locale, $middleware)
+    {
+        $middleware = is_string($middleware) ? [$middleware] : $middleware;
+        $middleware[] = $this->makeSetSessionLocale($locale);
+
+        return $middleware;
     }
 
     public function resource($name, $controller, array $options = [])
