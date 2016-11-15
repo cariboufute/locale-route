@@ -15,6 +15,9 @@ if (!function_exists('locale_route')) {
     {
         return app('locale-route-url')->localeRoute($locale, $name, $parameters, $absolute);
     }
+}
+
+if (!function_exists('other_locale')) {
 
     /**
      * Generate the URL for same route name but different locale
@@ -28,7 +31,9 @@ if (!function_exists('locale_route')) {
     {
         return app('locale-route-url')->localeRoute($locale, null, $parameters, $absolute);
     }
+}
 
+if (!function_exists('other_route')) {
     /**
      * Generate the URL for same route name but different locale
      *
