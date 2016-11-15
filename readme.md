@@ -67,7 +67,7 @@ Finally install the config file of the package by typing this line in the termin
 ``` bash
 php artisan vendor:publish
 
-//if for some reason, you only want to get locale-route config file, type this line instead
+#if for some reason, you only want to get locale-route config file, type this line instead
 php artisan vendor:publish --provider "CaribouFute\LocaleRoute\LocaleRouteServiceProvider"
 ```
 
