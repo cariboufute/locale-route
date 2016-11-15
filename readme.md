@@ -171,7 +171,7 @@ return [
 ]
 ```
 
-### Middlewares
+### Middleware
 
 If you want to use middleware for your LocaleRoute, add them in the url array (3rd parameter) in the ```'middleware'``` key.
 
@@ -182,6 +182,7 @@ LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'u
 LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 
 ```
+
 ### Grouping
 
 You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```) prefixes defined in the group attributes
