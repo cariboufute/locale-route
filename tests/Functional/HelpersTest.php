@@ -29,7 +29,9 @@ class HelpersTest extends TestCase
 
     public function testLocaleRoute()
     {
-        LocaleRoute::get('route', function () {return 'route';}, ['fr' => 'route_fr', 'en' => 'route_en']);
+        LocaleRoute::get('route', function () {
+            return 'route';
+        }, ['fr' => 'route_fr', 'en' => 'route_en']);
 
         $this->assertSame(url('fr/route_fr'), locale_route('fr', 'route'));
         $this->assertSame(url('en/route_en'), locale_route('en', 'route'));
@@ -37,7 +39,9 @@ class HelpersTest extends TestCase
 
     public function testOtherLocaleWithDefaultParameters()
     {
-        LocaleRoute::get('article.show', function () {return 'route';}, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
+        LocaleRoute::get('article.show', function () {
+            return 'route';
+        }, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
 
         $response = $this->call('get', 'fr/article/2');
 
@@ -47,7 +51,9 @@ class HelpersTest extends TestCase
 
     public function testLocaleRouteWithDefaultParameters()
     {
-        LocaleRoute::get('article.show', function () {return 'route';}, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
+        LocaleRoute::get('article.show', function () {
+            return 'route';
+        }, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
 
         $response = $this->call('get', 'fr/article/2');
 

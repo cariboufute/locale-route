@@ -178,7 +178,8 @@ class RouterTest extends TestCase
     public function testGroupWithNoHasAttribute()
     {
         $attributes = ['prefix' => 'url', 'middleware' => 'auth'];
-        $callback = function () {};
+        $callback = function () {
+        };
 
         foreach ($this->locales as $locale) {
             $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
@@ -193,7 +194,8 @@ class RouterTest extends TestCase
     {
         $route = 'route';
         $attributes = ['as' => $route, 'prefix' => 'url', 'middleware' => 'auth'];
-        $callback = function () {};
+        $callback = function () {
+        };
 
         foreach ($this->locales as $locale) {
             $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
@@ -217,6 +219,5 @@ class RouterTest extends TestCase
         }
 
         $this->localeRouter->resource($name, $controller, $options);
-
     }
 }

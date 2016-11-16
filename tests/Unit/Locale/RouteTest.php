@@ -143,5 +143,4 @@ class RouteTest extends TestCase
 
         $this->assertSame($locale . '.' . $route, $this->localizer->addLocale($locale, $route));
     }
-
 }

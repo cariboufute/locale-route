@@ -68,7 +68,7 @@ class Router
     {
         $url = $this->localeUrl->getRouteUrl($locale, $route, $urls);
         $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
-        $middleware = $this->addSetSessionLocaleMiddleware($locale, $urls['middleware'] ?? []);
+        $middleware = $this->addSetSessionLocaleMiddleware($locale, isset($urls['middleware']) ? $urls['middleware'] : []);
 
         $this->laravelRouter
             ->$method($url, $localeAction)
@@ -106,7 +106,7 @@ class Router
 
     protected function addLocaleAs($locale, array $attributes)
     {
-        $as = $attributes['as'] ?? '';
+        $as = isset($attributes['as']) ? $attributes['as'] : '';
         $as = $this->localeRoute->addLocale($locale, $as);
         $attributes['as'] = $as;
 
@@ -115,7 +115,7 @@ class Router
 
     protected function addLocalePrefix($locale, array $attributes)
     {
-        $prefix = $attributes['prefix'] ?? '';
+        $prefix = isset($attributes['prefix']) ? $attributes['prefix'] : '';
         $prefix = $this->localeUrl->addLocale($locale, $prefix);
         $prefix = rtrim($prefix, '/');
         $attributes['prefix'] = $prefix;
@@ -125,7 +125,7 @@ class Router
 
     protected function addSetSessionLocaleMiddlewareToAttributes($locale, array $attributes)
     {
-        $middleware = $attributes['middleware'] ?? [];
+        $middleware = isset($attributes['middleware']) ? $attributes['middleware'] : [];
         $attributes['middleware'] = $this->addSetSessionLocaleMiddleware($locale, $middleware);
 
         return $attributes;
@@ -146,5 +146,4 @@ class Router
             $this->laravelRouter->resource($localeName, $controller, $options);
         }
     }
-
 }
