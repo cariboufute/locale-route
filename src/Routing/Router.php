@@ -70,7 +70,9 @@ class Router
         $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
         $middleware = $this->addSetSessionLocaleMiddleware($locale, $urls['middleware'] ?? []);
 
-        $this->makeLaravelRoute($method, $locale, $url, $localeAction, $middleware);
+        $this->laravelRouter
+            ->$method($url, $localeAction)
+            ->middleware($middleware);
     }
 
     public function addLocaleRouteToAction($locale, $route, $action)
@@ -79,13 +81,6 @@ class Router
         $action['as'] = $this->localeRoute->addLocale($locale, $route);
 
         return $action;
-    }
-
-    protected function makeLaravelRoute($method, $locale, $url, $action, $middleware)
-    {
-        return $this->laravelRouter
-            ->$method($url, $action)
-            ->middleware($middleware);
     }
 
     protected function makeSetSessionLocale($locale)

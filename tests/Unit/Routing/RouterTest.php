@@ -148,12 +148,27 @@ class RouterTest extends TestCase
         $routeObjects = [];
 
         foreach ($this->locales as $locale) {
-            $urls[$locale] = $locale . '/url' . $locale;
+            $localeRoute = $locale . '.' . $route;
+            $url = $locale . '/url' . $locale;
             $routeObject = Mockery::mock(Route::class);
 
-            $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
-            $this->url->shouldReceive('getRouteUrl')->with($locale, $route, [])->once()->andReturn($urls[$locale]);
-            $this->laravelRouter->shouldReceive($method)->with($urls[$locale], ['as' => $locale . '.' . $route, 'uses' => $action])->once()->andReturn($routeObject);
+            $this->routeLocalizer
+                ->shouldReceive('addLocale')
+                ->with($locale, $route)
+                ->once()
+                ->andReturn($localeRoute);
+
+            $this->url
+                ->shouldReceive('getRouteUrl')
+                ->with($locale, $route, [])
+                ->once()
+                ->andReturn($url);
+
+            $this->laravelRouter
+                ->shouldReceive($method)
+                ->with($url, ['as' => $localeRoute, 'uses' => $action])
+                ->once()
+                ->andReturn($routeObject);
             $routeObject->shouldReceive('middleware')->with([SetSessionLocale::class . ':' . $locale])->once();
         }
 
