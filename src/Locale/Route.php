@@ -25,6 +25,7 @@ class Route
 
         $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
+        $localeUrl = rtrim($localeUrl, '?');
 
         return $localeUrl;
     }
@@ -74,5 +75,21 @@ class Route
     public function addLocale($locale, $route)
     {
         return $locale . '.' . $route;
+    }
+
+    public function otherLocale($locale = null, $parameters = null, $absolute = true)
+    {
+        $name = $this->getCurrentRouteName();
+        $parameters = $parameters ?: $this->getCurrentRouteParameters();
+
+        return $this->localeRoute($locale, $name, $parameters, $absolute);
+    }
+
+    public function getCurrentRouteParameters()
+    {
+        $currentRoute = $this->laravelRouter->current();
+        $currentRouteParameters = $currentRoute ? $currentRoute->parameters() : [];
+
+        return $currentRouteParameters;
     }
 }

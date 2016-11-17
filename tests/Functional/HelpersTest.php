@@ -59,12 +59,12 @@ class HelpersTest extends TestCase
             return 'route';
         }, ['fr' => 'articles', 'en' => 'articles']);
 
-        $response = $this->call('get', other_route('article.show', 'foobar'));
+        $response = $this->call('get', locale_route('en', 'article.show', ['param' => 'foo']));
 
         $this->assertSame(url('en/articles'), other_route('articles'));
     }
 
-    public function testLocaleRouteWithDefaultParameters()
+    public function testLocaleRouteWithNoParametersReturnsNoParameters()
     {
         LocaleRoute::get('article.show', function () {
             return 'route';
@@ -72,7 +72,7 @@ class HelpersTest extends TestCase
 
         $response = $this->call('get', 'fr/article/2');
 
-        $this->assertSame(url('fr/article/2'), locale_route('fr', 'article.show'));
-        $this->assertSame(url('en/article/2'), locale_route('en', 'article.show'));
+        $this->assertSame(url('fr/article'), locale_route('fr', 'article.show'));
+        $this->assertSame(url('en/article'), locale_route('en', 'article.show'));
     }
 }

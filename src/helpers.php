@@ -29,7 +29,7 @@ if (!function_exists('other_locale')) {
      */
     function other_locale($locale, $parameters = null, $absolute = true)
     {
-        return locale_route($locale, null, $parameters, $absolute);
+        return app('locale-route-url')->otherLocale($locale, $parameters, $absolute);
     }
 }
 

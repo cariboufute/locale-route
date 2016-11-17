@@ -274,8 +274,7 @@ Calls another route URL in the same locale. The syntax is the same as Laravel ``
 
 other_route('route');                   //gets the route URL in the current locale.
 other_route('article', ['id' => 1]);    //gets the article route URL in the current locale with parameter 'id' to 1 in the current locale
-other_route('article')                  //gets the article route URL in the current locale with current parameters.
-other_route('article', [])              //gets the article route URL in the current locale with no parameters, when there are parameters in the current route.
+other_route('article')                  //gets the article route URL in the current locale with no parameters.
 ```
 
 #### other_locale
