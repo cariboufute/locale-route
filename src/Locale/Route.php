@@ -24,9 +24,10 @@ class Route
         $currentRouteName = $currentRoute ? $currentRoute->getName() : '';
         $currentRouteParameters = $currentRoute ? $currentRoute->parameters() : [];
 
-        $locale = $locale ?? App::getLocale();
-        $name = $name ?? $currentRouteName;
-        $parameters = $parameters ?? $currentRouteParameters;
+
+        $locale = $locale != null ? $locale : App::getLocale();
+        $name = $name != null ? $name : $currentRouteName;
+        $parameters = isset($parameters) ? $parameters : $currentRouteParameters;
 
         $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
@@ -50,7 +51,7 @@ class Route
         return $unlocaleRoute;
     }
 
-    public function getLocalePrefix(string $route)
+    public function getLocalePrefix($route)
     {
         foreach ($this->locales() as $locale) {
             $localePrefix = $locale . '.';
@@ -72,5 +73,4 @@ class Route
     {
         return $locale . '.' . $route;
     }
-
 }

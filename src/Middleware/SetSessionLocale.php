@@ -28,5 +28,4 @@ class SetSessionLocale
 
         return $next($request);
     }
-
 }

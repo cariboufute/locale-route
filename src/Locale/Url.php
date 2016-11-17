@@ -16,7 +16,7 @@ class Url
 
     public function getRouteUrl($locale, $route, array $urls = [])
     {
-        $unlocaleUrl = $urls[$locale] ?? $this->translator->get('routes.' . $route, [], $locale);
+        $unlocaleUrl = isset($urls[$locale]) ? $urls[$locale] : $this->translator->get('routes.' . $route, [], $locale);
         $url = $this->addLocale($locale, $unlocaleUrl);
         return $url;
     }

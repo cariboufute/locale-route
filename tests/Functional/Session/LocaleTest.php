@@ -34,5 +34,4 @@ class LocaleTest extends TestCase
         $this->assertSame($fallbackLocale, $this->locale->get());
         $this->assertSame($fallbackLocale, app()->getLocale());
     }
-
 }
