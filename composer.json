@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php" : "~7.0",
+        "php" : ">=5.6.*",
         "laravel/framework": ">=5.1.0"
     },
     "require-dev": {
