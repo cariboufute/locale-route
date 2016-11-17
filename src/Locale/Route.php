@@ -18,21 +18,23 @@ class Route
         $this->laravelRouter = $laravelRouter;
     }
 
-    public function localeRoute($locale = null, $name = null, $parameters = null, $absolute = true)
+    public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
     {
-        $currentRoute = $this->laravelRouter->current();
-        $currentRouteName = $currentRoute ? $currentRoute->getName() : '';
-        $currentRouteParameters = $currentRoute ? $currentRoute->parameters() : [];
-
-
-        $locale = $locale != null ? $locale : App::getLocale();
-        $name = $name != null ? $name : $currentRouteName;
-        $parameters = isset($parameters) ? $parameters : $currentRouteParameters;
+        $locale = $locale ?: App::getLocale();
+        $name = $name ?: $this->getCurrentRouteName();
 
         $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
 
         return $localeUrl;
+    }
+
+    public function getCurrentRouteName()
+    {
+        $currentRoute = $this->laravelRouter->current();
+        $currentRouteName = $currentRoute ? $currentRoute->getName() : '';
+
+        return $currentRouteName;
     }
 
     public function switchLocale($locale, $route)

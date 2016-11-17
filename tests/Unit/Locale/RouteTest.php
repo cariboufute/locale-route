@@ -52,7 +52,6 @@ class RouteTest extends TestCase
         $localeUrl = 'fr/route_fr';
 
         $this->route->shouldReceive('getName')->once()->andReturn($localeRoute);
-        $this->route->shouldReceive('parameters')->once()->andReturn([]);
 
         App::shouldReceive('getLocale')->once()->andReturn($locale);
         $this->router->shouldReceive('current')->once()->andReturn($this->route);
@@ -73,7 +72,6 @@ class RouteTest extends TestCase
         $localeUrl = 'fr/route_fr';
 
         $this->route->shouldReceive('getName')->once()->andReturn($currentLocaleRoute);
-        $this->route->shouldReceive('parameters')->once()->andReturn([]);
 
         $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->localizer->shouldReceive('switchLocale')->with($locale, $currentLocaleRoute)->once()->andReturn($localeRoute);
@@ -89,10 +87,6 @@ class RouteTest extends TestCase
         $localeRoute = $locale . '.' . $route;
         $localeUrl = 'fr/route_fr';
 
-        $this->route->shouldReceive('getName')->once()->andReturn($localeRoute);
-        $this->route->shouldReceive('parameters')->once()->andReturn([]);
-
-        $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->localizer->shouldReceive('switchLocale')->with($locale, $route)->once()->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
 
@@ -142,5 +136,10 @@ class RouteTest extends TestCase
         $locale = 'lc';
 
         $this->assertSame($locale . '.' . $route, $this->localizer->addLocale($locale, $route));
+    }
+
+    public function testOtherLocale()
+    {
+
     }
 }

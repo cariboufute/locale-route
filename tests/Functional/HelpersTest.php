@@ -49,7 +49,7 @@ class HelpersTest extends TestCase
         $this->assertSame(url('en/article/2'), other_locale('en'));
     }
 
-    public function testAnotherRouteWithEmptyParameters()
+    public function testOtherRouteWithEmptyParameters()
     {
         LocaleRoute::get('article.show', function () {
             return 'route';
@@ -61,7 +61,7 @@ class HelpersTest extends TestCase
 
         $response = $this->call('get', other_route('article.show', 'foobar'));
 
-        $this->assertSame(url('en/articles'), other_route('articles', []));
+        $this->assertSame(url('en/articles'), other_route('articles'));
     }
 
     public function testLocaleRouteWithDefaultParameters()
