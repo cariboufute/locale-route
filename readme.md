@@ -21,7 +21,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 
 ## Requirements
 
-- PHP 7
+- PHP 5.6 or 7
 - Laravel 5.3 (should be compatible with 5.1 and 5.2 but has not been tested with these versions yet)
 
 ## Install

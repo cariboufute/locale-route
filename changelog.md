@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### To add
 - Complete missing unit and functional tests for complete code coverage.
 
+## [1.0.0-beta3] – 2016-11-17
+### Added
+
+- PHP 5.6 support
+
+### Removed
+- Default parameters in *other_route* helper function. Undefined parameters now is always no parameters. *other_locale* keeps default parameters.
+
 ## [1.0.0-beta2] – 2016-11-15
 ### Added
 
