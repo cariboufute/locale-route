@@ -24,9 +24,10 @@ class Route
         $currentRouteName = $currentRoute ? $currentRoute->getName() : '';
         $currentRouteParameters = $currentRoute ? $currentRoute->parameters() : [];
 
+
         $locale = $locale != null ? $locale : App::getLocale();
         $name = $name != null ? $name : $currentRouteName;
-        $parameters = $parameters != null ? $parameters : $currentRouteParameters;
+        $parameters = isset($parameters) ? $parameters : $currentRouteParameters;
 
         $localeRoute = $this->switchLocale($locale, $name);
         $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
