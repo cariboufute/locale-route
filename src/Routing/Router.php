@@ -68,7 +68,9 @@ class Router
     {
         $url = $this->localeUrl->getRouteUrl($locale, $route, $urls);
         $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
-        $middleware = $this->addSetSessionLocaleMiddleware($locale, isset($urls['middleware']) ? $urls['middleware'] : []);
+
+        $middleware = isset($urls['middleware']) ? $urls['middleware'] : [];
+        $middleware = $this->addSetSessionLocaleMiddleware($locale, $middleware);
 
         $this->laravelRouter
             ->$method($url, $localeAction)
