@@ -29,7 +29,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route 1.0.0-beta2
+composer require cariboufute/locale-route 1.0.0-beta3
 ```
 
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
