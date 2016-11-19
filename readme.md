@@ -230,14 +230,14 @@ Route::group(['as' => 'foo', prefix => 'foo'], function () {
 LocaleRoute::group([], function () {
     Route::group(['as' => 'foo', prefix => 'foo'], function () {
         Route::group(['as' => 'bar', prefix => 'bar'], function () {
-            Route::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
+            Route::get('baz', ['as' => 'baz']);
         });
     }); 
 });
 
 Route::group(['as' => 'foo', prefix => 'foo'], function () {
     Route::group(['as' => 'bar', prefix => 'bar'], function () {
-        Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
+        Route::post('post', ['as' => 'post']);
     });
 });
 
@@ -254,8 +254,8 @@ Route::group(['as' => 'foo', prefix => 'foo'], function () {
 LocaleRoute::group([], function () {
     Route::group(['as' => 'foo', prefix => 'foo'], function () {
         Route::group(['as' => 'bar', prefix => 'bar'], function () {
-            Route::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
-            Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
+            Route::get('baz', ['as' => 'baz']);
+            Route::post('post', ['as' => 'post']);
         });
     }); 
 });
