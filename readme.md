@@ -207,6 +207,67 @@ Will give these routes :
 */
 ```
 
+Also, the ```LocaleRoute::group``` *must* be at the top of your grouping of routes to keep the locale prefix in URLs and route names at the beginning, so the helper functions work. If you want to have localized and unlocalized routes in the same group, you will need to duplicate the grouping for both situations.
+
+``` php
+// Will not work...
+
+Route::group(['as' => 'foo', prefix => 'foo'], function () {
+    Route::group(['as' => 'bar', prefix => 'bar'], function () {
+        LocaleRoute::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
+        Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
+    });
+});
+
+/* Will give:
+    'foo.bar.en.baz'    => GET '/foo/bar/en/baz'
+    'foo.bar.fr.baz'    => GET '/foo/bar/fr/baz'
+    'foo.bar.post'      => POST '/foo/bar/post'
+*/
+
+// This will...
+
+LocaleRoute::group([], function () {
+    Route::group(['as' => 'foo', prefix => 'foo'], function () {
+        Route::group(['as' => 'bar', prefix => 'bar'], function () {
+            Route::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
+        });
+    }); 
+});
+
+Route::group(['as' => 'foo', prefix => 'foo'], function () {
+    Route::group(['as' => 'bar', prefix => 'bar'], function () {
+        Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
+    });
+});
+
+/* Will give:
+    'en.foo.bar.baz'    => GET '/en/foo/bar/baz'
+    'fr.foo.bar.baz'    => GET '/fr/foo/bar/baz'
+    'foo.bar.post'      => POST '/foo/bar/post'
+*/
+
+// For DRYer route coding, just keep all routes localized.
+// It won't alter any code if no localization is used,
+// although the routes will be duplicated.
+
+LocaleRoute::group([], function () {
+    Route::group(['as' => 'foo', prefix => 'foo'], function () {
+        Route::group(['as' => 'bar', prefix => 'bar'], function () {
+            Route::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
+            Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
+        });
+    }); 
+});
+
+/* Will give:
+    'en.foo.bar.baz'    => GET '/en/foo/bar/baz'
+    'fr.foo.bar.baz'    => GET '/fr/foo/bar/baz'
+    'en.foo.bar.post'   => POST '/en/foo/bar/post'
+    'fr.foo.bar.post'   => POST '/fr/foo/bar/post'
+*/
+```
+
 ### Resource
 
 You can also use ```LocaleRoute::resource``` the same way as you use ```Route::resource``` in Laravel. This will add the locale prefixes to all resources routes for the given controller. You can add options the same way as the normal ```Route```.
