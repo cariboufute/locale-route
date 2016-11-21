@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### To add
 - Complete missing unit and functional tests for complete code coverage.
 
+## [dev-master] – 2016-11-20
+### Changed
+
+- Given key 'locale.session' to SetSessionLocale middleware, to show shorter name in route:list
+
 ## [1.0.0-beta3] – 2016-11-17
 ### Added
 
