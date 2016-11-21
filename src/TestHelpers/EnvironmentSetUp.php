@@ -8,6 +8,9 @@ use CaribouFute\LocaleRoute\Routing\Router;
 
 trait EnvironmentSetUp
 {
+    protected $locales;
+    protected $addLocaleOption;
+
     protected function getEnvironmentSetUp($app)
     {
         $this->locales = ['fr', 'en'];
