@@ -6,16 +6,23 @@ use CaribouFute\LocaleRoute\Facades\LocaleRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
-use Session;
 
 class RouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
-    public function setUp()
+    public function testLocaleRouteInGroupHasLocalePrefixFirstInRouteName()
     {
-        parent::setUp();
-        Session::start();
+        LocaleRoute::group([], function () {
+            Route::group(['as' => 'foo.', 'prefix' => 'foo'], function () {
+                Route::group(['as' => 'bar.', 'prefix' => 'bar'], function () {
+                    Route::get('test', function () {}, ['fr' => 'test', 'en' => 'test', 'es' => 'test']);
+                });
+            });
+        });
+
+        $this->call('get', 'fr/foo/bar/test');
+        $this->assertResponseOk();
     }
 
     public function testGet()
