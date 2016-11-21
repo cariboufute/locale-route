@@ -3,22 +3,14 @@
 namespace Tests\Functional\Routing;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
-use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
 use Session;
 
 class RouterTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $this->locales = ['fr', 'en'];
-        $this->addLocaleOption = true;
-
-        $app['config']->set('localeroute.locales', $this->locales);
-        $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
-        $app['locale-route'] = app()->make(Router::class);
-    }
+    use EnvironmentSetUp;
 
     public function setUp()
     {

@@ -4,8 +4,8 @@ namespace Tests\Unit\Router;
 
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
 use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
-use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as LaravelRouter;
 use Mockery;
@@ -13,12 +13,7 @@ use Orchestra\Testbench\TestCase;
 
 class RouterTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $this->locales = ['fr', 'en', 'es'];
-        $app['config']->set('localeroute.locales', $this->locales);
-        $app['config']->set('localeroute.add_locale_to_url', true);
-    }
+    use EnvironmentSetUp;
 
     public function setUp()
     {
@@ -42,7 +37,7 @@ class RouterTest extends TestCase
             $localeRoute = $locale . '.' . $route;
             $url = $locale . '/url' . $locale;
             $routeObject = Mockery::mock(Route::class);
-            $routeMiddleware = $middleware + [2 => SetSessionLocale::class . ':' . $locale];
+            $routeMiddleware = $middleware + [2 => 'locale.session:' . $locale];
 
             $this->routeLocalizer
                 ->shouldReceive('addLocale')
@@ -81,7 +76,7 @@ class RouterTest extends TestCase
         foreach ($this->locales as $locale) {
             $localeRoute = $locale . '.' . $route;
             $routeObject = Mockery::mock(Route::class);
-            $routeMiddleware = [$middleware, SetSessionLocale::class . ':' . $locale];
+            $routeMiddleware = [$middleware, 'locale.session:' . $locale];
 
             $this->routeLocalizer
                 ->shouldReceive('addLocale')
@@ -169,7 +164,7 @@ class RouterTest extends TestCase
                 ->with($url, ['as' => $localeRoute, 'uses' => $action])
                 ->once()
                 ->andReturn($routeObject);
-            $routeObject->shouldReceive('middleware')->with([SetSessionLocale::class . ':' . $locale])->once();
+            $routeObject->shouldReceive('middleware')->with(['locale.session:' . $locale])->once();
         }
 
         $this->localeRouter->$method($route, $action);
@@ -182,7 +177,7 @@ class RouterTest extends TestCase
         };
 
         foreach ($this->locales as $locale) {
-            $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
+            $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, '')->once()->andReturn($locale . '.');
             $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
         }
@@ -198,7 +193,7 @@ class RouterTest extends TestCase
         };
 
         foreach ($this->locales as $locale) {
-            $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', SetSessionLocale::class . ':' . $locale]];
+            $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
             $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
         }

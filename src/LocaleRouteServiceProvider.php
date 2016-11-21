@@ -3,17 +3,21 @@
 namespace CaribouFute\LocaleRoute;
 
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRouteUrl;
+use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class LocaleRouteServiceProvider extends ServiceProvider
 {
     protected $defer = false;
 
-    public function boot()
+    public function boot(Router $router)
     {
         $this->publishes([__DIR__ . '/config/localeroute.php' => config_path('localeroute.php')]);
         $this->mergeConfigFrom(__DIR__ . '/config/localeroute.php', 'localeroute');
+
+        $router->middleware('locale.session', SetSessionLocale::class);
     }
 
     public function register()

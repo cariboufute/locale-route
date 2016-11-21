@@ -4,7 +4,6 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
 use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
-use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use Closure;
 use Config;
 use Illuminate\Routing\Router as LaravelRouter;
@@ -87,7 +86,7 @@ class Router
 
     protected function makeSetSessionLocale($locale)
     {
-        return SetSessionLocale::class . ':' . $locale;
+        return 'locale.session:' . $locale; //SetSessionLocale::class . ':' . $locale;
     }
 
     public function group(array $attributes, Closure $callback)

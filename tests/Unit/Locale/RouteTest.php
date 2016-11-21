@@ -4,6 +4,7 @@ namespace Tests\Unit\Locale;
 
 use App;
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
+use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Config;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -14,14 +15,7 @@ use Orchestra\Testbench\TestCase;
 
 class RouteTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $this->locales = ['fr', 'en'];
-        $this->addLocaleOption = true;
-
-        $app['config']->set('localeroute.locales', $this->locales);
-        $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
-    }
+    use EnvironmentSetUp;
 
     public function setUp()
     {

@@ -3,23 +3,13 @@
 namespace Tests\Functional;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
-use CaribouFute\LocaleRoute\Locale\Route as LocaleRouteUrl;
-use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Orchestra\Testbench\TestCase;
 use Session;
 
 class HelpersTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $this->locales = ['fr', 'en'];
-        $this->addLocaleOption = true;
-
-        $app['config']->set('localeroute.locales', $this->locales);
-        $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
-        $app['locale-route'] = app()->make(Router::class);
-        $app['locale-route-url'] = app()->make(LocaleRouteUrl::class);
-    }
+    use EnvironmentSetUp;
 
     public function setUp()
     {
