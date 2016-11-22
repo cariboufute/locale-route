@@ -4,11 +4,13 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
 use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
-use Closure;
+use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
 use Illuminate\Routing\Router as LaravelRouter;
 
 class SubRouter
 {
+    use ConvertToControllerAction;
+
     protected $laravelRouter;
     protected $localeRoute;
     protected $localeUrl;
@@ -68,7 +70,7 @@ class SubRouter
 
     public function addRouteToAction($route, $action)
     {
-        $action = is_string($action) || is_a($action, Closure::class) ? ['uses' => $action] : $action;
+        $action = $this->convertToControllerAction($action);
         $action['as'] = $route;
 
         return $action;
