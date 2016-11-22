@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Coming soon]
 ### To add
+
 - Complete missing unit and functional tests for complete code coverage.
 
-## [dev-master] – 2016-11-20
+## [1.0.0-beta4] – 2016-11-22
+### Added
+
+- *SubRoute* façade to use under *LocaleRoute::group*, so the URLs are still translated with *lang* files.
+
 ### Changed
 
 - Given key 'locale.session' to SetSessionLocale middleware, to show shorter name in route:list
