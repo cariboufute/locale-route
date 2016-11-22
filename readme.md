@@ -185,27 +185,29 @@ LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 
 ### Grouping
 
-You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```) prefixes defined in the group attributes
+You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```) prefixes defined in the group attributes.
 
-**Important:** Please note that you *must* use normal ```Route``` methods instead of their ```LocaleRoute``` counterparts (like ```Route::get``` instead of ```LocaleRoute::get```) inside a ```LocaleRoute::group```, to avoid duplications of locale adding to routes and URLs.
+To continue using different URLs according to locale, use the façade ```SubRoute```.
 
 ``` php
 //web.php or routes.php
 
 LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
     Route::get('/', ['as' => 'index', 'ArticleController@index']);
-    Route::get('/create', ['as' => 'create', 'ArticleController@create']);
-    Route::post('/', ['as' => 'store', 'ArticleController@store']); 
+    SubRoute::get('create', 'ArticleController@create', ['fr' => 'creer', 'en' => 'create']]);
 });
 
 /*
 Will give these routes :
 
 [fr.article.index]  => GET "/fr/article"        => ArticleController::index()
-[fr.article.create] => GET "/fr/article/create" => ArticleController::create()
-[fr.article.store]  => POST "/fr/article"       => ArticleController::store()
+[en.article.index]  => GET "/en/article"        => ArticleController::index()
+[fr.article.create] => GET "/fr/article/creer"  => ArticleController::create()
+[en.article.create] => GET "/en/article/create" => ArticleController::create()
 */
 ```
+
+**Important:** Please note that you *must* use normal ```Route``` or ```SubRoute``` methods instead of their ```LocaleRoute``` counterparts (like ```SubRoute::get``` instead of ```LocaleRoute::get```) inside a ```LocaleRoute::group```, to avoid duplications of locale adding to routes and URLs.
 
 Also, the ```LocaleRoute::group``` *must* be at the top of your grouping of routes to keep the locale prefix in URLs and route names at the beginning, so the helper functions work. If you want to have localized and unlocalized routes in the same group, you will need to duplicate the grouping for both situations.
 
