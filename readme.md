@@ -32,7 +32,7 @@ First install the package through Composer by typing this line in the terminal a
 composer require cariboufute/locale-route 1.0.0-beta3
 ```
 
-Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
+Add the service provider and the ```LocaleRoute``` and ```SubRoute``` aliases in ```config/app.php```.
 
 ``` php
 'providers' => [
@@ -44,6 +44,7 @@ Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```
 'aliases' => [
     //...
     'LocaleRoute' => CaribouFute\LocaleRoute\Facades\LocaleRoute::class,
+    'SubRoute' => CaribouFute\LocaleRoute\Facades\SubRoute::class,
 ],
 ```
 
