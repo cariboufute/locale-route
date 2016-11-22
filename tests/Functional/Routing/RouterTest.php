@@ -3,6 +3,7 @@
 namespace Tests\Functional\Routing;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
+use CaribouFute\LocaleRoute\Facades\SubRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
@@ -11,17 +12,18 @@ class RouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
-    public function testLocaleRouteInGroupHasLocalePrefixFirstInRouteName()
+    public function testSubRoute()
     {
-        LocaleRoute::group([], function () {
-            Route::group(['as' => 'foo.', 'prefix' => 'foo'], function () {
-                Route::group(['as' => 'bar.', 'prefix' => 'bar'], function () {
-                    Route::get('test', function () {}, ['fr' => 'test', 'en' => 'test', 'es' => 'test']);
-                });
-            });
+        LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function ($router) {
+            SubRoute::get('create', function () {
+                return 'Yes!';
+            }, ['fr' => 'créer', 'en' => 'create']);
         });
 
-        $this->call('get', 'fr/foo/bar/test');
+        $this->call('get', '/fr/article/créer');
+        $this->assertResponseOk();
+
+        $this->call('get', '/en/article/create');
         $this->assertResponseOk();
     }
 

@@ -67,6 +67,11 @@ class Route
         return '';
     }
 
+    public function getLocale($route)
+    {
+        return rtrim($this->getLocalePrefix($route), '.');
+    }
+
     public function locales()
     {
         return Config::get('localeroute.locales');
