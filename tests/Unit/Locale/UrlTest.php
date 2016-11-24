@@ -10,11 +10,6 @@ use Orchestra\Testbench\TestCase;
 
 class UrlTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        $app['config']->set('localeroute.add_locale_to_url', true);
-    }
-
     public function setUp()
     {
         parent::setUp();
@@ -25,6 +20,18 @@ class UrlTest extends TestCase
     public function testGetRouteUrl()
     {
         //TODO
+    }
+
+    public function testSwitchLocale()
+    {
+        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->twice()->andReturn(true);
+        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
+
+        $url = 'en/url';
+        $locale = 'fr';
+        $newUrl = 'fr/url';
+
+        $this->assertSame($newUrl, $this->url->switchLocale($locale, $url));
     }
 
     public function testAddLocaleConfig()
@@ -63,12 +70,13 @@ class UrlTest extends TestCase
     public function testRemoveLocaleWithConfigAddLocaleToUrlToTrue()
     {
         Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
+        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
 
         $locale = 'fr';
         $url = 'url';
         $localeUrl = $locale . '/' . $url;
 
-        $testUrl = $this->url->removeLocale($locale, $localeUrl);
+        $testUrl = $this->url->removeLocale($localeUrl);
 
         $this->assertSame($url, $testUrl);
     }
@@ -80,7 +88,7 @@ class UrlTest extends TestCase
         $locale = 'fr';
         $url = 'fr/url';
 
-        $testUrl = $this->url->removeLocale($locale, $url);
+        $testUrl = $this->url->removeLocale($url);
 
         $this->assertSame($url, $testUrl);
     }
