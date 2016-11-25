@@ -40,13 +40,13 @@ class LocaleRouterTest extends TestCase
 
             $this->prefixUrl
                 ->shouldReceive('getUnlocaleRouteUrl')
-                ->with($locale, $route, [])
+                ->with($locale, $route, $options)
                 ->once()
                 ->andReturn($url);
 
             $this->router
                 ->shouldReceive('get')
-                ->with($url, ['locale' => $locale, 'as' => $route, 'uses' => $action])
+                ->with($url, ['uses' => $action, 'locale' => $locale, 'as' => $route])
                 ->once()
                 ->andReturn($routeObject);
 
@@ -76,7 +76,7 @@ class LocaleRouterTest extends TestCase
 
             $this->prefixUrl
                 ->shouldReceive('getUnlocaleRouteUrl')
-                ->with($locale, $route, [])
+                ->with($locale, $route, $urls)
                 ->once()
                 ->andReturn($url);
 
