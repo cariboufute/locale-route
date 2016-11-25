@@ -60,6 +60,8 @@ class CaribouRouter
         $route = $this->router->$method($uri, $action);
         $route = $this->addLocale($route);
 
+        $this->router->getRoutes()->refreshNameLookups();
+
         return $route;
     }
 

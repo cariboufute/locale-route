@@ -39,6 +39,7 @@ class ClassTest extends TestCase
 
         $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
         $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
+        $this->illuminateRouter->shouldReceive('getRoutes->refreshNameLookups')->once();
 
         $this->assertSame($route, $this->router->$method($url, $action), 'Not same route : ' . $method);
     }
