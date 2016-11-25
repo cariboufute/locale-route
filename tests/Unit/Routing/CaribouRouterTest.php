@@ -21,6 +21,28 @@ class ClassTest extends TestCase
         $this->router = Mockery::mock(CaribouRouter::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
+    public function testRouteMethods()
+    {
+        $this->makeRouteTest('get');
+        $this->makeRouteTest('post');
+        $this->makeRouteTest('put');
+        $this->makeRouteTest('patch');
+        $this->makeRouteTest('delete');
+        $this->makeRouteTest('options');
+    }
+
+    public function makeRouteTest($method)
+    {
+        $route = Mockery::mock(Route::class);
+        $url = 'url';
+        $action = 'Controller@action';
+
+        $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
+        $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
+
+        $this->assertSame($route, $this->router->$method($url, $action), 'Not same route : ' . $method);
+    }
+
     public function testAddLocaleDoesNothingWhenNoLocale()
     {
         $route = Mockery::mock(Route::class);

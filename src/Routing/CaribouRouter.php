@@ -25,6 +25,44 @@ class CaribouRouter
         return $this->router;
     }
 
+    public function get($uri, $action = null)
+    {
+        return $this->makeRoute('get', $uri, $action);
+    }
+
+    public function post($uri, $action = null)
+    {
+        return $this->makeRoute('post', $uri, $action);
+    }
+
+    public function put($uri, $action = null)
+    {
+        return $this->makeRoute('put', $uri, $action);
+    }
+
+    public function patch($uri, $action = null)
+    {
+        return $this->makeRoute('patch', $uri, $action);
+    }
+
+    public function delete($uri, $action = null)
+    {
+        return $this->makeRoute('delete', $uri, $action);
+    }
+
+    public function options($uri, $action = null)
+    {
+        return $this->makeRoute('options', $uri, $action);
+    }
+
+    public function makeRoute($method, $uri, $action = null)
+    {
+        $route = $this->router->$method($uri, $action);
+        $route = $this->addLocale($route);
+
+        return $route;
+    }
+
     public function addLocale(Route $route)
     {
         $locale = $this->getActionLocale($route);
@@ -65,7 +103,13 @@ class CaribouRouter
         }
 
         $name = $this->route->switchLocale($locale, $name);
+        $route = $this->setRouteName($name, $route);
 
+        return $route;
+    }
+
+    public function setRouteName($name, Route $route)
+    {
         $action = $route->getAction();
         $action['as'] = $name;
         $route->setAction($action);
