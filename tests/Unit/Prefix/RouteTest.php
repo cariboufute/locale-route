@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Locale;
+namespace Tests\Unit\Prefix;
 
 use App;
-use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
+use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Config;
 use Illuminate\Routing\Route;
@@ -27,7 +27,7 @@ class RouteTest extends TestCase
         $this->router = Mockery::mock(Router::class);
         $this->translator = Mockery::mock(Translator::class);
 
-        $this->localizer = Mockery::mock(LocaleRoute::class, [$this->url, $this->router, $this->translator])->makePartial();
+        $this->localizer = Mockery::mock(PrefixRoute::class, [$this->url, $this->router, $this->translator])->makePartial();
     }
 
     public function testLocales()

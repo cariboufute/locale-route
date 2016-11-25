@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Router;
 
-use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
-use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
+use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
+use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Route;
@@ -20,8 +20,8 @@ class RouterTest extends TestCase
         parent::setUp();
 
         $this->laravelRouter = Mockery::mock(LaravelRouter::class);
-        $this->routeLocalizer = Mockery::mock(LocaleRoute::class);
-        $this->url = Mockery::mock(LocaleUrl::class)->makePartial();
+        $this->routeLocalizer = Mockery::mock(PrefixRoute::class);
+        $this->url = Mockery::mock(PrefixUrl::class)->makePartial();
 
         $this->localeRouter = Mockery::mock(Router::class, [$this->laravelRouter, $this->routeLocalizer, $this->url])->makePartial();
     }

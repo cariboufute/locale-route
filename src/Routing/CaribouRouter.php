@@ -2,8 +2,8 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
-use CaribouFute\LocaleRoute\Locale\Route as LocaleRoute;
-use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
+use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
+use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Illuminate\Contracts\Routing\Registrar as IlluminateRouter;
 use Illuminate\Routing\Route;
 
@@ -13,7 +13,7 @@ class CaribouRouter
     protected $url;
     protected $route;
 
-    public function __construct(IlluminateRouter $router, LocaleUrl $url, LocaleRoute $route)
+    public function __construct(IlluminateRouter $router, PrefixUrl $url, PrefixRoute $route)
     {
         $this->router = $router;
         $this->url = $url;

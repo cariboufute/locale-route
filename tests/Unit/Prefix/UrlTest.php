@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Locale;
 
-use CaribouFute\LocaleRoute\Locale\Url as LocaleUrl;
+use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Config;
 use Illuminate\Translation\Translator;
 use Mockery;
@@ -14,7 +14,7 @@ class UrlTest extends TestCase
     {
         parent::setUp();
         $this->translator = Mockery::mock(Translator::class);
-        $this->url = new LocaleUrl($this->translator);
+        $this->url = new PrefixUrl($this->translator);
     }
 
     public function testGetRouteUrl()

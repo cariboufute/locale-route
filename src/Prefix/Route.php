@@ -1,6 +1,6 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\Locale;
+namespace CaribouFute\LocaleRoute\Prefix;
 
 use App;
 use Config;

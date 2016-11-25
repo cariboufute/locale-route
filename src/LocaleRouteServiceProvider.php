@@ -2,8 +2,8 @@
 
 namespace CaribouFute\LocaleRoute;
 
-use CaribouFute\LocaleRoute\Locale\Route as LocaleRouteUrl;
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
+use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
 use CaribouFute\LocaleRoute\Routing\SubRouter;
 use Illuminate\Routing\Router;
@@ -25,7 +25,7 @@ class LocaleRouteServiceProvider extends ServiceProvider
     {
         $this->app->bind('locale-route', LocaleRouter::class);
         $this->app->bind('sub-route', SubRouter::class);
-        $this->app->bind('locale-route-url', LocaleRouteUrl::class);
+        $this->app->bind('locale-route-url', PrefixRoute::class);
         config('config/localeroute.php');
     }
 }
