@@ -12,9 +12,35 @@ class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
+    public function testGetMakesTwoRoutes()
+    {
+        LocaleRoute::get('article', function () {
+            return 'route';
+        }, ['fr' => 'article_fr', 'en' => 'article_en']);
+
+        $this->call('get', '/fr/article_fr');
+        $this->assertResponseOk();
+
+        $this->call('get', '/en/article_en');
+        $this->assertResponseOk();
+    }
+
+    public function testGetMakesTwoRoutesWithSameUrl()
+    {
+        LocaleRoute::get('article', function () {
+            return 'route';
+        }, ['fr' => 'article', 'en' => 'article']);
+
+        $this->call('get', '/fr/article');
+        $this->assertResponseOk();
+
+        $this->call('get', '/en/article');
+        $this->assertResponseOk();
+    }
+
     public function testSubRoute()
     {
-        LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function ($router) {
+        LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
             SubRoute::get('create', function () {
                 return 'Yes!';
             }, ['fr' => 'créer', 'en' => 'create']);

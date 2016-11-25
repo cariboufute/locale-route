@@ -17,6 +17,24 @@ class RouterTest extends TestCase
         $this->router = app()->make(Router::class);
     }
 
+    public function testGetWithSameUriAndDifferentLocale()
+    {
+        $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+        $this->router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+
+        $this->call('GET', 'fr/test');
+        $this->assertResponseOk();
+
+        $this->call('GET', route('fr.route'));
+        $this->assertResponseOk();
+
+        $this->call('GET', 'en/test');
+        $this->assertResponseOk();
+
+        $this->call('GET', route('en.route'));
+        $this->assertResponseOk();
+    }
+
     public function testGet()
     {
         $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);

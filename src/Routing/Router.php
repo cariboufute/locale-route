@@ -59,8 +59,8 @@ class Router
     {
         $route = $this->router->$method($uri, $action);
         $route = $this->addLocale($route);
-
-        $this->router->getRoutes()->refreshNameLookups();
+        $this->router->getRoutes()->add($route);
+        //TODO remove duplicate route
 
         return $route;
     }

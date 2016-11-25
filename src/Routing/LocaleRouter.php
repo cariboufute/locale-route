@@ -68,14 +68,19 @@ class LocaleRouter
 
     public function makeRoute($locale, $method, $route, $action, array $urls = [])
     {
-        $url = $this->prefixUrl->getRouteUrl($locale, $route, $urls);
-        $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
+
+        $url = $this->prefixUrl->getUnlocaleRouteUrl($locale, $route, $urls);
+        //$localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
+
+        $action = $this->convertToControllerAction($action);
+        $action['locale'] = $locale;
+        $action['as'] = $route;
 
         $middleware = isset($urls['middleware']) ? $urls['middleware'] : [];
         $middleware = $this->addSetSessionLocaleMiddleware($locale, $middleware);
 
         $this->router
-            ->$method($url, $localeAction)
+            ->$method($url, $action)
             ->middleware($middleware);
     }
 
