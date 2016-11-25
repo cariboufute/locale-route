@@ -5,9 +5,9 @@ namespace Tests\Unit\Router;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use CaribouFute\LocaleRoute\Routing\LocaleRouter;
+use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router as LaravelRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
@@ -19,11 +19,11 @@ class LocaleRouterTest extends TestCase
     {
         parent::setUp();
 
-        $this->laravelRouter = Mockery::mock(LaravelRouter::class);
+        $this->router = Mockery::mock(Router::class);
         $this->routeLocalizer = Mockery::mock(PrefixRoute::class);
         $this->url = Mockery::mock(PrefixUrl::class)->makePartial();
 
-        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->laravelRouter, $this->routeLocalizer, $this->url])->makePartial();
+        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->routeLocalizer, $this->url])->makePartial();
     }
 
     public function testAddMiddlewareWithoutLocaleRoutesInArray()
@@ -51,7 +51,7 @@ class LocaleRouterTest extends TestCase
                 ->once()
                 ->andReturn($url);
 
-            $this->laravelRouter
+            $this->router
                 ->shouldReceive('get')
                 ->with($url, ['as' => $localeRoute, 'uses' => $action])
                 ->once()
@@ -90,7 +90,7 @@ class LocaleRouterTest extends TestCase
                 ->once()
                 ->andReturn($urls[$locale]);
 
-            $this->laravelRouter
+            $this->router
                 ->shouldReceive('get')
                 ->with($urls[$locale], ['as' => $localeRoute, 'uses' => $action])
                 ->once()
@@ -159,7 +159,7 @@ class LocaleRouterTest extends TestCase
                 ->once()
                 ->andReturn($url);
 
-            $this->laravelRouter
+            $this->router
                 ->shouldReceive($method)
                 ->with($url, ['as' => $localeRoute, 'uses' => $action])
                 ->once()
@@ -179,7 +179,7 @@ class LocaleRouterTest extends TestCase
         foreach ($this->locales as $locale) {
             $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, '')->once()->andReturn($locale . '.');
-            $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
+            $this->router->shouldReceive('group')->with($newAttributes, $callback)->once();
         }
 
         $this->localeRouter->group($attributes, $callback);
@@ -195,7 +195,7 @@ class LocaleRouterTest extends TestCase
         foreach ($this->locales as $locale) {
             $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
-            $this->laravelRouter->shouldReceive('group')->with($newAttributes, $callback)->once();
+            $this->router->shouldReceive('group')->with($newAttributes, $callback)->once();
         }
 
         $this->localeRouter->group($attributes, $callback);
@@ -210,7 +210,7 @@ class LocaleRouterTest extends TestCase
         foreach ($this->locales as $locale) {
             $localeName = $locale . '.' . $name;
             $this->routeLocalizer->shouldReceive('addLocale')->with($locale, $name)->andReturn($localeName);
-            $this->laravelRouter->shouldReceive('resource')->with($localeName, $controller, $options);
+            $this->router->shouldReceive('resource')->with($localeName, $controller, $options);
         }
 
         $this->localeRouter->resource($name, $controller, $options);

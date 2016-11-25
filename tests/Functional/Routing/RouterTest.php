@@ -2,19 +2,19 @@
 
 namespace Tests\Functional\Routing;
 
-use CaribouFute\LocaleRoute\Routing\CaribouRouter;
+use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
 
-class CaribouRouterTest extends TestCase
+class RouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
     public function setUp()
     {
         parent::setUp();
-        $this->router = app()->make(CaribouRouter::class);
+        $this->router = app()->make(Router::class);
     }
 
     public function testGet()

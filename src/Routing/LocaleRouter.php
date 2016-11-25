@@ -4,24 +4,24 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
+use CaribouFute\LocaleRoute\Routing\Router as Router;
 use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
 use Closure;
 use Config;
-use Illuminate\Routing\Router as LaravelRouter;
 
 class LocaleRouter
 {
     use ConvertToControllerAction;
 
-    protected $laravelRouter;
-    protected $localeRoute;
-    protected $localeUrl;
+    protected $router;
+    protected $prefixRoute;
+    protected $prefixUrl;
 
-    public function __construct(LaravelRouter $laravelRouter, PrefixRoute $localeRoute, PrefixUrl $localeUrl)
+    public function __construct(Router $router, PrefixRoute $prefixRoute, PrefixUrl $prefixUrl)
     {
-        $this->laravelRouter = $laravelRouter;
-        $this->localeRoute = $localeRoute;
-        $this->localeUrl = $localeUrl;
+        $this->router = $router;
+        $this->prefixRoute = $prefixRoute;
+        $this->prefixUrl = $prefixUrl;
     }
 
     public function get($route, $action, array $urls = [])
@@ -68,13 +68,13 @@ class LocaleRouter
 
     public function makeRoute($locale, $method, $route, $action, array $urls = [])
     {
-        $url = $this->localeUrl->getRouteUrl($locale, $route, $urls);
+        $url = $this->prefixUrl->getRouteUrl($locale, $route, $urls);
         $localeAction = $this->addLocaleRouteToAction($locale, $route, $action);
 
         $middleware = isset($urls['middleware']) ? $urls['middleware'] : [];
         $middleware = $this->addSetSessionLocaleMiddleware($locale, $middleware);
 
-        $this->laravelRouter
+        $this->router
             ->$method($url, $localeAction)
             ->middleware($middleware);
     }
@@ -82,7 +82,7 @@ class LocaleRouter
     public function addLocaleRouteToAction($locale, $route, $action)
     {
         $action = $this->convertToControllerAction($action);
-        $action['as'] = $this->localeRoute->addLocale($locale, $route);
+        $action['as'] = $this->prefixRoute->addLocale($locale, $route);
 
         return $action;
     }
@@ -105,13 +105,13 @@ class LocaleRouter
         $attributes = $this->addLocalePrefix($locale, $attributes);
         $attributes = $this->addSetSessionLocaleMiddlewareToAttributes($locale, $attributes);
 
-        $this->laravelRouter->group($attributes, $callback);
+        $this->router->group($attributes, $callback);
     }
 
     protected function addLocaleAs($locale, array $attributes)
     {
         $as = isset($attributes['as']) ? $attributes['as'] : '';
-        $as = $this->localeRoute->addLocale($locale, $as);
+        $as = $this->prefixRoute->addLocale($locale, $as);
         $attributes['as'] = $as;
 
         return $attributes;
@@ -120,7 +120,7 @@ class LocaleRouter
     protected function addLocalePrefix($locale, array $attributes)
     {
         $prefix = isset($attributes['prefix']) ? $attributes['prefix'] : '';
-        $prefix = $this->localeUrl->addLocale($locale, $prefix);
+        $prefix = $this->prefixUrl->addLocale($locale, $prefix);
         $prefix = rtrim($prefix, '/');
         $attributes['prefix'] = $prefix;
 
@@ -146,8 +146,8 @@ class LocaleRouter
     public function resource($name, $controller, array $options = [])
     {
         foreach ($this->locales() as $locale) {
-            $localeName = $this->localeRoute->addLocale($locale, $name);
-            $this->laravelRouter->resource($localeName, $controller, $options);
+            $localeName = $this->prefixRoute->addLocale($locale, $name);
+            $this->router->resource($localeName, $controller, $options);
         }
     }
 }

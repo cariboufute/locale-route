@@ -4,13 +4,13 @@ namespace Tests\Unit\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use CaribouFute\LocaleRoute\Routing\CaribouRouter;
+use CaribouFute\LocaleRoute\Routing\Router;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
-class ClassTest extends TestCase
+class RouterTest extends TestCase
 {
     public function setUp()
     {
@@ -18,7 +18,7 @@ class ClassTest extends TestCase
         $this->illuminateRouter = Mockery::mock(IlluminateRouter::class);
         $this->url = Mockery::mock(PrefixUrl::class);
         $this->route = Mockery::mock(PrefixRoute::class);
-        $this->router = Mockery::mock(CaribouRouter::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
+        $this->router = Mockery::mock(Router::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
     public function testRouteMethods()

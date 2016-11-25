@@ -7,7 +7,7 @@ use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Illuminate\Contracts\Routing\Registrar as IlluminateRouter;
 use Illuminate\Routing\Route;
 
-class CaribouRouter
+class Router
 {
     protected $router;
     protected $url;
