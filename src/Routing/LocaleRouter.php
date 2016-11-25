@@ -9,7 +9,7 @@ use Closure;
 use Config;
 use Illuminate\Routing\Router as LaravelRouter;
 
-class Router
+class LocaleRouter
 {
     use ConvertToControllerAction;
 

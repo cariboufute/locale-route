@@ -4,14 +4,14 @@ namespace Tests\Unit\Router;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\Routing\LocaleRouter;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as LaravelRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
-class RouterTest extends TestCase
+class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
@@ -23,7 +23,7 @@ class RouterTest extends TestCase
         $this->routeLocalizer = Mockery::mock(PrefixRoute::class);
         $this->url = Mockery::mock(PrefixUrl::class)->makePartial();
 
-        $this->localeRouter = Mockery::mock(Router::class, [$this->laravelRouter, $this->routeLocalizer, $this->url])->makePartial();
+        $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->laravelRouter, $this->routeLocalizer, $this->url])->makePartial();
     }
 
     public function testAddMiddlewareWithoutLocaleRoutesInArray()

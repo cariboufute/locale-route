@@ -4,7 +4,7 @@ namespace CaribouFute\LocaleRoute;
 
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
-use CaribouFute\LocaleRoute\Routing\Router as LocaleRouter;
+use CaribouFute\LocaleRoute\Routing\LocaleRouter;
 use CaribouFute\LocaleRoute\Routing\SubRouter;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;

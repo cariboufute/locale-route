@@ -8,7 +8,7 @@ use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
 
-class RouterTest extends TestCase
+class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 

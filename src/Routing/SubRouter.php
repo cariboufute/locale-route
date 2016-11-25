@@ -5,7 +5,7 @@ namespace CaribouFute\LocaleRoute\Routing;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
-use Illuminate\Routing\Router as LaravelRouter;
+use Illuminate\Routing\Router as IlluminateRouter;
 
 class SubRouter
 {
@@ -15,7 +15,7 @@ class SubRouter
     protected $localeRoute;
     protected $localeUrl;
 
-    public function __construct(LaravelRouter $laravelRouter, PrefixRoute $localeRoute, PrefixUrl $localeUrl)
+    public function __construct(IlluminateRouter $laravelRouter, PrefixRoute $localeRoute, PrefixUrl $localeUrl)
     {
         $this->laravelRouter = $laravelRouter;
         $this->localeRoute = $localeRoute;

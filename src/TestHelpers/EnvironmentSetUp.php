@@ -4,7 +4,7 @@ namespace CaribouFute\LocaleRoute\TestHelpers;
 
 use CaribouFute\LocaleRoute\Middleware\SetSessionLocale;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
-use CaribouFute\LocaleRoute\Routing\Router;
+use CaribouFute\LocaleRoute\Routing\LocaleRouter;
 use CaribouFute\LocaleRoute\Routing\SubRouter;
 
 trait EnvironmentSetUp
@@ -19,7 +19,7 @@ trait EnvironmentSetUp
 
         $app['config']->set('localeroute.locales', $this->locales);
         $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
-        $app['locale-route'] = app()->make(Router::class);
+        $app['locale-route'] = app()->make(LocaleRouter::class);
         $app['locale-route-url'] = app()->make(PrefixRoute::class);
         $app['sub-route'] = app()->make(SubRouter::class);
 

@@ -7,7 +7,7 @@ use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use CaribouFute\LocaleRoute\Routing\SubRouter;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router as LaravelRouter;
+use Illuminate\Routing\Router as IlluminateRouter;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
@@ -19,7 +19,7 @@ class SubRouterTest extends TestCase
     {
         parent::setUp();
 
-        $this->laravelRouter = Mockery::mock(LaravelRouter::class);
+        $this->laravelRouter = Mockery::mock(IlluminateRouter::class);
         $this->routeLocalizer = Mockery::mock(PrefixRoute::class);
         $this->url = Mockery::mock(PrefixUrl::class)->makePartial();
 
