@@ -34,14 +34,6 @@ class UrlTest extends TestCase
         $this->assertSame($newUrl, $this->url->switchLocale($locale, $url));
     }
 
-    public function testAddLocaleConfig()
-    {
-        $config = true;
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn($config);
-
-        $this->assertSame($config, $this->url->addLocaleConfig());
-    }
-
     public function testAddLocaleWithConfigAddLocaleToUrlToTrue()
     {
         Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);

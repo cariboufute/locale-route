@@ -124,7 +124,7 @@ class Router
         return $route;
     }
 
-    protected function makeSetSessionLocale($locale)
+    public function makeSetSessionLocale($locale)
     {
         return 'locale.session:' . $locale;
     }

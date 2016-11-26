@@ -77,7 +77,7 @@ class LocaleRouterTest extends TestCase
             $routeObject = Mockery::mock(Route::class);
 
             $this->prefixUrl
-                ->shouldReceive('getUnlocaleRouteUrl')
+                ->shouldReceive('rawRouteUrl')
                 ->with($locale, $route, $options)
                 ->once()
                 ->andReturn($url);

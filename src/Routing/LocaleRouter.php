@@ -63,7 +63,7 @@ class LocaleRouter
 
     public function makeRoute($locale, $method, $route, $action, array $options = [])
     {
-        $url = $this->prefixUrl->getUnlocaleRouteUrl($locale, $route, $options);
+        $url = $this->prefixUrl->rawRouteUrl($locale, $route, $options);
 
         $action = $this->convertToControllerAction($action);
 

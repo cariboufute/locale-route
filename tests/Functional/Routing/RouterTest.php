@@ -17,10 +17,56 @@ class RouterTest extends TestCase
         $this->router = app()->make(Router::class);
     }
 
+    public function testGet()
+    {
+        $this->makeMethodTest('get');
+    }
+
+    public function testPost()
+    {
+        $this->makeMethodTest('post');
+    }
+
+    public function testPut()
+    {
+        $this->makeMethodTest('put');
+    }
+
+    public function testPatch()
+    {
+        $this->makeMethodTest('patch');
+    }
+
+    public function testDelete()
+    {
+        $this->makeMethodTest('delete');
+    }
+
+    public function testOptions()
+    {
+        $this->makeMethodTest('options');
+    }
+
+    public function makeMethodTest($method)
+    {
+        $this->router->$method('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yes!';}]);
+
+        $this->call($method, 'fr/test');
+        $this->assertResponseOk();
+
+        $this->call($method, route('fr.route'));
+        $this->assertResponseOk();
+    }
+
     public function testGetWithSameUriAndDifferentLocale()
     {
         $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
         $this->router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+
+        //To test that route collection is well refreshed and
+        //that there is no duplication of routes
+        //after adding changed route.
+        $this->assertSame(2, $this->router->getRoutes()->count());
 
         $this->call('GET', 'fr/test');
         $this->assertResponseOk();
@@ -34,18 +80,6 @@ class RouterTest extends TestCase
         $this->call('GET', route('en.route'));
         $this->assertResponseOk();
 
-        $this->assertSame(2, $this->router->getRoutes()->count());
-    }
-
-    public function testGet()
-    {
-        $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
-
-        $this->call('GET', 'fr/test');
-        $this->assertResponseOk();
-
-        $this->call('GET', route('fr.route'));
-        $this->assertResponseOk();
     }
 
     public function testGetInGroup()

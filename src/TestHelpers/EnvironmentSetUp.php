@@ -19,6 +19,7 @@ trait EnvironmentSetUp
 
         $app['config']->set('localeroute.locales', $this->locales);
         $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
+
         $app['locale-route'] = app()->make(LocaleRouter::class);
         $app['locale-route-url'] = app()->make(PrefixRoute::class);
 
