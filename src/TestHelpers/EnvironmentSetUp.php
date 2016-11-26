@@ -31,8 +31,8 @@ trait EnvironmentSetUp
         $routeColl = collect(Route::getRoutes()->getRoutes());
         $routeInfo = $routeColl->map(function ($route) {
             return ['name' => $route->getName(), 'uri' => $route->uri()];
-        })
-        
+        });
+
         dd($routeInfo);
     }
 }

@@ -17,9 +17,14 @@ class UrlTest extends TestCase
         $this->url = new PrefixUrl($this->translator);
     }
 
-    public function testGetRouteUrl()
+    public function testLocale()
     {
-        //TODO
+        Config::shouldReceive('get')->with('localeroute.locales')->twice()->andReturn(['fr', 'en']);
+        $localeUrl = 'fr/test';
+        $noLocaleUrl = 'test';
+
+        $this->assertSame('fr', $this->url->locale($localeUrl));
+        $this->assertSame('', $this->url->locale($noLocaleUrl));
     }
 
     public function testSwitchLocale()
