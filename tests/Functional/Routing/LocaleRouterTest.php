@@ -36,6 +36,8 @@ class LocaleRouterTest extends TestCase
 
         $this->call('get', '/en/article');
         $this->assertResponseOk();
+
+        $this->assertSame(2, Route::getRoutes()->count());
     }
 
     public function testSubRoute()
