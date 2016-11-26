@@ -2,16 +2,23 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
+use CaribouFute\LocaleRoute\Prefix\Base;
 use Config;
 use Illuminate\Translation\Translator;
 
-class Url
+class Url extends Base
 {
+    protected $separator = '/';
     protected $translator;
 
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
+    }
+
+    public function addLocaleConfig()
+    {
+        return Config::get('localeroute.add_locale_to_url');
     }
 
     public function getRouteUrl($locale, $route, array $urls = [])
@@ -27,51 +34,8 @@ class Url
         return $unlocaleUrl;
     }
 
-    public function switchLocale($locale, $url)
-    {
-        $unlocaleUrl = $this->removeLocale($url);
-        $localeUrl = $this->addLocale($locale, $unlocaleUrl);
-
-        return $localeUrl;
-    }
-
     public function addLocale($locale, $url)
     {
-        return $this->addLocaleConfig() ? $locale . '/' . $url : $url;
-    }
-
-    public function removeLocale($url)
-    {
-        if (!$this->addLocaleConfig()) {
-            return $url;
-        }
-
-        $localePrefix = $this->prefix($url);
-        $unlocaleRoute = str_replace($localePrefix, '', $url);
-
-        return $unlocaleRoute;
-    }
-
-    public function prefix($url)
-    {
-        foreach ($this->locales() as $locale) {
-            $localePrefix = $locale . '/';
-
-            if (strpos($url, $localePrefix) === 0) {
-                return $localePrefix;
-            }
-        }
-
-        return '';
-    }
-
-    public function addLocaleConfig()
-    {
-        return Config::get('localeroute.add_locale_to_url');
-    }
-
-    public function locales()
-    {
-        return Config::get('localeroute.locales');
+        return $this->addLocaleConfig() ? parent::addLocale($locale, $url) : $url;
     }
 }

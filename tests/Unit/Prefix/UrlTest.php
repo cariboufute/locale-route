@@ -24,7 +24,7 @@ class UrlTest extends TestCase
 
     public function testSwitchLocale()
     {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->twice()->andReturn(true);
+        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
         Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
 
         $url = 'en/url';
@@ -67,9 +67,8 @@ class UrlTest extends TestCase
         $this->assertSame($url, $testUrl);
     }
 
-    public function testRemoveLocaleWithConfigAddLocaleToUrlToTrue()
+    public function testRemoveLocale()
     {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
         Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
 
         $locale = 'fr';
@@ -77,18 +76,6 @@ class UrlTest extends TestCase
         $localeUrl = $locale . '/' . $url;
 
         $testUrl = $this->url->removeLocale($localeUrl);
-
-        $this->assertSame($url, $testUrl);
-    }
-
-    public function testRemoveLocaleWithConfigAddLocaleToUrlToFalse()
-    {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(false);
-
-        $locale = 'fr';
-        $url = 'fr/url';
-
-        $testUrl = $this->url->removeLocale($url);
 
         $this->assertSame($url, $testUrl);
     }
