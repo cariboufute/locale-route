@@ -13,7 +13,9 @@ LocaleRoute has a syntax close to the original Laravel routing methods, so the i
 
 For an example of LocaleRoute implementation, please check my [locale-route-example repo](https://github.com/cariboufute/locale-route-example).
 
-**This package is now on beta stage. It should be functional. It just needs other programmers' feedback before having an "official" release. Please check it and test it before using it in production.**
+*This package is now on beta stage. It should be functional. It just needs other programmers' feedback before having an "official" release. Please check it and test it before using it in production.*
+
+**The package has been just refactored, with a much more supple usage. Please check documentation again**
 
 ## Change log
 
@@ -32,7 +34,7 @@ First install the package through Composer by typing this line in the terminal a
 composer require cariboufute/locale-route 1.0.0-beta4
 ```
 
-Add the service provider and the ```LocaleRoute``` and ```SubRoute``` aliases in ```config/app.php```.
+Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
 'providers' => [
@@ -44,7 +46,6 @@ Add the service provider and the ```LocaleRoute``` and ```SubRoute``` aliases in
 'aliases' => [
     //...
     'LocaleRoute' => CaribouFute\LocaleRoute\Facades\LocaleRoute::class,
-    'SubRoute' => CaribouFute\LocaleRoute\Facades\SubRoute::class,
 ],
 ```
 
@@ -184,90 +185,24 @@ LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 
 ```
 
-### Grouping
+### Grouping **(new and improved)**
 
-You can use ```LocaleRoute::group``` the same way as you use ```Route::group``` in Laravel. This will add the locale prefixes to the given routes (```'as'```) and URL (```'prefix'```) prefixes defined in the group attributes.
-
-To continue using different URLs according to locale, use the façade ```SubRoute```.
+You can use the ```LocaleRoute``` methods inside normal ```Route::group``` methods. 
 
 ``` php
 //web.php or routes.php
 
-LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
-    Route::get('/', ['as' => 'index', 'ArticleController@index']);
-    SubRoute::get('create', 'ArticleController@create', ['fr' => 'creer', 'en' => 'create']]);
+Route::group(['as' => 'article.', 'prefix' => 'article'], function () {
+    LocaleRoute::get('create', 'ArticleController@index', ['fr' => 'creer', 'en' => 'create']);
+    Route::post('store', ['as' => 'store', 'uses' => 'ArticleController@store']);
 });
 
 /*
 Will give these routes :
 
-[fr.article.index]  => GET "/fr/article"        => ArticleController::index()
-[en.article.index]  => GET "/en/article"        => ArticleController::index()
-[fr.article.create] => GET "/fr/article/creer"  => ArticleController::create()
-[en.article.create] => GET "/en/article/create" => ArticleController::create()
-*/
-```
-
-**Important:** Please note that you *must* use normal ```Route``` or ```SubRoute``` methods instead of their ```LocaleRoute``` counterparts (like ```SubRoute::get``` instead of ```LocaleRoute::get```) inside a ```LocaleRoute::group```, to avoid duplications of locale adding to routes and URLs.
-
-Also, the ```LocaleRoute::group``` *must* be at the top of your grouping of routes to keep the locale prefix in URLs and route names at the beginning, so the helper functions work. If you want to have localized and unlocalized routes in the same group, you will need to duplicate the grouping for both situations.
-
-``` php
-// Will not work...
-
-Route::group(['as' => 'foo', prefix => 'foo'], function () {
-    Route::group(['as' => 'bar', prefix => 'bar'], function () {
-        LocaleRoute::get('baz', function () {}, ['en' => 'baz', 'fr' => 'baz']);
-        Route::post('post', function () {}, ['en' => 'post', 'fr' => 'post']);
-    });
-});
-
-/* Will give:
-    'foo.bar.en.baz'    => GET '/foo/bar/en/baz'
-    'foo.bar.fr.baz'    => GET '/foo/bar/fr/baz'
-    'foo.bar.post'      => POST '/foo/bar/post'
-*/
-
-// This will...
-
-LocaleRoute::group([], function () {
-    Route::group(['as' => 'foo', prefix => 'foo'], function () {
-        Route::group(['as' => 'bar', prefix => 'bar'], function () {
-            Route::get('baz', ['as' => 'baz']);
-        });
-    }); 
-});
-
-Route::group(['as' => 'foo', prefix => 'foo'], function () {
-    Route::group(['as' => 'bar', prefix => 'bar'], function () {
-        Route::post('post', ['as' => 'post']);
-    });
-});
-
-/* Will give:
-    'en.foo.bar.baz'    => GET '/en/foo/bar/baz'
-    'fr.foo.bar.baz'    => GET '/fr/foo/bar/baz'
-    'foo.bar.post'      => POST '/foo/bar/post'
-*/
-
-// For DRYer route coding, just keep all routes localized.
-// It won't alter any code if no localization is used,
-// although the routes will be duplicated.
-
-LocaleRoute::group([], function () {
-    Route::group(['as' => 'foo', prefix => 'foo'], function () {
-        Route::group(['as' => 'bar', prefix => 'bar'], function () {
-            Route::get('baz', ['as' => 'baz']);
-            Route::post('post', ['as' => 'post']);
-        });
-    }); 
-});
-
-/* Will give:
-    'en.foo.bar.baz'    => GET '/en/foo/bar/baz'
-    'fr.foo.bar.baz'    => GET '/fr/foo/bar/baz'
-    'en.foo.bar.post'   => POST '/en/foo/bar/post'
-    'fr.foo.bar.post'   => POST '/fr/foo/bar/post'
+[fr.article.create] => GET  "/fr/article/creer"     => ArticleController::create()
+[en.article.create] => GET  "/en/article/create"    => ArticleController::create()
+[article.store]     => POST "/article/store"        => ArticleController::store()
 */
 ```
 
