@@ -18,11 +18,10 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix=".php">./src/testHelpers</directory>
+            </exclude>
         </whitelist>
-
-        <blacklist>
-            <directory suffix=".php">./src/testHelpers</directory>
-        </blacklist>
     </filter>
 
     <php>
