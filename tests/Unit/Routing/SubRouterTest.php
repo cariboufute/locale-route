@@ -74,7 +74,7 @@ class SubRouterTest extends TestCase
         ];
 
         $this->laravelRouter->shouldReceive('getGroupStack')->once()->andReturn($groupStack);
-        $this->routeLocalizer->shouldReceive('getLocale')->with($groupStack[0]['as'])->once()->andReturn($locale);
+        $this->routeLocalizer->shouldReceive('locale')->with($groupStack[0]['as'])->once()->andReturn($locale);
 
         $url = '/url' . $locale;
         $routeObject = Mockery::mock(Route::class);

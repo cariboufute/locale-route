@@ -3,19 +3,20 @@
 namespace CaribouFute\LocaleRoute\Prefix;
 
 use App;
-use Config;
-use Illuminate\Routing\Router as LaravelRouter;
+use CaribouFute\LocaleRoute\Prefix\Base;
+use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
 
-class Route
+class Route extends Base
 {
+    protected $separator = '.';
     protected $url;
-    protected $laravelRouter;
+    protected $router;
 
-    public function __construct(UrlGenerator $url, LaravelRouter $laravelRouter)
+    public function __construct(UrlGenerator $url, IlluminateRouter $router)
     {
         $this->url = $url;
-        $this->laravelRouter = $laravelRouter;
+        $this->router = $router;
     }
 
     public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
@@ -32,54 +33,10 @@ class Route
 
     public function getCurrentRouteName()
     {
-        $currentRoute = $this->laravelRouter->current();
+        $currentRoute = $this->router->current();
         $currentRouteName = $currentRoute ? $currentRoute->getName() : '';
 
         return $currentRouteName;
-    }
-
-    public function switchLocale($locale, $route)
-    {
-        $unlocaleRoute = $this->removeLocale($route);
-        $localeRoute = $this->addLocale($locale, $unlocaleRoute);
-
-        return $localeRoute;
-    }
-
-    public function removeLocale($route)
-    {
-        $localePrefix = $this->getLocalePrefix($route);
-        $unlocaleRoute = str_replace($localePrefix, '', $route);
-
-        return $unlocaleRoute;
-    }
-
-    public function getLocalePrefix($route)
-    {
-        foreach ($this->locales() as $locale) {
-            $localePrefix = $locale . '.';
-
-            if (strpos($route, $localePrefix) === 0) {
-                return $localePrefix;
-            }
-        }
-
-        return '';
-    }
-
-    public function getLocale($route)
-    {
-        return rtrim($this->getLocalePrefix($route), '.');
-    }
-
-    public function locales()
-    {
-        return Config::get('localeroute.locales');
-    }
-
-    public function addLocale($locale, $route)
-    {
-        return $locale . '.' . $route;
     }
 
     public function otherLocale($locale = null, $parameters = null, $absolute = true)
@@ -92,7 +49,7 @@ class Route
 
     public function getCurrentRouteParameters()
     {
-        $currentRoute = $this->laravelRouter->current();
+        $currentRoute = $this->router->current();
         $currentRouteParameters = $currentRoute ? $currentRoute->parameters() : [];
 
         return $currentRouteParameters;

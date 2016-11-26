@@ -114,14 +114,14 @@ class RouteTest extends TestCase
     {
         $route = 'es.route';
 
-        $this->assertSame('', $this->localizer->getLocalePrefix($route));
+        $this->assertSame('', $this->localizer->prefix($route));
     }
 
     public function testGetLocalePrefixReturnsConfigLocale()
     {
         $route = 'en.route';
 
-        $this->assertSame('en.', $this->localizer->getLocalePrefix($route));
+        $this->assertSame('en.', $this->localizer->prefix($route));
     }
 
     public function testAddLocale()

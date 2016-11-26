@@ -46,13 +46,13 @@ class Url
             return $url;
         }
 
-        $localePrefix = $this->getLocalePrefix($url);
+        $localePrefix = $this->prefix($url);
         $unlocaleRoute = str_replace($localePrefix, '', $url);
 
         return $unlocaleRoute;
     }
 
-    public function getLocalePrefix($url)
+    public function prefix($url)
     {
         foreach ($this->locales() as $locale) {
             $localePrefix = $locale . '/';

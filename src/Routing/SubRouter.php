@@ -55,7 +55,7 @@ class SubRouter
     public function makeLocaleRoute($method, $route, $action, array $urls = [])
     {
         $group = collect($this->laravelRouter->getGroupStack())->last();
-        $locale = $this->localeRoute->getLocale($group['as']);
+        $locale = $this->localeRoute->locale($group['as']);
 
         return $this->makeRoute($locale, $method, $route, $action, $urls);
     }
