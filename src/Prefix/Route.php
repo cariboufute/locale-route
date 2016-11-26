@@ -54,4 +54,9 @@ class Route extends Base
 
         return $currentRouteParameters;
     }
+
+    public function otherRoute($name, $parameters = null, $absolute = true)
+    {
+        return $this->localeRoute(null, $name, $parameters, $absolute);
+    }
 }

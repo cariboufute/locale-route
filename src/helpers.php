@@ -44,6 +44,6 @@ if (!function_exists('other_route')) {
      */
     function other_route($name, $parameters = null, $absolute = true)
     {
-        return locale_route(null, $name, $parameters, $absolute);
+        return app('locale-route-url')->otherRoute($name, $parameters, $absolute);
     }
 }
