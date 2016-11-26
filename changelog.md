@@ -8,7 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Coming soon]
 ### To add
 
+- LocaleRoute::resource.
 - Complete missing unit and functional tests for complete code coverage.
+
+## [1.0.0-beta5] – 2016-11-22
+### Changed
+
+- Massive refactoring for more supple LocaleRoute usage, now can be used under Route::group()
+
+### Removed
+
+- Unnecessary *SubRoute* facade and class, replaced with more supple usage of *LocaleRoute*. Please check documentation for new usage.
+- Unnecessary *LocaleRoute::group*.
+- Temporarily, *LocaleRoute::resource*. Soon will have a DRYer resource method with no locale duplication of non GET routes.
 
 ## [1.0.0-beta4] – 2016-11-22
 ### Added

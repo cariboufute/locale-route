@@ -273,43 +273,7 @@ LocaleRoute::group([], function () {
 
 ### Resource
 
-You can also use ```LocaleRoute::resource``` the same way as you use ```Route::resource``` in Laravel. This will add the locale prefixes to all resources routes for the given controller. You can add options the same way as the normal ```Route```.
-
-``` php
-//web.php or routes.php
-
-LocaleRoute::resource('photo', 'PhotoController');
-
-/*
-Will give the resources routes in all locales:
-
-[fr.photo.index]  => GET "/fr/photo"        => PhotoController::index()
-[fr.photo.create] => GET "/fr/photo/create" => PhotoController::create()
-[fr.photo.store]  => POST "/fr/photo"       => PhotoController::store()
-(etc.)
-
-[en.photo.index]  => GET "/en/photo"        => PhotoController::index()
-[en.photo.create] => GET "/en/photo/create" => PhotoController::create()
-[en.photo.store]  => POST "/en/photo"       => PhotoController::store()
-(etc.)
-
-*/
-
-Route::resource('article', 'ArticleController', ['only' => [
-    'index', 'show'
-]]);
-
-/*
-Will give:
-
-[fr.article.index]  => GET "/fr/article"        => ArticleController::index()
-[fr.article.show] => GET "/fr/article/{id}"     => ArticleController::show()
-
-[en.article.index]  => GET "/en/article"        => ArticleController::index()
-[en.article.show] => GET "/en/article/{id}"     => ArticleController::show()
-*/
-```
-
+*Under reconstruction, coming soon...*
 
 ### Fetching URLs
 

@@ -4,7 +4,7 @@ namespace CaribouFute\LocaleRoute\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class SubRoute extends Facade
+class Route extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class SubRoute extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'sub-route';
+        return 'caribou-route';
     }
 }

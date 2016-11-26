@@ -3,7 +3,6 @@
 namespace Tests\Functional\Routing;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
-use CaribouFute\LocaleRoute\Facades\SubRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
@@ -12,6 +11,31 @@ class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
+    public function testSessionLocaleIsKeptInUnlocaleRoute()
+    {
+        Route::group(['as' => 'group.', 'prefix' => 'group'], function () {
+            LocaleRoute::get('create', function () {
+                return 'creer';
+            }, ['fr' => 'creer', 'en' => 'create']);
+
+            Route::post('store', function () {
+                return redirect(other_route('group.create'));
+            });
+        });
+
+        $this->call('get', '/fr/group/creer');
+        $this->assertResponseOk();
+
+        $this->call('post', '/group/store');
+        $this->assertRedirectedTo('fr/group/creer');
+
+        $this->call('get', '/en/group/create');
+        $this->assertResponseOk();
+
+        $this->call('post', '/group/store');
+        $this->assertRedirectedTo('en/group/create');
+
+    }
     public function testGetMakesTwoRoutes()
     {
         LocaleRoute::get('article', function () {
@@ -38,15 +62,15 @@ class LocaleRouterTest extends TestCase
         $this->assertResponseOk();
     }
 
-    public function testSubRoute()
+    public function testLocaleRouteUnderRouteGroup()
     {
-        LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
-            SubRoute::get('create', function () {
+        Route::group(['locale' => 'es', 'as' => 'article.', 'prefix' => 'article'], function () {
+            LocaleRoute::get('create', function () {
                 return 'Yes!';
-            }, ['fr' => 'créer', 'en' => 'create']);
+            }, ['fr' => 'creer', 'en' => 'create']);
         });
 
-        $this->call('get', '/fr/article/créer');
+        $this->call('get', '/fr/article/creer');
         $this->assertResponseOk();
 
         $this->call('get', '/en/article/create');
@@ -94,45 +118,5 @@ class LocaleRouterTest extends TestCase
 
         $this->call($method, '/en/english');
         $this->assertResponseOk('No OK response for ' . $method . ' EN route.');
-    }
-
-    public function testGroupWithoutPrefix()
-    {
-        LocaleRoute::group([], function () {
-            Route::get('/', ['as' => 'index', function () {
-                return 'Yé!';
-            }]);
-        });
-
-        $this->call('get', '/fr');
-        $this->assertResponseOk();
-
-        $this->call('get', '/en');
-        $this->assertResponseOk();
-    }
-
-    public function testGroupWithPrefixAndParameter()
-    {
-        LocaleRoute::group(['as' => 'article.', 'prefix' => 'article'], function () {
-            Route::get('/', ['as' => 'index', function () {
-                return 'Yé!';
-            }]);
-
-            Route::get('/{id}', ['as' => 'show', function ($id) {
-                return $id;
-            }]);
-        });
-
-        $this->call('get', '/fr/article');
-        $this->assertResponseOk();
-
-        $this->call('get', '/en/article');
-        $this->assertResponseOk();
-
-        $this->call('get', '/fr/article/1');
-        $this->assertResponseOk();
-
-        $this->call('get', '/en/article/2');
-        $this->assertResponseOk();
     }
 }

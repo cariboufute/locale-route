@@ -21,28 +21,48 @@ class RouterTest extends TestCase
         $this->router = Mockery::mock(Router::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
-    /*public function testRouteMethods()
+    public function testGet()
     {
-    $this->makeRouteTest('get');
-    $this->makeRouteTest('post');
-    $this->makeRouteTest('put');
-    $this->makeRouteTest('patch');
-    $this->makeRouteTest('delete');
-    $this->makeRouteTest('options');
+        $this->makeRouteTest('get');
+    }
+
+    public function testPost()
+    {
+        $this->makeRouteTest('post');
+    }
+
+    public function testPut()
+    {
+        $this->makeRouteTest('put');
+    }
+
+    public function testPatch()
+    {
+        $this->makeRouteTest('patch');
+    }
+
+    public function testDelete()
+    {
+        $this->makeRouteTest('delete');
+    }
+
+    public function testOptions()
+    {
+        $this->makeRouteTest('options');
     }
 
     public function makeRouteTest($method)
     {
-    $route = Mockery::mock(Route::class);
-    $url = 'url';
-    $action = 'Controller@action';
+        $route = Mockery::mock(Route::class);
+        $url = 'url';
+        $action = 'Controller@action';
 
-    $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
-    $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
-    $this->illuminateRouter->shouldReceive('getRoutes->add')->once();
+        $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
+        $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
+        $this->router->shouldReceive('refreshRoutes')->once();
 
-    $this->assertSame($route, $this->router->$method($url, $action), 'Not same route : ' . $method);
-    }*/
+        $this->assertSame($route, $this->router->$method($url, $action));
+    }
 
     public function testAddLocaleDoesNothingWhenNoLocale()
     {
@@ -59,6 +79,7 @@ class RouterTest extends TestCase
         $locale = 'fr';
         $uri = 'uri';
         $newUri = $locale . '/' . $uri;
+        $middleware = 'locale.session:' . $locale;
 
         $name = 'route';
         $newName = $locale . '.' . $name;
@@ -70,6 +91,7 @@ class RouterTest extends TestCase
         $this->router->shouldReceive('getActionLocale')->with($route)->once()->andReturn($locale);
         $this->router->shouldReceive('switchRouteLocale')->with($locale, $route)->once()->andReturn($route);
         $this->router->shouldReceive('switchUrlLocale')->with($locale, $route)->once()->andReturn($route);
+        $route->shouldReceive('middleware')->with($middleware);
 
         $testRoute = $this->router->addLocale($route);
 

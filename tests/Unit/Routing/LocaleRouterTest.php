@@ -26,73 +26,82 @@ class LocaleRouterTest extends TestCase
         $this->localeRouter = Mockery::mock(LocaleRouter::class, [$this->router, $this->prefixRoute, $this->prefixUrl])->makePartial();
     }
 
-    public function testAddMiddlewareWithoutLocaleRoutesInArray()
+    /*public function testAddMiddlewareWithoutLocaleRoutesInArray()
     {
-        $route = 'route';
-        $action = 'ActionController@action';
-        $middleware = ['guest', 'auth'];
-        $options = ['middleware' => $middleware];
+    $route = 'route';
+    $action = 'ActionController@action';
+    $middleware = ['guest', 'auth'];
+    $options = ['middleware' => $middleware];
 
-        foreach ($this->locales as $locale) {
-            $url = 'url' . $locale;
-            $routeObject = Mockery::mock(Route::class);
-            $routeMiddleware = $middleware + [2 => 'locale.session:' . $locale];
+    foreach ($this->locales as $locale) {
+    $url = 'url' . $locale;
+    $routeObject = Mockery::mock(Route::class);
 
-            $this->prefixUrl
-                ->shouldReceive('getUnlocaleRouteUrl')
-                ->with($locale, $route, $options)
-                ->once()
-                ->andReturn($url);
+    $this->prefixUrl
+    ->shouldReceive('getUnlocaleRouteUrl')
+    ->with($locale, $route, $options)
+    ->once()
+    ->andReturn($url);
 
-            $this->router
-                ->shouldReceive('get')
-                ->with($url, ['uses' => $action, 'locale' => $locale, 'as' => $route])
-                ->once()
-                ->andReturn($routeObject);
+    $this->router
+    ->shouldReceive('get')
+    ->with($url, ['uses' => $action, 'locale' => $locale, 'as' => $route])
+    ->once()
+    ->andReturn($routeObject);
 
-            $routeObject
-                ->shouldReceive('middleware')
-                ->with($routeMiddleware)
-                ->once();
-        }
-
-        $this->localeRouter->get($route, $action, $options);
+    $routeObject
+    ->shouldReceive('middleware')
+    ->with($middleware)
+    ->once();
     }
 
-    public function testAddMiddleware()
+    $this->localeRouter->get($route, $action, $options);
+    }*/
+
+    /*public function testAddMiddleware()
     {
-        $route = 'route';
-        $action = 'ActionController@action';
-        $middleware = 'guest';
-        $urls = ['fr' => 'routefr', 'en' => 'routeen', 'es' => 'routees', 'middleware' => $middleware];
+    $route = 'route';
+    $action = 'ActionController@action';
+    $middleware = 'guest';
+    $urls = ['fr' => 'routefr', 'en' => 'routeen', 'es' => 'routees', 'middleware' => $middleware];
 
-        foreach ($this->locales as $locale) {
-            $localeRoute = $locale . '.' . $route;
-            $routeObject = Mockery::mock(Route::class);
-            $routeMiddleware = [$middleware, 'locale.session:' . $locale];
+    foreach ($this->locales as $locale) {
+    $localeRoute = $locale . '.' . $route;
+    $routeObject = Mockery::mock(Route::class);
 
-            $url = 'url' . $locale;
-            $routeObject = Mockery::mock(Route::class);
+    $url = 'url' . $locale;
+    $routeObject = Mockery::mock(Route::class);
 
-            $this->prefixUrl
-                ->shouldReceive('getUnlocaleRouteUrl')
-                ->with($locale, $route, $urls)
-                ->once()
-                ->andReturn($url);
+    $this->prefixUrl
+    ->shouldReceive('getUnlocaleRouteUrl')
+    ->with($locale, $route, $urls)
+    ->once()
+    ->andReturn($url);
 
-            $this->router
-                ->shouldReceive('get')
-                ->with($url, ['locale' => $locale, 'as' => $route, 'uses' => $action])
-                ->once()
-                ->andReturn($routeObject);
+    $this->router
+    ->shouldReceive('get')
+    ->with($url, ['locale' => $locale, 'as' => $route, 'uses' => $action])
+    ->once()
+    ->andReturn($routeObject);
 
-            $routeObject
-                ->shouldReceive('middleware')
-                ->with($routeMiddleware)
-                ->once();
-        }
+    $routeObject
+    ->shouldReceive('middleware')
+    ->with($middleware)
+    ->once();
+    }
 
-        $this->localeRouter->get($route, $action, $urls);
+    $this->localeRouter->get($route, $action, $urls);
+    }
+     */
+
+    public function testGetWithStringMiddleware()
+    {
+        $this->makeRouteTest('get', 'auth');
+    }
+
+    public function testGetWithArrayMiddleware()
+    {
+        $this->makeRouteTest('get', ['auth', 'guest']);
     }
 
     public function testGet()
@@ -125,11 +134,11 @@ class LocaleRouterTest extends TestCase
         $this->makeRouteTest('options');
     }
 
-    protected function makeRouteTest($method)
+    protected function makeRouteTest($method, $middleware = [])
     {
         $route = 'route';
         $action = 'ActionController@action';
-        $urls = [];
+        $options = $middleware ? ['middleware' => $middleware] : [];
 
         foreach ($this->locales as $locale) {
             $url = 'url' . $locale;
@@ -137,7 +146,7 @@ class LocaleRouterTest extends TestCase
 
             $this->prefixUrl
                 ->shouldReceive('getUnlocaleRouteUrl')
-                ->with($locale, $route, [])
+                ->with($locale, $route, $options)
                 ->once()
                 ->andReturn($url);
 
@@ -147,55 +156,9 @@ class LocaleRouterTest extends TestCase
                 ->once()
                 ->andReturn($routeObject);
 
-            $routeObject->shouldReceive('middleware')->with(['locale.session:' . $locale])->once();
+            $routeObject->shouldReceive('middleware')->with($middleware)->once();
         }
 
-        $this->localeRouter->$method($route, $action);
-    }
-
-    public function testGroupWithNoHasAttribute()
-    {
-        $attributes = ['prefix' => 'url', 'middleware' => 'auth'];
-        $callback = function () {
-        };
-
-        foreach ($this->locales as $locale) {
-            $newAttributes = ['as' => $locale . '.', 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
-            $this->prefixRoute->shouldReceive('addLocale')->with($locale, '')->once()->andReturn($locale . '.');
-            $this->router->shouldReceive('group')->with($newAttributes, $callback)->once();
-        }
-
-        $this->localeRouter->group($attributes, $callback);
-    }
-
-    public function testGroupWithHasAttribute()
-    {
-        $route = 'route';
-        $attributes = ['as' => $route, 'prefix' => 'url', 'middleware' => 'auth'];
-        $callback = function () {
-        };
-
-        foreach ($this->locales as $locale) {
-            $newAttributes = ['as' => $locale . '.' . $route, 'prefix' => $locale . '/url', 'middleware' => ['auth', 'locale.session:' . $locale]];
-            $this->prefixRoute->shouldReceive('addLocale')->with($locale, $route)->once()->andReturn($locale . '.' . $route);
-            $this->router->shouldReceive('group')->with($newAttributes, $callback)->once();
-        }
-
-        $this->localeRouter->group($attributes, $callback);
-    }
-
-    public function testResource()
-    {
-        $name = 'article';
-        $controller = 'Controller';
-        $options = ['options' => 'yé'];
-
-        foreach ($this->locales as $locale) {
-            $localeName = $locale . '.' . $name;
-            $this->prefixRoute->shouldReceive('addLocale')->with($locale, $name)->andReturn($localeName);
-            $this->router->shouldReceive('resource')->with($localeName, $controller, $options);
-        }
-
-        $this->localeRouter->resource($name, $controller, $options);
+        $this->localeRouter->$method($route, $action, $options);
     }
 }

@@ -21,11 +21,6 @@ class Router
         $this->route = $route;
     }
 
-    public function getRouter()
-    {
-        return $this->router;
-    }
-
     public function get($uri, $action = null)
     {
         return $this->makeRoute('get', $uri, $action);
@@ -76,6 +71,8 @@ class Router
         $route = $this->switchRouteLocale($locale, $route);
         $route = $this->switchUrlLocale($locale, $route);
 
+        $route->middleware($this->makeSetSessionLocale($locale));
+
         return $route;
     }
 
@@ -125,6 +122,11 @@ class Router
         $route->setUri($uri);
 
         return $route;
+    }
+
+    protected function makeSetSessionLocale($locale)
+    {
+        return 'locale.session:' . $locale;
     }
 
     public function refreshRoutes()
