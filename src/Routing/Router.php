@@ -4,6 +4,7 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
+use CaribouFute\LocaleRoute\Routing\RouteCollection;
 use Illuminate\Contracts\Routing\Registrar as IlluminateRouter;
 use Illuminate\Routing\Route;
 
@@ -59,9 +60,7 @@ class Router
     {
         $route = $this->router->$method($uri, $action);
         $route = $this->addLocale($route);
-        $this->router->getRoutes()->refreshNameLookups();
-        //need to refresh all collections too! URL keys as still at 'test', no locale.
-        dd($this->router->getRoutes()->get());
+        $this->refreshRoutes();
 
         return $route;
     }
@@ -126,6 +125,14 @@ class Router
         $route->setUri($uri);
 
         return $route;
+    }
+
+    public function refreshRoutes()
+    {
+        $routeCollection = new RouteCollection;
+        $routeCollection->hydrate($this->router->getRoutes());
+        $routeCollection->refresh();
+        $this->router->setRoutes($routeCollection);
     }
 
     public function __call($method, $arguments)

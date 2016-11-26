@@ -2,7 +2,6 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
-use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollection as IlluminateRouteCollection;
 
 class RouteCollection extends IlluminateRouteCollection
@@ -15,38 +14,17 @@ class RouteCollection extends IlluminateRouteCollection
         $this->actionList = $coll->actionList;
     }
 
-    public function remove(Route $route)
+    public function refresh()
     {
-        $this->removeFromCollections($route);
-        $this->removeLookups($route);
-    }
+        $routes = $this->getRoutes();
 
-    protected function removeFromCollections(Route $route)
-    {
-        $domainAndUri = $route->domain() . $route->getUri();
+        $this->routes = [];
+        $this->allRoutes = [];
+        $this->nameList = [];
+        $this->actionList = [];
 
-        foreach ($route->methods() as $method) {
-            unset($this->routes[$method][$domainAndUri]);
+        foreach ($routes as $route) {
+            $this->add($route);
         }
-
-        unset($this->allRoutes[$method . $domainAndUri]);
-    }
-
-    protected function removeLookups(Route $route)
-    {
-        $action = $route->getAction();
-
-        if (isset($action['as'])) {
-            unset($this->nameList[$action['as']]);
-        }
-
-        if (isset($action['controller'])) {
-            $this->removeFromActionList($action, $route);
-        }
-    }
-
-    protected function removeFromActionList($action)
-    {
-        unset($this->actionList[trim($action['controller'], '\\')]);
     }
 }
