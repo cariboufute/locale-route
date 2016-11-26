@@ -2,16 +2,13 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use Config;
+use CaribouFute\LocaleRoute\Traits\ConfigParams;
 
 abstract class Base
 {
-    protected $separator;
+    use ConfigParams;
 
-    public function locales()
-    {
-        return Config::get('localeroute.locales');
-    }
+    protected $separator;
 
     public function switchLocale($locale, $string)
     {
