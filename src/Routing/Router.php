@@ -80,18 +80,14 @@ class Router
     {
         $locales = $this->getActionLocales($route);
 
-        if (!$locales) {
-            return null;
-        }
-
-        return is_array($locales) ? collect($locales)->last() : $locales;
+        return is_array($locales) ? last($locales) : $locales;
     }
 
     public function getActionLocales(Route $route)
     {
         $action = $route->getAction();
 
-        return is_array($action) && isset($action['locale']) ? $action['locale'] : null;
+        return is_array($action) && isset($action['locale']) ? $action['locale'] : [];
     }
 
     public function switchRouteLocale($locale, Route $route)

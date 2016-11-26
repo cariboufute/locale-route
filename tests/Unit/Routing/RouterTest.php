@@ -149,7 +149,7 @@ class RouterTest extends TestCase
         $route = Mockery::mock(Route::class);
         $route->shouldReceive('getAction')->once()->andReturn($action);
 
-        $this->assertNull($this->router->getActionLocales($route));
+        $this->assertEmpty($this->router->getActionLocales($route));
     }
 
     public function testGetActionLocalesReturnsLocaleKey()
@@ -170,7 +170,7 @@ class RouterTest extends TestCase
         $route = Mockery::mock(Route::class);
         $route->shouldReceive('getAction')->once()->andReturn($action);
 
-        $this->assertNull($this->router->getActionLocale($route));
+        $this->assertFalse($this->router->getActionLocale($route));
     }
 
     public function testGetActionLocaleReturnLocaleKeyWhenString()
