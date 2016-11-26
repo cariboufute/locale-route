@@ -21,28 +21,28 @@ class RouterTest extends TestCase
         $this->router = Mockery::mock(Router::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
-    public function testRouteMethods()
+    /*public function testRouteMethods()
     {
-        $this->makeRouteTest('get');
-        $this->makeRouteTest('post');
-        $this->makeRouteTest('put');
-        $this->makeRouteTest('patch');
-        $this->makeRouteTest('delete');
-        $this->makeRouteTest('options');
+    $this->makeRouteTest('get');
+    $this->makeRouteTest('post');
+    $this->makeRouteTest('put');
+    $this->makeRouteTest('patch');
+    $this->makeRouteTest('delete');
+    $this->makeRouteTest('options');
     }
 
     public function makeRouteTest($method)
     {
-        $route = Mockery::mock(Route::class);
-        $url = 'url';
-        $action = 'Controller@action';
+    $route = Mockery::mock(Route::class);
+    $url = 'url';
+    $action = 'Controller@action';
 
-        $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
-        $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
-        $this->illuminateRouter->shouldReceive('getRoutes->add')->once();
+    $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
+    $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
+    $this->illuminateRouter->shouldReceive('getRoutes->add')->once();
 
-        $this->assertSame($route, $this->router->$method($url, $action), 'Not same route : ' . $method);
-    }
+    $this->assertSame($route, $this->router->$method($url, $action), 'Not same route : ' . $method);
+    }*/
 
     public function testAddLocaleDoesNothingWhenNoLocale()
     {

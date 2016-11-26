@@ -19,13 +19,13 @@ class RouteCollectionTest extends TestCase
         $this->coll = app()->make(RouteCollection::class);
     }
 
-    public function testClone()
+    public function testHydrate()
     {
         Route::get('test', ['as' => 'test', 'uses' => 'Controller@action']);
         $coll = $this->router->getRoutes();
         $route = $coll->getRoutes()[0];
 
-        $this->coll->clone($coll);
+        $this->coll->hydrate($coll);
 
         $testRoute = $this->coll->getRoutes()[0];
         $this->assertEquals($route, $testRoute);

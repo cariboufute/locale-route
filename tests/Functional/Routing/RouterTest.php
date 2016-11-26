@@ -33,6 +33,8 @@ class RouterTest extends TestCase
 
         $this->call('GET', route('en.route'));
         $this->assertResponseOk();
+
+        $this->assertSame(2, $this->router->getRoutes()->count());
     }
 
     public function testGet()
