@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Config;
 
 trait ConfigParams
 {
-    public function locales()
+    public function locales(array $options = [])
     {
-        return Config::get('localeroute.locales');
+        return isset($options['locales']) ? $options['locales'] : Config::get('localeroute.locales');
     }
 
-    public function getAddLocaleToUrl()
+    public function getAddLocaleToUrl(array $options = [])
     {
-        return Config::get('localeroute.add_locale_to_url');
+        return isset($options['add_locale_to_url']) ? $options['add_locale_to_url'] : Config::get('localeroute.add_locale_to_url');
     }
 }

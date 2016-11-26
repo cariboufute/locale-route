@@ -58,7 +58,7 @@ class RouterTest extends TestCase
         $action = 'Controller@action';
 
         $this->illuminateRouter->shouldReceive($method)->with($url, $action)->once()->andReturn($route);
-        $this->router->shouldReceive('addLocale')->with($route)->once()->andReturn($route);
+        $this->router->shouldReceive('addLocale')->with($route, $action)->once()->andReturn($route);
         $this->router->shouldReceive('refreshRoutes')->once();
 
         $this->assertSame($route, $this->router->$method($url, $action));
@@ -80,7 +80,6 @@ class RouterTest extends TestCase
         $uri = 'uri';
         $newUri = $locale . '/' . $uri;
         $middleware = 'locale.session:' . $locale;
-
         $name = 'route';
         $newName = $locale . '.' . $name;
 
@@ -90,10 +89,10 @@ class RouterTest extends TestCase
 
         $this->router->shouldReceive('getActionLocale')->with($route)->once()->andReturn($locale);
         $this->router->shouldReceive('switchRouteLocale')->with($locale, $route)->once()->andReturn($route);
-        $this->router->shouldReceive('switchUrlLocale')->with($locale, $route)->once()->andReturn($route);
+        $this->router->shouldReceive('switchUrlLocale')->with($locale, $route, $action)->once()->andReturn($route);
         $route->shouldReceive('middleware')->with($middleware);
 
-        $testRoute = $this->router->addLocale($route);
+        $testRoute = $this->router->addLocale($route, $action);
 
         $this->assertSame($route, $testRoute);
 
@@ -134,7 +133,7 @@ class RouterTest extends TestCase
 
         $route = Mockery::mock(Route::class);
         $route->shouldReceive('uri')->once()->andReturn($uri);
-        $this->url->shouldReceive('switchLocale')->with($locale, $uri)->once()->andReturn($newUri);
+        $this->url->shouldReceive('switchLocale')->with($locale, $uri, [])->once()->andReturn($newUri);
         $route->shouldReceive('setUri')->with($locale . '/' . $uri)->once();
 
         $testRoute = $this->router->switchUrlLocale($locale, $route);

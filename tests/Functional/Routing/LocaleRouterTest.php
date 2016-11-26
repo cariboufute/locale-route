@@ -11,6 +11,42 @@ class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
+    public function testGetWithRouteddRouteToUrlOption()
+    {
+        LocaleRoute::get('create', function () {
+            return 'create';
+        }, ['fr' => 'creer', 'en' => 'create', 'add_locale_to_url' => false]);
+
+        //Default config is true
+        LocaleRoute::get('delete', function () {
+            return 'create';
+        }, ['fr' => 'supprimer', 'en' => 'delete']);
+
+        $this->call('get', 'creer');
+        $this->assertResponseOk();
+        $this->call('get', 'create');
+        $this->assertResponseOk();
+        $this->call('get', '/fr/supprimer');
+        $this->assertResponseOk();
+        $this->call('get', '/en/delete');
+        $this->assertResponseOk();
+
+    }
+
+    public function testGetWithRouteLocalesOption()
+    {
+        LocaleRoute::get('create', function () {
+            return 'create';
+        }, ['fr' => 'creer', 'en' => 'create', 'de' => 'erstellen', 'locales' => ['fr', 'en', 'de']]);
+
+        $this->call('get', '/fr/creer');
+        $this->assertResponseOk();
+        $this->call('get', '/en/create');
+        $this->assertResponseOk();
+        $this->call('get', '/de/erstellen');
+        $this->assertResponseOk();
+    }
+
     public function testGet()
     {
         $this->makeMethodTest('get');

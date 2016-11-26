@@ -56,7 +56,7 @@ class LocaleRouter
 
     public function makeRoutes($method, $route, $action, array $options = [])
     {
-        foreach ($this->locales() as $locale) {
+        foreach ($this->locales($options) as $locale) {
             $this->makeRoute($locale, $method, $route, $action, $options);
         }
     }
@@ -66,13 +66,24 @@ class LocaleRouter
         $url = $this->prefixUrl->rawRouteUrl($locale, $route, $options);
 
         $action = $this->convertToControllerAction($action);
+        $action = $this->fillAction($locale, $route, $action, $options);
 
-        $action['locale'] = $locale;
-        $action['as'] = $route;
         $middleware = isset($options['middleware']) ? $options['middleware'] : [];
 
         $this->router
             ->$method($url, $action)
             ->middleware($middleware);
+    }
+
+    protected function fillAction($locale, $route, $action, $options)
+    {
+        $action['locale'] = $locale;
+        $action['as'] = $route;
+
+        if (isset($options['add_locale_to_url'])) {
+            $action['add_locale_to_url'] = $options['add_locale_to_url'];
+        }
+
+        return $action;
     }
 }

@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Route;
 trait EnvironmentSetUp
 {
     protected $locales;
-    protected $addLocaleOption;
+    protected $addLocaleToUrl;
 
     protected function getEnvironmentSetUp($app)
     {
         $this->locales = ['fr', 'en'];
-        $this->addLocaleOption = true;
+        $this->addLocaleToUrl = true;
 
         $app['config']->set('localeroute.locales', $this->locales);
-        $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleOption);
+        $app['config']->set('localeroute.add_locale_to_url', $this->addLocaleToUrl);
 
         $app['locale-route'] = app()->make(LocaleRouter::class);
         $app['locale-route-url'] = app()->make(PrefixRoute::class);

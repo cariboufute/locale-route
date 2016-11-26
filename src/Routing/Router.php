@@ -21,46 +21,46 @@ class Router
         $this->route = $route;
     }
 
-    public function get($uri, $action = null)
+    public function get($uri, $action = [])
     {
         return $this->makeRoute('get', $uri, $action);
     }
 
-    public function post($uri, $action = null)
+    public function post($uri, $action = [])
     {
         return $this->makeRoute('post', $uri, $action);
     }
 
-    public function put($uri, $action = null)
+    public function put($uri, $action = [])
     {
         return $this->makeRoute('put', $uri, $action);
     }
 
-    public function patch($uri, $action = null)
+    public function patch($uri, $action = [])
     {
         return $this->makeRoute('patch', $uri, $action);
     }
 
-    public function delete($uri, $action = null)
+    public function delete($uri, $action = [])
     {
         return $this->makeRoute('delete', $uri, $action);
     }
 
-    public function options($uri, $action = null)
+    public function options($uri, $action = [])
     {
         return $this->makeRoute('options', $uri, $action);
     }
 
-    public function makeRoute($method, $uri, $action = null)
+    public function makeRoute($method, $uri, $action = [])
     {
         $route = $this->router->$method($uri, $action);
-        $route = $this->addLocale($route);
+        $route = $this->addLocale($route, $action);
         $this->refreshRoutes();
 
         return $route;
     }
 
-    public function addLocale(Route $route)
+    public function addLocale(Route $route, $action = [])
     {
         $locale = $this->getActionLocale($route);
 
@@ -69,7 +69,7 @@ class Router
         }
 
         $route = $this->switchRouteLocale($locale, $route);
-        $route = $this->switchUrlLocale($locale, $route);
+        $route = $this->switchUrlLocale($locale, $route, $action);
 
         $route->middleware($this->makeSetSessionLocale($locale));
 
@@ -112,9 +112,9 @@ class Router
         return $route;
     }
 
-    public function switchUrlLocale($locale, Route $route)
+    public function switchUrlLocale($locale, Route $route, array $action = [])
     {
-        $uri = $this->url->switchLocale($locale, $route->uri());
+        $uri = $this->url->switchLocale($locale, $route->uri(), $action);
         $route->setUri($uri);
 
         return $route;

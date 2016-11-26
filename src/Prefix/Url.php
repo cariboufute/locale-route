@@ -21,8 +21,16 @@ class Url extends Base
         return $unlocaleUrl;
     }
 
-    public function addLocale($locale, $url)
+    public function switchLocale($locale, $url, array $options = [])
     {
-        return $this->getAddLocaleToUrl() ? parent::addLocale($locale, $url) : $url;
+        $unlocalized = $this->removeLocale($url);
+        $localized = $this->addLocale($locale, $unlocalized, $options);
+
+        return $localized;
+    }
+
+    public function addLocale($locale, $unlocalized, $options = [])
+    {
+        return $this->getAddLocaleToUrl($options) ? parent::addLocale($locale, $unlocalized) : $unlocalized;
     }
 }
