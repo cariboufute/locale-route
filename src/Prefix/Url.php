@@ -15,9 +15,9 @@ class Url extends Base
         $this->translator = $translator;
     }
 
-    public function rawRouteUrl($locale, $route, array $urls = [])
+    public function rawRouteUrl($locale, $route, array $options = [])
     {
-        $unlocaleUrl = isset($urls[$locale]) ? $urls[$locale] : $this->translator->get('routes.' . $route, [], $locale);
+        $unlocaleUrl = isset($options[$locale]) ? $options[$locale] : $this->translator->get('routes.' . $route, [], $locale);
         return $unlocaleUrl;
     }
 
