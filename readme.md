@@ -251,7 +251,7 @@ LocaleRoute::get('store', 'Controller@create', [
     ['fr.store']    => '/stocker'
     ['en.store']    => '/store'
 */
-
+```
 
 ### Fetching URLs
 
