@@ -198,7 +198,7 @@ LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 
 ```
 
-### Grouping **(new and improved)**
+### Grouping
 
 You can use the ```LocaleRoute``` methods inside normal ```Route::group``` methods. 
 
