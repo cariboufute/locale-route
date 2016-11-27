@@ -39,20 +39,20 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
     protected function addResourceCreate($name, $base, $controller, $options)
     {
-        $uris = $this->getLocaleUris($name, 'create', $options);
+        $base = $this->getResourceUri($name);
+        $uris = $this->getLocaleUris($base, 'create', $options);
         $name = $this->getResourceName($name, 'create', $options);
         $action = $this->getLocaleResourceAction($controller, 'create');
 
         return $this->localeRouter->get($name, $action, $uris);
     }
 
-    protected function getLocaleUris($name, $label, $options)
+    protected function getLocaleUris($base, $label, $options)
     {
-        $baseUri = $this->getResourceUri($name);
         $uris = [];
 
         foreach ($this->locales($options) as $locale) {
-            $uris[$locale] = $baseUri . '/' . $this->getTranslation($locale, $label);
+            $uris[$locale] = $base . '/' . $this->getTranslation($locale, $label);
         }
 
         return $uris;
@@ -76,11 +76,12 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
     protected function addResourceEdit($name, $base, $controller, $options)
     {
-        $uri = $this->getResourceUri($name) . '/{' . $base . '}/edit';
+        $base = $this->getResourceUri($name) . '/{' . $base . '}';
+        $uris = $this->getLocaleUris($base, 'edit', $options);
         $name = $this->getResourceName($name, 'edit', $options);
         $action = $this->getLocaleResourceAction($controller, 'edit');
 
-        return $this->localeRouter->get($name, $action, $uri);
+        return $this->localeRouter->get($name, $action, $uris);
     }
 
 }
