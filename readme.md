@@ -320,7 +320,7 @@ LocaleRoute::get('create', 'Controller@create', [
     ['de.create']    => '/de/erstellen'
 */
 
-LocaleRoute::get('store', 'Controller@create', [
+LocaleRoute::get('store', 'Controller@store', [
         'fr' => 'stocker',
         'en' => 'store',
         'add_locale_to_url' => false
