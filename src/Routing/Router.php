@@ -21,6 +21,11 @@ class Router
         $this->route = $route;
     }
 
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
     public function get($uri, $action = [])
     {
         return $this->makeRoute('get', $uri, $action);

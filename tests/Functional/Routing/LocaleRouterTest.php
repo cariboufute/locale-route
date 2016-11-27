@@ -169,4 +169,53 @@ class LocaleRouterTest extends TestCase
         $this->call('get', '/en/create/3');
         $this->assertResponseOk();
     }
+
+    public function testResource()
+    {
+        LocaleRoute::resource('article', 'ArticleController');
+        $routeInfo = $this->getRouteInfo();
+
+        $this->assertContains([
+            "methods" => [
+                0 => "GET",
+                1 => "HEAD",
+            ],
+            "name" => "fr.article.index",
+            "uri" => "fr/article",
+        ], $routeInfo);
+
+        $this->assertContains([
+            "methods" => [
+                0 => "GET",
+                1 => "HEAD",
+            ],
+            "name" => "en.article.index",
+            "uri" => "en/article",
+        ], $routeInfo);
+
+        $this->assertContains([
+            "methods" => [
+                0 => "POST",
+            ],
+            "name" => "article.store",
+            "uri" => "article",
+        ], $routeInfo);
+
+        $this->assertContains([
+            "methods" => [
+                0 => "PUT",
+                1 => "PATCH",
+            ],
+            "name" => "article.update",
+            "uri" => "article/{article}",
+        ], $routeInfo);
+
+        $this->assertContains([
+            "methods" => [
+                0 => "DELETE",
+            ],
+            "name" => "article.destroy",
+            "uri" => "article/{article}",
+        ], $routeInfo);
+    }
 }

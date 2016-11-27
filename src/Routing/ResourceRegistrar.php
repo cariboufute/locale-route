@@ -15,4 +15,19 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         $this->localeRouter = $localeRouter;
         parent::__construct($router);
     }
+
+    protected function addResourceIndex($name, $base, $controller, $options)
+    {
+        $uri = $this->getResourceUri($name);
+        $rawRouteName = $this->getResourceName($name, 'index', $options);
+        $action = $this->getLocaleResourceAction($controller, 'index');
+
+        return $this->localeRouter->get($rawRouteName, $action, $uri);
+    }
+
+    protected function getLocaleResourceAction($controller, $method)
+    {
+        return $controller . '@' . $method;
+    }
+
 }

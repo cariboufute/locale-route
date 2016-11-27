@@ -26,13 +26,22 @@ trait EnvironmentSetUp
         $app['router']->middleware('locale.session', SetSessionLocale::class);
     }
 
-    public function ddRoutes()
+    public function getRouteInfo()
     {
         $routeColl = collect(Route::getRoutes()->getRoutes());
         $routeInfo = $routeColl->map(function ($route) {
-            return ['name' => $route->getName(), 'uri' => $route->uri()];
+            return [
+                'methods' => $route->methods(),
+                'name' => $route->getName(),
+                'uri' => $route->uri(),
+            ];
         });
 
-        dd($routeInfo);
+        return $routeInfo;
+    }
+
+    public function ddRouteInfo()
+    {
+        dd($this->getRouteInfo());
     }
 }

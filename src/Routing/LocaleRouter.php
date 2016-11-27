@@ -4,6 +4,7 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
+use CaribouFute\LocaleRoute\Routing\ResourceRegistrar;
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
@@ -98,5 +99,12 @@ class LocaleRouter
         }
 
         return $action;
+    }
+
+    public function resource($route, $controller, $options = [])
+    {
+        $registrar = new ResourceRegistrar($this, $this->router->getRouter());
+
+        $registrar->register($route, $controller, $options);
     }
 }
