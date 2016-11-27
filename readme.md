@@ -37,6 +37,8 @@ composer require cariboufute/locale-route 1.0.0-beta6
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
+// config/app.php
+
 'providers' => [
     //...
     CaribouFute\LocaleRoute\LocaleRouteServiceProvider::class,
