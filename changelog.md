@@ -5,10 +5,10 @@ All Notable changes to `locale-route` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Coming soon]
-### To add
+## [1.0.0-beta6] – 2016-11-27
+### Added
 
-- LocaleRoute::resource.
+- Refactored *LocaleRoute::resource* method.
 
 ## [1.0.0-beta5] – 2016-11-22
 ### Added

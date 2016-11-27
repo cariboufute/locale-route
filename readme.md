@@ -31,12 +31,14 @@ Please see [changelog](changelog.md) for more information what has changed recen
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route 1.0.0-beta5
+composer require cariboufute/locale-route 1.0.0-beta6
 ```
 
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
+// config/app.php
+
 'providers' => [
     //...
     CaribouFute\LocaleRoute\LocaleRouteServiceProvider::class,
@@ -80,6 +82,8 @@ Then you should have a ```config/localeroute.php``` installed.
 
 Check your ```config/localeroute.php``` file. Here is the default file.
 ``` php
+// config/localeroute.php
+
 <?php
 
 return [
@@ -127,6 +131,8 @@ If for any reason, you don't want this prefix to be added automatically, just pu
 Adding localized routes is now really easy. Just go to your ```routes/web.php``` file (or ```app/Http/routes.php``` in older versions of Laravel) and add ```LocaleRoute``` declarations almost like you would declare Laravel ```Route``` methods.
 
 ``` php
+// routes/web.php or app/Http/routes.php
+
 LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::post('route', 'Controller@postAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::put('route', 'Controller@putAction', ['fr' => 'url_fr', 'en' => 'url_en']);
@@ -165,13 +171,13 @@ LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL s
 You can also use the Laravel translator to put all your locale URLs in ```resources/lang/{locale}/routes.php``` files. If there is no locale URL array, ```LocaleRoute``` will automatically check for the translated ```routes.php``` files to find URLs. All you need to do is to remove the locale URL array in ```LocaleRoute``` and declare them as ```'route' => 'url'``` in your translated route files, like this. 
 
 ``` php
-//routes/web.php
+// routes/web.php or app/Http/routes.php
 
 LocaleRoute::get('route', 'Controller@routeAction');
 ```
 
 ``` php
-//resources/lang/en/routes.php
+// resources/lang/en/routes.php
 
 return [
     'route' => 'url_en',
@@ -179,7 +185,7 @@ return [
 ```
 
 ``` php
-//resources/lang/fr/routes.php
+// resources/lang/fr/routes.php
 
 return [
     'route' => 'url_fr',
@@ -191,6 +197,8 @@ return [
 If you want to use middleware for your LocaleRoute, add them in the url array (3rd parameter) in the ```'middleware'``` key.
 
 ``` php
+//routes/web.php or app/Http/routes.php
+
 LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en', 'middleware' => 'guest']);
 
 //To use trans files URL, just add 'middleware'
@@ -198,12 +206,13 @@ LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 
 ```
 
-### Grouping **(new and improved)**
+### Grouping
 
 You can use the ```LocaleRoute``` methods inside normal ```Route::group``` methods. 
 
 ``` php
-//web.php or routes.php
+// routes/web.php or app/Http/routes.php
+
 
 Route::group(['as' => 'article.', 'prefix' => 'article'], function () {
     LocaleRoute::get('create', 'ArticleController@index', ['fr' => 'creer', 'en' => 'create']);
@@ -221,7 +230,64 @@ Will give these routes :
 
 ### Resource
 
-*Under reconstruction, coming soon...*
+To add a localized RESTful resource, just use ```LocaleRoute::resource()``` with the same syntax as ```Route::resource```. This will give localized routes for all GET/HEAD routes and will keep the POST/PUT/PATCH/DELETE routes unlocalized.
+
+```php 
+// routes/web.php or app/Http/routes.php
+
+LocaleRoute::resource('article', 'ArticleController');
+
+/*
+Will give these routes :
+
+[fr.article.index]  => GET/HEAD     "/fr/article"                   => ArticleController::index()
+[en.article.index]  => GET/HEAD     "/en/article"                   => ArticleController::index()
+[fr.article.show]   => GET/HEAD     "/fr/article/{article}"         => ArticleController::show()
+[en.article.show]   => GET/HEAD     "/en/article/{article}"         => ArticleController::show()
+[fr.article.create] => GET/HEAD     "/fr/article/create"            => ArticleController::create()
+[en.article.create] => GET/HEAD     "/en/article/create"            => ArticleController::create()
+[article.store]     => POST         "/article"                      => ArticleController::store()
+[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/edit"    => ArticleController::edit()
+[en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
+[article.update]    => PUT/PATCH    "/article/{article}"            => ArticleController::update()
+[article.destroy]   => DELETE       "/article/{article}"            => ArticleController::destroy()
+*/
+```
+
+If you want to translate the *create* and *edit* words in resources routes URL, add *route-labels.php* lang files in the *resources/lang* folder with translation for *create* and *edit*.
+
+```php
+// resources/lang/fr/route-labels.php
+
+return [
+    'create' => 'creer',
+    'edit' => 'editer',
+];
+```
+
+```php
+// resources/lang/en/route-labels.php
+
+return [
+    'create' => 'create',
+    'edit' => 'edit',
+];
+```
+
+```php
+// routes/web.php or app/Http/routes.php
+LocaleRoute::resource('article', 'ArticleController');
+
+/*
+Will give these routes :
+
+[fr.article.create] => GET/HEAD     "/fr/article/creer"             => ArticleController::create()
+[en.article.create] => GET/HEAD     "/en/article/create"            => ArticleController::create()
+[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/editer"  => ArticleController::edit()
+[en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
+...
+*/
+```
 
 
 ### Overriding options
@@ -254,7 +320,7 @@ LocaleRoute::get('create', 'Controller@create', [
     ['de.create']    => '/de/erstellen'
 */
 
-LocaleRoute::get('store', 'Controller@create', [
+LocaleRoute::get('store', 'Controller@store', [
         'fr' => 'stocker',
         'en' => 'store',
         'add_locale_to_url' => false
