@@ -80,6 +80,8 @@ Then you should have a ```config/localeroute.php``` installed.
 
 Check your ```config/localeroute.php``` file. Here is the default file.
 ``` php
+// config/localeroute.php
+
 <?php
 
 return [
@@ -127,6 +129,8 @@ If for any reason, you don't want this prefix to be added automatically, just pu
 Adding localized routes is now really easy. Just go to your ```routes/web.php``` file (or ```app/Http/routes.php``` in older versions of Laravel) and add ```LocaleRoute``` declarations almost like you would declare Laravel ```Route``` methods.
 
 ``` php
+// routes/web.php or app/Http/routes.php
+
 LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::post('route', 'Controller@postAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::put('route', 'Controller@putAction', ['fr' => 'url_fr', 'en' => 'url_en']);
@@ -165,13 +169,13 @@ LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL s
 You can also use the Laravel translator to put all your locale URLs in ```resources/lang/{locale}/routes.php``` files. If there is no locale URL array, ```LocaleRoute``` will automatically check for the translated ```routes.php``` files to find URLs. All you need to do is to remove the locale URL array in ```LocaleRoute``` and declare them as ```'route' => 'url'``` in your translated route files, like this. 
 
 ``` php
-//routes/web.php
+// routes/web.php or app/Http/routes.php
 
 LocaleRoute::get('route', 'Controller@routeAction');
 ```
 
 ``` php
-//resources/lang/en/routes.php
+// resources/lang/en/routes.php
 
 return [
     'route' => 'url_en',
@@ -179,7 +183,7 @@ return [
 ```
 
 ``` php
-//resources/lang/fr/routes.php
+// resources/lang/fr/routes.php
 
 return [
     'route' => 'url_fr',
@@ -191,6 +195,8 @@ return [
 If you want to use middleware for your LocaleRoute, add them in the url array (3rd parameter) in the ```'middleware'``` key.
 
 ``` php
+//routes/web.php or app/Http/routes.php
+
 LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en', 'middleware' => 'guest']);
 
 //To use trans files URL, just add 'middleware'
@@ -203,7 +209,8 @@ LocaleRoute::get('route', 'Controller@getAction', ['middleware' => 'guest']);
 You can use the ```LocaleRoute``` methods inside normal ```Route::group``` methods. 
 
 ``` php
-//web.php or routes.php
+// routes/web.php or app/Http/routes.php
+
 
 Route::group(['as' => 'article.', 'prefix' => 'article'], function () {
     LocaleRoute::get('create', 'ArticleController@index', ['fr' => 'creer', 'en' => 'create']);
@@ -224,6 +231,7 @@ Will give these routes :
 To add a localized RESTful resource, just use ```LocaleRoute::resource()``` with the same syntax as ```Route::resource```. This will give localized routes for all GET/HEAD routes and will keep the POST/PUT/PATCH/DELETE routes unlocalized.
 
 ```php 
+// routes/web.php or app/Http/routes.php
 
 LocaleRoute::resource('article', 'ArticleController');
 
@@ -264,8 +272,8 @@ return [
 ];
 ```
 
-```php 
-
+```php
+// routes/web.php or app/Http/routes.php
 LocaleRoute::resource('article', 'ArticleController');
 
 /*
