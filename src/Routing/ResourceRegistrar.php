@@ -60,7 +60,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
     protected function getTranslation($locale, $label)
     {
-        $untranslated = 'routes.' . $label;
+        $untranslated = 'route-labels.' . $label;
         $translated = $this->translator->get($untranslated, [], $locale);
         return $translated === $untranslated ? $label : $translated;
     }
