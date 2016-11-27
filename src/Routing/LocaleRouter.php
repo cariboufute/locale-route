@@ -8,7 +8,6 @@ use CaribouFute\LocaleRoute\Routing\ResourceRegistrar;
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
-use Illuminate\Translation\Translator;
 
 class LocaleRouter
 {
@@ -24,6 +23,7 @@ class LocaleRouter
         $this->router = $router;
         $this->prefixRoute = $prefixRoute;
         $this->prefixUrl = $prefixUrl;
+
     }
 
     public function get($route, $action, $options = [])
@@ -104,8 +104,7 @@ class LocaleRouter
 
     public function resource($route, $controller, $options = [])
     {
-        $registrar = new ResourceRegistrar($this, $this->router->getRouter(), app()->make(Translator::class));
-
+        $registrar = app()->make(ResourceRegistrar::class);
         $registrar->register($route, $controller, $options);
     }
 }
