@@ -241,8 +241,43 @@ Will give these routes :
 [en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
 [article.update]    => PUT/PATCH    "/article/{article}"            => ArticleController::update()
 [article.destroy]   => DELETE       "/article/{article}"            => ArticleController::destroy()
-
 */
+```
+
+If you want to translate the *create* and *edit* words in resources routes URL, add *route-labels.php* lang files in the *resources/lang* folder with translation for *create* and *edit*.
+
+```php
+// resources/lang/fr/route-labels.php
+
+return [
+    'create' => 'creer',
+    'edit' => 'editer',
+];
+```
+
+```php
+// resources/lang/en/route-labels.php
+
+return [
+    'create' => 'create',
+    'edit' => 'edit',
+];
+```
+
+```php 
+
+LocaleRoute::resource('article', 'ArticleController');
+
+/*
+Will give these routes :
+
+[fr.article.create] => GET/HEAD     "/fr/article/creer"            => ArticleController::create()
+[en.article.create] => GET/HEAD     "/en/article/create"            => ArticleController::create()
+[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/editer"    => ArticleController::edit()
+[en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
+*/
+```
+
 
 ### Overriding options
 
