@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Feature of overriding *locales* and *add_locale_to_url* config options.
+- You can add a URL string to have same URL for all locales.
 
 ### Changed
 

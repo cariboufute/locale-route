@@ -141,10 +141,23 @@ Route::get('fr/url_fr', ['as' => 'fr.route', 'uses' => 'Controller@getAction']);
 Route::get('en/url_en', ['as' => 'en.route', 'uses' => 'Controller@getAction']);
 ```
 
+You can also give a string as locale URL if it is the same for all locales
+
+```php
+LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
+
+/*
+    This will give these routes.
+
+    ['fr.route']    =>  'fr/url'
+    ['en.route']    =>  'en/url'
+*/
+```
+
 So the syntax can be resumed to this.
 
 ```
-LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL array with 'locale' => 'url'});
+LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL string or array with 'locale' => 'url'});
 ```
 
 #### Using translator files for URLs

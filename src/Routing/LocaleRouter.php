@@ -24,44 +24,57 @@ class LocaleRouter
         $this->prefixUrl = $prefixUrl;
     }
 
-    public function get($route, $action, array $options = [])
+    public function get($route, $action, $options = [])
     {
         $this->makeRoutes('get', $route, $action, $options);
     }
 
-    public function post($route, $action, array $options = [])
+    public function post($route, $action, $options = [])
     {
         $this->makeRoutes('post', $route, $action, $options);
     }
 
-    public function put($route, $action, array $options = [])
+    public function put($route, $action, $options = [])
     {
         $this->makeRoutes('put', $route, $action, $options);
     }
 
-    public function patch($route, $action, array $options = [])
+    public function patch($route, $action, $options = [])
     {
         $this->makeRoutes('patch', $route, $action, $options);
     }
 
-    public function delete($route, $action, array $options = [])
+    public function delete($route, $action, $options = [])
     {
         $this->makeRoutes('delete', $route, $action, $options);
     }
 
-    public function options($route, $action, array $options = [])
+    public function options($route, $action, $options = [])
     {
         $this->makeRoutes('options', $route, $action, $options);
     }
 
-    public function makeRoutes($method, $route, $action, array $options = [])
+    public function makeRoutes($method, $route, $action, $options = [])
     {
+        $options = is_string($options) ? $this->convertOptionUrlsToArray($options) : $options;
+
         foreach ($this->locales($options) as $locale) {
             $this->makeRoute($locale, $method, $route, $action, $options);
         }
     }
 
-    public function makeRoute($locale, $method, $route, $action, array $options = [])
+    protected function convertOptionUrlsToArray($options)
+    {
+        $newOptions = [];
+
+        foreach ($this->locales() as $locale) {
+            $newOptions[$locale] = $options;
+        }
+
+        return $newOptions;
+    }
+
+    public function makeRoute($locale, $method, $route, $action, $options = [])
     {
         $url = $this->prefixUrl->rawRouteUrl($locale, $route, $options);
 
