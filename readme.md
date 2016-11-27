@@ -221,8 +221,28 @@ Will give these routes :
 
 ### Resource
 
-*Under reconstruction, coming soon...*
+To add a localized RESTful resource, just use ```LocaleRoute::resource()``` with the same syntax as ```Route::resource```. This will give localized routes for all GET/HEAD routes and will keep the POST/PUT/PATCH/DELETE routes unlocalized.
 
+```php 
+
+LocaleRoute::resource('article', 'ArticleController');
+
+/*
+Will give these routes :
+
+[fr.article.index]  => GET/HEAD     "/fr/article"                   => ArticleController::index()
+[en.article.index]  => GET/HEAD     "/en/article"                   => ArticleController::index()
+[fr.article.show]   => GET/HEAD     "/fr/article/{article}"         => ArticleController::show()
+[en.article.show]   => GET/HEAD     "/en/article/{article}"         => ArticleController::show()
+[fr.article.create] => GET/HEAD     "/fr/article/create"            => ArticleController::create()
+[en.article.create] => GET/HEAD     "/en/article/create"            => ArticleController::create()
+[article.store]     => POST         "/article"                      => ArticleController::store()
+[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/edit"    => ArticleController::edit()
+[en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
+[article.update]    => PUT/PATCH    "/article/{article}"            => ArticleController::update()
+[article.destroy]   => DELETE       "/article/{article}"            => ArticleController::destroy()
+
+*/
 
 ### Overriding options
 
