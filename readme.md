@@ -210,6 +210,49 @@ Will give these routes :
 
 *Under reconstruction, coming soon...*
 
+
+### Overriding options
+
+You can override the ```locale``` and ```add_locale_to_url``` config options simply by declaring them in the url array.
+
+``` php
+/*
+    Config::get('localeroute.locales') => ['fr', 'en']
+    Config::get('localeroute.add_locale_to_url') => true
+*/
+
+LocaleRoute::get('index', 'Controller@index', ['fr' => '/', 'en' => '/']);
+
+/*
+    ['fr.index']    => '/fr'
+    ['en.index']    => '/en'
+*/
+
+LocaleRoute::get('create', 'Controller@create', [
+        'fr' => 'creer',
+        'en' => 'create',
+        'de' => 'erstellen',
+        'locales' => ['fr', 'en', 'de']
+]);
+
+/*
+    ['fr.create']    => '/fr/creer'
+    ['en.create']    => '/en/create'
+    ['de.create']    => '/de/erstellen'
+*/
+
+LocaleRoute::get('store', 'Controller@create', [
+        'fr' => 'stocker',
+        'en' => 'store',
+        'add_locale_to_url' => false
+]);
+
+/*
+    ['fr.store']    => '/stocker'
+    ['en.store']    => '/store'
+*/
+
+
 ### Fetching URLs
 
 ```LocaleRoute``` gives three helper functions to help you get your URLs quickly. They are close to the Laravel ```route``` helper function.

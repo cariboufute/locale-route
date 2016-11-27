@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### To add
 
 - LocaleRoute::resource.
-- Complete missing unit and functional tests for complete code coverage.
 
 ## [1.0.0-beta5] – 2016-11-22
+### Added
+
+- Feature of overriding *locales* and *add_locale_to_url* config options.
+
 ### Changed
 
 - Massive refactoring for more supple LocaleRoute usage, now can be used under Route::group()
