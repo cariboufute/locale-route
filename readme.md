@@ -13,9 +13,7 @@ LocaleRoute has a syntax close to the original Laravel routing methods, so the i
 
 For an example of LocaleRoute implementation, please check my [locale-route-example repo](https://github.com/cariboufute/locale-route-example).
 
-*This package is now on beta stage. It should be functional. It just needs other programmers' feedback before having an "official" release. Please check it and test it before using it in production.*
-
-**The package has been just refactored, with a much more supple usage. Please check documentation again**
+**This should be the last beta version before "official" release.**
 
 ## Change log
 
