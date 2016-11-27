@@ -281,10 +281,11 @@ LocaleRoute::resource('article', 'ArticleController');
 /*
 Will give these routes :
 
-[fr.article.create] => GET/HEAD     "/fr/article/creer"            => ArticleController::create()
+[fr.article.create] => GET/HEAD     "/fr/article/creer"             => ArticleController::create()
 [en.article.create] => GET/HEAD     "/en/article/create"            => ArticleController::create()
-[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/editer"    => ArticleController::edit()
+[fr.article.edit]   => GET/HEAD     "/fr/article/{article}/editer"  => ArticleController::edit()
 [en.article.edit]   => GET/HEAD     "/en/article/{article}/edit"    => ArticleController::edit()
+...
 */
 ```
 
