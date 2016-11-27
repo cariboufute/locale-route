@@ -144,7 +144,7 @@ Route::get('en/url_en', ['as' => 'en.route', 'uses' => 'Controller@getAction']);
 You can also give a string as locale URL if it is the same for all locales
 
 ```php
-LocaleRoute::get('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
+LocaleRoute::get('route', 'Controller@getAction', 'url');
 
 /*
     This will give these routes.
