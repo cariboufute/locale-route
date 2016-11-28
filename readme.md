@@ -164,11 +164,11 @@ So the syntax can be resumed to this.
 LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL string or array with 'locale' => 'url'});
 ```
 
-**Note:** If you declare a normal route with a URL – for instance, ```"/"```, then declare localized routes with the same base URL besides the locale prefixes (```"/"``` for ```"/fr"``` and ```"/en"```), you will lose the first route.
+#### Note about localized and unlocalized routes using same base URL
 
-This is because of the localized routes that are being stored with base URL first before adding locale. So even if the final routes are different because of the locale, the first route will be replaced.
+If you declare localized and unlocalized routes using the same base URL, *please declare your LocaleRoute method before the Route method*. If you don't, the normal route will be discarded by the locale route attribution process.
 
-To avoid this, when normal and localized routes share the same unlocalized URL, *please declare your LocaleRoute method before the Route method*.
+For instance, if you declare a normal route with ```"/"``` to redirect to the fallback locale (for instance, ```"/en"```) before the localized routes (for instance, ```"/en"``` and ```"/en"```), the localized routes with replace the first route before being added the locale. Declaring locale routes before the normal unlocalized route will cause no problems.
 
 ```php
 /**
