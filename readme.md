@@ -171,7 +171,9 @@ This is because of the localized routes that are being stored with base URL firs
 To avoid this, when normal and localized routes share the same unlocalized URL, *please declare your LocaleRoute method before the Route method*.
 
 ```php
-//Here, the '/' URL will be discarded. Only "/fr" and "/en" will exist.
+/**
+ * Here, the '/' URL will be discarded. Only "/fr" and "/en" will exist.
+ */
 
 Route::get('/', function () {
     return redirect('/fr');
@@ -179,7 +181,10 @@ Route::get('/', function () {
 
 LocaleRoute::get('index', 'PublicController@index', ['fr' => '/', 'en' => '/']);
 
-//Here, all routes with work fine : "/", "/fr" and "/en".
+
+/**
+ * Here, all routes with work fine : "/", "/fr" and "/en".
+ */
 
 LocaleRoute::get('index', 'PublicController@index', ['fr' => '/', 'en' => '/']);
 
