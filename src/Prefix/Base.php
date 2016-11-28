@@ -21,9 +21,9 @@ abstract class Base
     public function removeLocale($string)
     {
         $prefix = $this->prefix($string);
-        $unlocale = str_replace($prefix, '', $string);
+        $unlocalized = str_replace($prefix, '', $string);
 
-        return $unlocale;
+        return $unlocalized;
     }
 
     public function prefix($string)
