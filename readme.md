@@ -164,6 +164,32 @@ So the syntax can be resumed to this.
 LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL string or array with 'locale' => 'url'});
 ```
 
+#### Using translator files for URLs
+
+You can also use the Laravel translator to put all your locale URLs in ```resources/lang/{locale}/routes.php``` files. If there is no locale URL array, ```LocaleRoute``` will automatically check for the translated ```routes.php``` files to find URLs. All you need to do is to remove the locale URL array in ```LocaleRoute``` and declare them as ```'route' => 'url'``` in your translated route files, like this. 
+
+``` php
+// routes/web.php or app/Http/routes.php
+
+LocaleRoute::get('route', 'Controller@routeAction');
+```
+
+``` php
+// resources/lang/en/routes.php
+
+return [
+    'route' => 'url_en',
+]
+```
+
+``` php
+// resources/lang/fr/routes.php
+
+return [
+    'route' => 'url_fr',
+]
+```
+
 #### Note about localized and unlocalized routes using same base URL
 
 If you declare localized and unlocalized routes using the same base URL, *please declare your LocaleRoute method before the Route method*. If you don't, the normal route will be discarded by the locale route attribution process.
@@ -192,32 +218,6 @@ Route::get('/', function () {
     return redirect('/fr');
 });
 
-```
-
-#### Using translator files for URLs
-
-You can also use the Laravel translator to put all your locale URLs in ```resources/lang/{locale}/routes.php``` files. If there is no locale URL array, ```LocaleRoute``` will automatically check for the translated ```routes.php``` files to find URLs. All you need to do is to remove the locale URL array in ```LocaleRoute``` and declare them as ```'route' => 'url'``` in your translated route files, like this. 
-
-``` php
-// routes/web.php or app/Http/routes.php
-
-LocaleRoute::get('route', 'Controller@routeAction');
-```
-
-``` php
-// resources/lang/en/routes.php
-
-return [
-    'route' => 'url_en',
-]
-```
-
-``` php
-// resources/lang/fr/routes.php
-
-return [
-    'route' => 'url_fr',
-]
 ```
 
 ### Middleware
