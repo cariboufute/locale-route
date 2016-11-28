@@ -164,6 +164,31 @@ So the syntax can be resumed to this.
 LocaleRoute::{method}({routeName}, {Closure or controller action}, {locale URL string or array with 'locale' => 'url'});
 ```
 
+**Note:** If you declare a normal route with a URL (for instance, ```"/"```), then declare localized routes with the same base URL (besides the locale prefixes), you will lose the first route. (This is because of the localized routes that are being stored without locale before being changed by the package route decorator.)
+
+So even if the final routes are different because of the locale, the first route will be replaced.
+
+To avoid this, when normal and localized routes share the same unlocalized URL, *please declare your *LocaleRoute* method before the *Route* method*.
+
+```php
+//Here, the '/' URL will be discarded. Only "/fr" and "/en" will exist.
+
+Route::get('/', function () {
+    return redirect('/fr');
+});
+
+LocaleRoute::get('index', 'PublicController@index', ['fr' => '/', 'en' => '/']);
+
+//Here, all routes with work fine : "/", "/fr" and "/en".
+
+LocaleRoute::get('index', 'PublicController@index', ['fr' => '/', 'en' => '/']);
+
+Route::get('/', function () {
+    return redirect('/fr');
+});
+
+```
+
 #### Using translator files for URLs
 
 You can also use the Laravel translator to put all your locale URLs in ```resources/lang/{locale}/routes.php``` files. If there is no locale URL array, ```LocaleRoute``` will automatically check for the translated ```routes.php``` files to find URLs. All you need to do is to remove the locale URL array in ```LocaleRoute``` and declare them as ```'route' => 'url'``` in your translated route files, like this. 
