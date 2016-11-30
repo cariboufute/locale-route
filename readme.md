@@ -194,7 +194,7 @@ return [
 
 If you declare localized and unlocalized routes using the same base URL, *please declare your LocaleRoute method before the Route method*. If you don't, the normal route will be discarded by the locale route attribution process.
 
-For instance, if you declare a normal route with ```"/"``` to redirect to the fallback locale (for instance, ```"/en"```) before the localized routes (for instance, ```"/en"``` and ```"/en"```), the localized routes with replace the first route before being added the locale. Declaring locale routes before the normal unlocalized route will cause no problems.
+For instance, if you declare a normal route with ```"/"``` to redirect to the fallback locale (for instance, ```"/en"```) before the localized routes (for instance, ```"/en"``` and ```"/fr"```), the localized routes with replace the first route before being added the locale. Declaring locale routes before the normal unlocalized route will cause no problems.
 
 ```php
 /**
