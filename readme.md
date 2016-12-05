@@ -13,8 +13,6 @@ LocaleRoute has a syntax close to the original Laravel routing methods, so the i
 
 For an example of LocaleRoute implementation, please check my [locale-route-example repo](https://github.com/cariboufute/locale-route-example).
 
-**This should be the last beta version before "official" release.**
-
 ## Change log
 
 Please see [changelog](changelog.md) for more information what has changed recently and what will be added soon.
@@ -29,7 +27,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route 1.0.0-beta6
+composer require cariboufute/locale-route 1.0.0
 ```
 
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
