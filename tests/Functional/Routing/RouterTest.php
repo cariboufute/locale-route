@@ -49,7 +49,9 @@ class RouterTest extends TestCase
 
     public function makeMethodTest($method)
     {
-        $this->router->$method('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yes!';}]);
+        $this->router->$method('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {
+            return 'yes!';
+        }]);
 
         $this->call($method, 'fr/test');
         $this->assertResponseOk();
@@ -60,8 +62,12 @@ class RouterTest extends TestCase
 
     public function testGetWithSameUriAndDifferentLocale()
     {
-        $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
-        $this->router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+        $this->router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {
+            return 'yé!';
+        }]);
+        $this->router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {
+            return 'yé!';
+        }]);
 
         //To test that route collection is well refreshed and
         //that there is no duplication of routes
@@ -79,7 +85,6 @@ class RouterTest extends TestCase
 
         $this->call('GET', route('en.route'));
         $this->assertResponseOk();
-
     }
 
     public function testGetInGroup()
@@ -87,7 +92,9 @@ class RouterTest extends TestCase
         $router = $this->router;
 
         $router->group(['as' => 'group.', 'prefix' => 'group'], function () use ($router) {
-            $router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+            $router->get('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {
+                return 'yé!';
+            }]);
         });
 
         $this->call('GET', 'fr/group/test');
@@ -102,7 +109,9 @@ class RouterTest extends TestCase
         $router = $this->router;
 
         $router->group(['locale' => 'fr', 'as' => 'group.', 'prefix' => 'group'], function () use ($router) {
-            $router->get('test', ['as' => 'route', 'uses' => function () {return 'yé!';}]);
+            $router->get('test', ['as' => 'route', 'uses' => function () {
+                return 'yé!';
+            }]);
         });
 
         $this->call('GET', 'fr/group/test');
@@ -117,7 +126,9 @@ class RouterTest extends TestCase
         $router = $this->router;
 
         $router->group(['locale' => 'fr', 'as' => 'group.', 'prefix' => 'group'], function () use ($router) {
-            $router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {return 'yé!';}]);
+            $router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => function () {
+                return 'yé!';
+            }]);
         });
 
         $this->call('GET', 'en/group/test');

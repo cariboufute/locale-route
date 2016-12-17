@@ -83,5 +83,4 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
         return $this->localeRouter->get($name, $action, $uris);
     }
-
 }

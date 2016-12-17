@@ -400,6 +400,54 @@ other_locale('fr')                      //gets the same URL in French with curre
 other_locale('de', [])                  //gets the same URL in German with no parameters, when there are parameters in the current route.
 ```
 
+### Translate URL parameters
+
+Translation of url parameters takes several steps:
+
+#### 1. Define translatable parameters
+
+```php
+// resources/lang/fr/routes.php
+
+return [
+    '!parameters' => [
+        'user' => 'usager',
+        'admin' => 'administrateur',
+    ],
+    
+    'login' => '/login/{user_type}'
+];
+```
+
+#### 2. Fetch URL with translatable parameters
+
+All of helper functions described above will translate parameters which was defined in '!parameters' block. Some of locales may not contain '!parameters' block, that's fine too, parameters will be passed as is. So, for e.g. we retrieve login page for different user types:
+
+```php
+locale_route('en', 'login', 'user');    // return '/en/login/user'
+locale_route('fr', 'login', 'user');    // return '/fr/login/usager'
+other_route('login', 'admin');          // return '/fr/login/administrateur'
+other_locale('en');                     // return '/en/login/admin'
+```
+
+#### 3. Back translation parameters for controllers
+
+Controllers shouldn't know about current locale and expect same parameters in every language, so we have to translate url parameters back before passing it to controller. Add middleware ```CaribouFute\LocaleRoute\Middleware\TranslateUrlParameters``` to specific LocaleRoute for handling with back translation of parameters:
+
+```php
+// routes/web.php or app/Http/routes.php
+
+LocaleRoute::get(
+    'login', 
+    'AccountController@login', 
+    [
+        'middleware' => 'CaribouFute\LocaleRoute\Middleware\TranslateUrlParameters'
+    ]
+);
+```
+
+Then, the method ```login``` of ```AccountController``` will always receive original user type from collection ```(user|admin)```
+
 ## Contributing
 
 Please see [contributing](contributing.md) and [conduct](conduct.md) for details.

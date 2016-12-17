@@ -95,7 +95,6 @@ class RouterTest extends TestCase
         $testRoute = $this->router->addLocale($route, $action);
 
         $this->assertSame($route, $testRoute);
-
     }
 
     public function testSwitchRouteLocaleDoesNothingWhenNoName()
