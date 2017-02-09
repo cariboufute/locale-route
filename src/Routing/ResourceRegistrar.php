@@ -31,7 +31,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     protected function addResourceIndex($name, $base, $controller, $options)
     {
         $uri = $this->getResourceUri($name);
-        $name = $this->getResourceName($name, 'index', $options);
+        $name = $this->getResourceRouteName($name, 'index', $options);
         $action = $this->getLocaleResourceAction($controller, 'index');
 
         return $this->localeRouter->get($name, $action, $uri);
@@ -41,7 +41,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     {
         $base = $this->getResourceUri($name);
         $uris = $this->getLocaleUris($base, 'create', $options);
-        $name = $this->getResourceName($name, 'create', $options);
+        $name = $this->getResourceRouteName($name, 'create', $options);
         $action = $this->getLocaleResourceAction($controller, 'create');
 
         return $this->localeRouter->get($name, $action, $uris);
@@ -68,7 +68,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     protected function addResourceShow($name, $base, $controller, $options)
     {
         $uri = $this->getResourceUri($name) . '/{' . $base . '}';
-        $name = $this->getResourceName($name, 'show', $options);
+        $name = $this->getResourceRouteName($name, 'show', $options);
         $action = $this->getLocaleResourceAction($controller, 'show');
 
         return $this->localeRouter->get($name, $action, $uri);
@@ -78,7 +78,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     {
         $base = $this->getResourceUri($name) . '/{' . $base . '}';
         $uris = $this->getLocaleUris($base, 'edit', $options);
-        $name = $this->getResourceName($name, 'edit', $options);
+        $name = $this->getResourceRouteName($name, 'edit', $options);
         $action = $this->getLocaleResourceAction($controller, 'edit');
 
         return $this->localeRouter->get($name, $action, $uris);
