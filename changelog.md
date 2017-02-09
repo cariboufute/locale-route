@@ -5,6 +5,12 @@ All Notable changes to `locale-route` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Next]
+### Added
+- Laravel 5.4 support.
+- Implementing pull requests.
+
+
 ## [1.0.0] – 2016-12-05
 ### Changed
 
