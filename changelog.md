@@ -6,10 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Next]
-### Added
-- Laravel 5.4 support.
+### To add
+
 - Implementing pull requests.
 
+## [1.1.0] – 2017-02-09
+### Added
+
+- Laravel 5.4 support. Laravel 5.1 to 5.3 support kept for version 1.0.
 
 ## [1.0.0] – 2016-12-05
 ### Changed

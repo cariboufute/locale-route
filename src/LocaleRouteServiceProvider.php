@@ -17,7 +17,7 @@ class LocaleRouteServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config/localeroute.php' => config_path('localeroute.php')]);
         $this->mergeConfigFrom(__DIR__ . '/config/localeroute.php', 'localeroute');
 
-        $router->middleware('locale.session', SetSessionLocale::class);
+        $router->aliasMiddleware('locale.session', SetSessionLocale::class);
     }
 
     public function register()

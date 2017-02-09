@@ -32,7 +32,7 @@ class LocaleTest extends TestCase
     public function testSet()
     {
         $locale = 'es';
-        Session::shouldReceive('set')->with('locale', $locale);
+        Session::shouldReceive('put')->with('locale', $locale);
         Session::shouldReceive('get')->with('locale')->andReturn($locale);
         $this->locale->set($locale);
 
@@ -42,7 +42,7 @@ class LocaleTest extends TestCase
     public function testGetFallbackLocaleIfNone()
     {
         Session::shouldReceive('get')->with('locale')->andReturn(null);
-        Session::shouldReceive('set')->with('locale', $this->fallbackLocale);
+        Session::shouldReceive('put')->with('locale', $this->fallbackLocale);
 
         $this->assertSame($this->fallbackLocale, $this->locale->get());
     }

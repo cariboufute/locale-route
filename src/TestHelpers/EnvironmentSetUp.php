@@ -23,7 +23,7 @@ trait EnvironmentSetUp
         $app['locale-route'] = app()->make(LocaleRouter::class);
         $app['locale-route-url'] = app()->make(PrefixRoute::class);
 
-        $app['router']->middleware('locale.session', SetSessionLocale::class);
+        $app['router']->aliasMiddleware('locale.session', SetSessionLocale::class);
     }
 
     public function getRouteInfo()

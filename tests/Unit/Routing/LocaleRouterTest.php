@@ -92,5 +92,7 @@ class LocaleRouterTest extends TestCase
         }
 
         $this->localeRouter->$method($route, $action, $options);
+
+        $this->assertTrue(true);
     }
 }

@@ -15,7 +15,12 @@ abstract class Base
 
     public function set($value)
     {
-        return Session::set($this->key, $value);
+        return $this->put($value);
+    }
+
+    public function put($value)
+    {
+        return Session::put($this->key, $value);
     }
 
     protected function setAndGetDefault()

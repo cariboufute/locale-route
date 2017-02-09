@@ -19,15 +19,17 @@ Please see [changelog](changelog.md) for more information what has changed recen
 
 ## Requirements
 
-- PHP 5.6 or later, fully compatible with PHP 7.0
-- Laravel 5.1 to 5.3. *For Laravel 5.4, please check LocaleRoute version 1.1.*
+- PHP 7.0 or later
+- Laravel 5.4 or later
+
+*For PHP 5.6 and Laravel 5.1 to 5.3 support, please check the 1.0 version.*
 
 ## Install
 
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route 1.0.0
+composer require cariboufute/locale-route 1.1.*
 ```
 
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
