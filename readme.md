@@ -20,7 +20,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 ## Requirements
 
 - PHP 5.6 or later, fully compatible with PHP 7.0
-- Laravel 5.1 or later
+- Laravel 5.1 to 5.3. *For Laravel 5.4, please check LocaleRoute version 1.1.*
 
 ## Install
 
