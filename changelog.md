@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing pull requests.
 
+## [1.1.1] – 2017-02-09
+### Added
+
+- Laravel 5.1 to 5.4 support in same version.
+
 ## [1.1.0] – 2017-02-09
 ### Added
 
