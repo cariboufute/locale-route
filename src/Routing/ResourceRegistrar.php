@@ -28,10 +28,26 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $controller . '@' . $method;
     }
 
+    /**
+     *  Get resource name for both Laravel 5.4 (getResourceRouteName) and Laravel <5.4 (getResourceName)
+     *  @param $resource: the resource name
+     *  @param $method: the controller method
+     *  @param $options: different options
+     *  @return the route name
+     */
+    protected function getResourceName($resource, $method, $options)
+    {
+        if (method_exists($this, 'getResourceRouteName')) {
+            return $this->getResourceRouteName($resource, $method, $options);
+        } else {
+            return parent::getResourceName($resource, $method, $options);
+        }
+    }
+
     protected function addResourceIndex($name, $base, $controller, $options)
     {
         $uri = $this->getResourceUri($name);
-        $name = $this->getResourceRouteName($name, 'index', $options);
+        $name = $this->getResourceName($name, 'index', $options);
         $action = $this->getLocaleResourceAction($controller, 'index');
 
         return $this->localeRouter->get($name, $action, $uri);
@@ -41,7 +57,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     {
         $base = $this->getResourceUri($name);
         $uris = $this->getLocaleUris($base, 'create', $options);
-        $name = $this->getResourceRouteName($name, 'create', $options);
+        $name = $this->getResourceName($name, 'create', $options);
         $action = $this->getLocaleResourceAction($controller, 'create');
 
         return $this->localeRouter->get($name, $action, $uris);
@@ -68,7 +84,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     protected function addResourceShow($name, $base, $controller, $options)
     {
         $uri = $this->getResourceUri($name) . '/{' . $base . '}';
-        $name = $this->getResourceRouteName($name, 'show', $options);
+        $name = $this->getResourceName($name, 'show', $options);
         $action = $this->getLocaleResourceAction($controller, 'show');
 
         return $this->localeRouter->get($name, $action, $uri);
@@ -78,7 +94,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     {
         $base = $this->getResourceUri($name) . '/{' . $base . '}';
         $uris = $this->getLocaleUris($base, 'edit', $options);
-        $name = $this->getResourceRouteName($name, 'edit', $options);
+        $name = $this->getResourceName($name, 'edit', $options);
         $action = $this->getLocaleResourceAction($controller, 'edit');
 
         return $this->localeRouter->get($name, $action, $uris);
