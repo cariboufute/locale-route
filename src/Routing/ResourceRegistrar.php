@@ -28,6 +28,22 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $controller . '@' . $method;
     }
 
+    /**
+     *  Get resource name for both Laravel 5.4 (getResourceRouteName) and Laravel <5.4 (getResourceName)
+     *  @param string $resource : the resource name
+     *  @param string $method : the controller method
+     *  @param array $options : different options
+     *  @return string
+     */
+    protected function getResourceName($resource, $method, $options)
+    {
+        if (method_exists($this, 'getResourceRouteName')) {
+            return $this->getResourceRouteName($resource, $method, $options);
+        } else {
+            return parent::getResourceName($resource, $method, $options);
+        }
+    }
+
     protected function addResourceIndex($name, $base, $controller, $options)
     {
         $uri = $this->getResourceUri($name);

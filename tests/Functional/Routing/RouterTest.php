@@ -53,11 +53,28 @@ class RouterTest extends TestCase
             return 'yes!';
         }]);
 
-        $this->call($method, 'fr/test');
-        $this->assertResponseOk();
+        $this->makeAssertMethodTest($method);
+    }
 
-        $this->call($method, route('fr.route'));
-        $this->assertResponseOk();
+    protected function makeAssertMethodTest($method)
+    {
+        $response = $this->call($method, 'fr/test');
+        $this->assertSame(200, $response->getStatusCode());
+
+        $response = $this->call($method, route('fr.route'));
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testAny()
+    {
+        $this->router->any('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yes!';}]);
+
+        $this->makeAssertMethodTest('get');
+        $this->makeAssertMethodTest('post');
+        $this->makeAssertMethodTest('put');
+        $this->makeAssertMethodTest('patch');
+        $this->makeAssertMethodTest('delete');
+        $this->makeAssertMethodTest('options');
     }
 
     public function testGetWithSameUriAndDifferentLocale()
@@ -74,17 +91,17 @@ class RouterTest extends TestCase
         //after adding changed route.
         $this->assertSame(2, $this->router->getRoutes()->count());
 
-        $this->call('GET', 'fr/test');
-        $this->assertResponseOk();
+        $response = $this->call('GET', 'fr/test');
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', route('fr.route'));
-        $this->assertResponseOk();
+        $response = $this->call('GET', route('fr.route'));
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', 'en/test');
-        $this->assertResponseOk();
+        $response = $this->call('GET', 'en/test');
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', route('en.route'));
-        $this->assertResponseOk();
+        $response = $this->call('GET', route('en.route'));
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     public function testGetInGroup()
@@ -97,11 +114,11 @@ class RouterTest extends TestCase
             }]);
         });
 
-        $this->call('GET', 'fr/group/test');
-        $this->assertResponseOk();
+        $response = $this->call('GET', 'fr/group/test');
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', route('fr.group.route'));
-        $this->assertResponseOk();
+        $response = $this->call('GET', route('fr.group.route'));
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     public function testGetInLocaleGroup()
@@ -114,11 +131,11 @@ class RouterTest extends TestCase
             }]);
         });
 
-        $this->call('GET', 'fr/group/test');
-        $this->assertResponseOk();
+        $response = $this->call('GET', 'fr/group/test');
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', route('fr.group.route'));
-        $this->assertResponseOk();
+        $response = $this->call('GET', route('fr.group.route'));
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     public function testLocaleGetInLocaleGroupTakesGetLocale()
@@ -131,10 +148,10 @@ class RouterTest extends TestCase
             }]);
         });
 
-        $this->call('GET', 'en/group/test');
-        $this->assertResponseOk();
+        $response = $this->call('GET', 'en/group/test');
+        $this->assertSame(200, $response->getStatusCode());
 
-        $this->call('GET', route('en.group.route'));
-        $this->assertResponseOk();
+        $response = $this->call('GET', route('en.group.route'));
+        $this->assertSame(200, $response->getStatusCode());
     }
 }

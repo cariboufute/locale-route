@@ -17,7 +17,21 @@ class LocaleRouteServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config/localeroute.php' => config_path('localeroute.php')]);
         $this->mergeConfigFrom(__DIR__ . '/config/localeroute.php', 'localeroute');
 
-        $router->middleware('locale.session', SetSessionLocale::class);
+        $this->aliasMiddleware($router);
+    }
+
+    /**
+     *  Adds locale.session middleware alias to both Laravel 5.4 (aliasMiddleware) and Laravel <5.4 (middleware)
+     *  @param Router $router: the app router
+     *  @return void
+     */
+    protected function aliasMiddleware(Router $router)
+    {
+        if (method_exists($router, 'aliasMiddleware')) {
+            $router->aliasMiddleware('locale.session', SetSessionLocale::class);
+        } else {
+            $router->middleware('locale.session', SetSessionLocale::class);
+        }
     }
 
     public function register()

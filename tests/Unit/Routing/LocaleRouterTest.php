@@ -36,6 +36,11 @@ class LocaleRouterTest extends TestCase
         $this->makeRouteTest('get', ['auth', 'guest']);
     }
 
+    public function testAny()
+    {
+        $this->makeRouteTest('any');
+    }
+
     public function testGet()
     {
         $this->makeRouteTest('get');
@@ -92,5 +97,7 @@ class LocaleRouterTest extends TestCase
         }
 
         $this->localeRouter->$method($route, $action, $options);
+
+        $this->assertTrue(true);
     }
 }

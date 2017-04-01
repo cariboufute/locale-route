@@ -21,6 +21,11 @@ class RouterTest extends TestCase
         $this->router = Mockery::mock(Router::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
+    public function testAny()
+    {
+        $this->makeRouteTest('any');
+    }
+
     public function testGet()
     {
         $this->makeRouteTest('get');

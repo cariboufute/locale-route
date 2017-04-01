@@ -5,6 +5,26 @@ All Notable changes to `locale-route` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Next]
+### To add
+
+- Implementing pull requests.
+
+## [1.2.0] – 2017-04-01
+### Added
+
+- LocaleRoute::any method.
+
+## [1.1.1] – 2017-02-09
+### Added
+
+- Laravel 5.1 to 5.4 support in same version.
+
+## [1.1.0] – 2017-02-09
+### Added
+
+- Laravel 5.4 support. Laravel 5.1 to 5.3 support kept for version 1.0.
+
 ## [1.0.0] – 2016-12-05
 ### Changed
 

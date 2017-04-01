@@ -19,7 +19,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 
 ## Requirements
 
-- PHP 5.6 or later, fully compatible with PHP 7.0
+- PHP 5.6 or later, fully compatible with PHP 7.0 and later.
 - Laravel 5.1 or later
 
 ## Install
@@ -27,7 +27,7 @@ Please see [changelog](changelog.md) for more information what has changed recen
 First install the package through Composer by typing this line in the terminal at the root of your Laravel application.
 
 ``` bash
-composer require cariboufute/locale-route 1.0.0
+composer require cariboufute/locale-route
 ```
 
 Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
@@ -135,6 +135,8 @@ LocaleRoute::put('route', 'Controller@putAction', ['fr' => 'url_fr', 'en' => 'u
 LocaleRoute::patch('route', 'Controller@patchAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::delete('route', 'Controller@deleteAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::options('route', 'Controller@optionsAction', ['fr' => 'url_fr', 'en' => 'url_en']);
+LocaleRoute::any('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
+
 ```
 
 For the first line, it is the equivalent of declaring this in pure Laravel, while having the app locale set to the right locale.
