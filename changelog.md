@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing pull requests.
 
+## [1.2.0] – 2017-04-01
+### Added
+
+- LocaleRoute::any method.
+
 ## [1.1.1] – 2017-02-09
 ### Added
 
