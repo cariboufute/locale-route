@@ -51,11 +51,28 @@ class RouterTest extends TestCase
     {
         $this->router->$method('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yes!';}]);
 
+        $this->makeAssertMethodTest($method);
+    }
+
+    protected function makeAssertMethodTest($method)
+    {
         $response = $this->call($method, 'fr/test');
         $this->assertSame(200, $response->getStatusCode());
 
         $response = $this->call($method, route('fr.route'));
         $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testAny()
+    {
+        $this->router->any('test', ['locale' => 'fr', 'as' => 'route', 'uses' => function () {return 'yes!';}]);
+
+        $this->makeAssertMethodTest('get');
+        $this->makeAssertMethodTest('post');
+        $this->makeAssertMethodTest('put');
+        $this->makeAssertMethodTest('patch');
+        $this->makeAssertMethodTest('delete');
+        $this->makeAssertMethodTest('options');
     }
 
     public function testGetWithSameUriAndDifferentLocale()

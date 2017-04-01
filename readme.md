@@ -135,8 +135,6 @@ LocaleRoute::put('route', 'Controller@putAction', ['fr' => 'url_fr', 'en' => 'u
 LocaleRoute::patch('route', 'Controller@patchAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::delete('route', 'Controller@deleteAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 LocaleRoute::options('route', 'Controller@optionsAction', ['fr' => 'url_fr', 'en' => 'url_en']);
-
-// You can also use `any`
 LocaleRoute::any('route', 'Controller@getAction', ['fr' => 'url_fr', 'en' => 'url_en']);
 
 ```
