@@ -21,6 +21,11 @@ class RouterTest extends TestCase
         $this->router = Mockery::mock(Router::class, [$this->illuminateRouter, $this->url, $this->route])->makePartial();
     }
 
+    public function testAny()
+    {
+        $this->makeRouteTest('any');
+    }
+
     public function testGet()
     {
         $this->makeRouteTest('get');
@@ -95,7 +100,6 @@ class RouterTest extends TestCase
         $testRoute = $this->router->addLocale($route, $action);
 
         $this->assertSame($route, $testRoute);
-
     }
 
     public function testSwitchRouteLocaleDoesNothingWhenNoName()

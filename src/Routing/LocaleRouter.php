@@ -23,7 +23,11 @@ class LocaleRouter
         $this->router = $router;
         $this->prefixRoute = $prefixRoute;
         $this->prefixUrl = $prefixUrl;
+    }
 
+    public function any($route, $action, $options = [])
+    {
+        $this->makeRoutes('any', $route, $action, $options);
     }
 
     public function get($route, $action, $options = [])
