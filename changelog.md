@@ -8,7 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Next]
 ### To add
 
-- Implementing pull requests.
+- Implementing localized parameters pull request.
+
+## [1.2.1] – 2017-04-02
+### Changed
+
+- Helpers functions now fall back to default route handling when no locale route is available. This keeps *other_locale* helper function from raising errors in unlocalized pages.
+
+- LocaleRoute::any method.
 
 ## [1.2.0] – 2017-04-01
 ### Added
