@@ -15,8 +15,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Helpers functions now fall back to default route handling when no locale route is available. This keeps *other_locale* helper function from raising errors in unlocalized pages.
 
-- LocaleRoute::any method.
-
 ## [1.2.0] – 2017-04-01
 ### Added
 
