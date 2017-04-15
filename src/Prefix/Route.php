@@ -25,7 +25,7 @@ class Route extends Base
     {
         $locale = $locale ?: App::getLocale();
         $name = $name ?: $this->getCurrentRouteName();
-        $localeName = $this->url->switchLocale($locale, $name);
+        $localeName = $this->switchLocale($locale, $name);
         $parameters = $this->translateParameters($locale, $parameters);
 
         return $this->getLocaleOrNotLocaleRouteUrl($localeName, $name, $parameters, $absolute);
