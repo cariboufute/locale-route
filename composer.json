@@ -57,7 +57,7 @@
                 "CaribouFute\\LocaleRoute\\LocaleRouteServiceProvider"
             ],
             "aliases": {
-                "LocaleRoute": "CaribouFute\LocaleRoute\Facades\LocaleRoute"
+                "LocaleRoute": "CaribouFute\\LocaleRoute\\Facades\\LocaleRoute"
             }
         }
     },
