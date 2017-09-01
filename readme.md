@@ -30,7 +30,9 @@ First install the package through Composer by typing this line in the terminal a
 composer require cariboufute/locale-route
 ```
 
-Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
+### For Laravel 5.4 and earlier
+
+In Laravel 5.5, Package Discovery installs service provider and ```LocaleRoute``` alias automatically. But if you have Laravel 5.4 and earlier, add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
 // config/app.php
@@ -47,6 +49,8 @@ Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```
 ],
 ```
 
+### Middleware
+
 In your ```app/Http/Kernel.app``` file, add the ```SetLocale``` middleware in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route and will keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
 
 ``` php
@@ -61,6 +65,8 @@ protected $middlewareGroups = [
     //...
 ];
 ```
+
+### Config file
 
 Finally install the config file of the package by typing this line in the terminal at the root of your Laravel application.
 
