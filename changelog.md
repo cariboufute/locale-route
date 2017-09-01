@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.3.0] – 2017-09-01
 ### Added
-- Laravel Package Discovery parameters in composer.json for automatic adding of service provider and ```LocaleRoute``` façade.
+- Laravel 5.5 Package Discovery parameters in composer.json for automatic adding of service provider and ```LocaleRoute``` façade.
 
 ## [1.2.1] – 2017-04-02
 ### Changed
