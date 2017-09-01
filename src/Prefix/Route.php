@@ -28,10 +28,10 @@ class Route extends Base
         $localeName = $this->switchLocale($locale, $name);
         $parameters = $this->translateParameters($locale, $parameters);
 
-        return $this->getLocaleOrNotLocaleRouteUrl($localeName, $name, $parameters, $absolute);
+        return $this->getRouteUrl($localeName, $name, $parameters, $absolute);
     }
 
-    protected function getLocaleOrNotLocaleRouteUrl($localeName = null, $name = null, $parameters = [], $absolute = true)
+    protected function getRouteUrl($localeName = null, $name = null, $parameters = [], $absolute = true)
     {
         try {
             $url = $this->url->route($localeName, $parameters, $absolute);
@@ -44,21 +44,19 @@ class Route extends Base
         return $url;
     }
 
-    private function translateParameters($locale, $parameters)
+    protected function translateParameters($locale, $parameters)
     {
-        if (!is_array($parameters)) {
-            $parameters = array($parameters);
-        }
+        $parameters = is_array($parameters) ? $parameters : [$parameters];
+        $localeParams = [];
 
-        $translated_parameters = array();
-        foreach ($parameters as $parameter) {
-            if (!is_numeric($parameter) && Lang::has('routes.!parameters.' . $parameter, $locale)) {
-                $translated_parameters[] = Lang::get('routes.!parameters.' . $parameter, [], $locale);
+        foreach ($parameters as $param) {
+            if (!is_numeric($param) && Lang::has('routes.!parameters.' . $param, $locale)) {
+                $localeParams[] = Lang::get('routes.!parameters.' . $param, [], $locale);
             } else {
-                $translated_parameters[] = $parameter;
+                $localeParams[] = $param;
             }
         }
-        return $translated_parameters;
+        return $localeParams;
     }
 
     public function getCurrentRouteName()
