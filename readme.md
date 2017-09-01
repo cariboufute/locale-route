@@ -30,7 +30,9 @@ First install the package through Composer by typing this line in the terminal a
 composer require cariboufute/locale-route
 ```
 
-Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
+### For Laravel 5.4 and earlier
+
+In Laravel 5.5, Package Discovery installs service provider and ```LocaleRoute``` alias automatically. But if you have Laravel 5.4 and earlier, add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
 // config/app.php
@@ -47,6 +49,8 @@ Add the service provider and the ```LocaleRoute``` alias in ```config/app.php```
 ],
 ```
 
+### Middleware
+
 In your ```app/Http/Kernel.app``` file, add the ```SetLocale``` middleware in the web middleware group. This will read the locale from the ```locale``` session variable, saved by each localized route and will keep the locale for redirections, even after using unlocalized routes to access models CRUD routes, for instance.
 
 ``` php
@@ -61,6 +65,8 @@ protected $middlewareGroups = [
     //...
 ];
 ```
+
+### Config file
 
 Finally install the config file of the package by typing this line in the terminal at the root of your Laravel application.
 
@@ -401,6 +407,54 @@ other_locale('en', ['id' => 1]);        //gets the same URL in English with para
 other_locale('fr')                      //gets the same URL in French with current parameters.
 other_locale('de', [])                  //gets the same URL in German with no parameters, when there are parameters in the current route.
 ```
+
+### Translate URL parameters
+
+Translation of url parameters takes several steps:
+
+#### 1. Define translatable parameters
+
+```php
+// resources/lang/fr/routes.php
+
+return [
+    '!parameters' => [
+        'user' => 'usager',
+        'admin' => 'administrateur',
+    ],
+    
+    'login' => '/login/{user_type}'
+];
+```
+
+#### 2. Fetch URL with translatable parameters
+
+All of helper functions described above will translate parameters which was defined in '!parameters' block. Some of locales may not contain '!parameters' block, that's fine too, parameters will be passed as is. So, for e.g. we retrieve login page for different user types:
+
+```php
+locale_route('en', 'login', 'user');    // return '/en/login/user'
+locale_route('fr', 'login', 'user');    // return '/fr/login/usager'
+other_route('login', 'admin');          // return '/fr/login/administrateur'
+other_locale('en');                     // return '/en/login/admin'
+```
+
+#### 3. Back translation parameters for controllers
+
+Controllers shouldn't know about current locale and expect same parameters in every language, so we have to translate url parameters back before passing it to controller. Add middleware ```CaribouFute\LocaleRoute\Middleware\TranslateUrlParameters``` to specific LocaleRoute for handling with back translation of parameters:
+
+```php
+// routes/web.php or app/Http/routes.php
+
+LocaleRoute::get(
+    'login', 
+    'AccountController@login', 
+    [
+        'middleware' => 'CaribouFute\LocaleRoute\Middleware\TranslateUrlParameters'
+    ]
+);
+```
+
+Then, the method ```login``` of ```AccountController``` will always receive original user type from collection ```(user|admin)```
 
 ## Contributing
 
