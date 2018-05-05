@@ -34,10 +34,8 @@ class HelpersTest extends TestCase
             return 'route';
         }, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
 
-        $response = $this->call('get', 'fr/article/2');
-
-        $this->assertSame(url('fr/article'), locale_route('fr', 'article.show'));
-        $this->assertSame(url('en/article'), locale_route('en', 'article.show'));
+        $this->assertSame(url('fr/article/2'), locale_route('fr', 'article.show', ['id' => 2]));
+        $this->assertSame(url('en/article/2'), locale_route('en', 'article.show', ['id' => 2]));
     }
 
     public function testLocaleRouteWithNonLocaleRouteReturnsItsUrl()
