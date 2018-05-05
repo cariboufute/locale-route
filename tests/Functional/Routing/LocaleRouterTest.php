@@ -171,4 +171,17 @@ class LocaleRouterTest extends TestCase
         $response = $this->call('get', '/en/create/3');
         $this->assertSame(200, $response->getStatusCode());
     }
+
+    public function testLocaleRouteCanTreatTrailingMethods()
+    {
+        LocaleRoute::get('create', function () {
+            return 'create';
+        }, 'create/{id}')->where(['id' => '[0-3]']);
+
+        $response = $this->call('get', '/fr/create/2');
+        $this->assertSame(200, $response->getStatusCode());
+
+        $response = $this->call('get', '/fr/create/4');
+        $this->assertSame(404, $response->getStatusCode());
+    }
 }

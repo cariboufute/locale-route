@@ -27,4 +27,11 @@ class RouteCollection extends IlluminateRouteCollection
             $this->add($route);
         }
     }
+
+    public function __call($name, $arguments)
+    {
+        foreach ($this->getRoutes() as $route) {
+            call_user_func_array([$route, $name], $arguments);
+        }
+    }
 }
