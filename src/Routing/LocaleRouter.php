@@ -8,6 +8,7 @@ use CaribouFute\LocaleRoute\Routing\ResourceRegistrar;
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 
 class LocaleRouter
@@ -26,47 +27,47 @@ class LocaleRouter
         $this->prefixUrl = $prefixUrl;
     }
 
-    public function any($route, $action, $options = [])
+    public function any($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('any', $route, $action, $options);
     }
 
-    public function get($route, $action, $options = [])
+    public function get($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('get', $route, $action, $options);
     }
 
-    public function post($route, $action, $options = [])
+    public function post($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('post', $route, $action, $options);
     }
 
-    public function put($route, $action, $options = [])
+    public function put($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('put', $route, $action, $options);
     }
 
-    public function patch($route, $action, $options = [])
+    public function patch($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('patch', $route, $action, $options);
     }
 
-    public function delete($route, $action, $options = [])
+    public function delete($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('delete', $route, $action, $options);
     }
 
-    public function options($route, $action, $options = [])
+    public function options($route, $action, $options = []): RouteCollection
     {
         return $this->makeRoutes('options', $route, $action, $options);
     }
 
-    public function makeRoutes($method, $route, $action, $options = [])
+    public function makeRoutes($method, $route, $action, $options = []): RouteCollection
     {
         $options = is_string($options) ? $this->convertOptionUrlsToArray($options) : $options;
         $routeCollection = new RouteCollection();
 
-        foreach($this->locales($options) as $locale) {
+        foreach ($this->locales($options) as $locale) {
             $routeObject = $this->makeRoute($locale, $method, $route, $action, $options);
             $routeCollection->add($routeObject);
         }
@@ -74,7 +75,7 @@ class LocaleRouter
         return $routeCollection;
     }
 
-    protected function convertOptionUrlsToArray($options)
+    protected function convertOptionUrlsToArray($options): array
     {
         $newOptions = [];
 
@@ -85,7 +86,7 @@ class LocaleRouter
         return $newOptions;
     }
 
-    public function makeRoute($locale, $method, $route, $action, $options = [])
+    public function makeRoute($locale, $method, $route, $action, $options = []): Route
     {
         $url = $this->prefixUrl->rawRouteUrl($locale, $route, $options);
 
@@ -101,7 +102,7 @@ class LocaleRouter
         return $route;
     }
 
-    protected function fillAction($locale, $route, $action, $options)
+    protected function fillAction($locale, $route, $action, $options): array
     {
         $action['locale'] = $locale;
         $action['as'] = $route;
@@ -111,11 +112,6 @@ class LocaleRouter
         }
 
         return $action;
-    }
-
-    protected function makeRouteCollection(array $routes)
-    {
-
     }
 
     public function resource($route, $controller, $options = [])

@@ -21,9 +21,9 @@ class LocaleRouteServiceProvider extends ServiceProvider
     }
 
     /**
-     *  Adds locale.session middleware alias to both Laravel 5.4 (aliasMiddleware) and Laravel <5.4 (middleware)
-     *  @param Router $router: the app router
-     *  @return void
+     * Adds locale.session middleware alias to both Laravel 5.4 (aliasMiddleware) and Laravel <5.4 (middleware)
+     * @param Router $router the app router
+     * @return void
      */
     protected function aliasMiddleware(Router $router)
     {
