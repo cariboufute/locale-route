@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [1.4.0] – 2018-05-05
+### Added
+- Laravel 5.6 support.
+- Support of trailing methods after LocaleRoute call (ex.: `LocaleRoute::get([...])->where([...]);`)
 
 ## [1.3.0] – 2017-09-01
 ### Added

@@ -164,6 +164,24 @@ LocaleRoute::get('route', 'Controller@getAction', 'url');
 */
 ```
 
+Now, trailing methods are supported with LocaleRoute, as with the original Laravel Route facade.
+
+```php
+//Example with URL parameter and trailing where method
+LocaleRoute::get('show', 'Controller@show', ['fr' => 'url_fr/{id}', 'en' => 'url_en/{id}'])
+    ->where(['id' => '[1-9]');
+/*
+    These routes will exist...
+
+    ['fr.route']    =>  'fr/url_fr/1'
+    ['en.route']    =>  'en/url_en/1'
+
+    ...but not these routes.
+    ['fr.route']    =>  'fr/url_fr/0'
+    ['en.route']    =>  'en/url_en/0'
+ */
+```
+
 So the syntax can be resumed to this.
 
 ```
