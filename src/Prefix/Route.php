@@ -7,6 +7,7 @@ use Lang;
 use CaribouFute\LocaleRoute\Prefix\Base;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
+use InvalidArgumentException;
 
 class Route extends Base
 {
@@ -26,11 +27,20 @@ class Route extends Base
         $name = $name ?: $this->getCurrentRouteName();
         $parameters = $this->translateParameters($locale, $parameters);
 
-        $localeRoute = $this->switchLocale($locale, $name);
-        $localeUrl = $this->url->route($localeRoute, $parameters, $absolute);
-        $localeUrl = rtrim($localeUrl, '?');
+        return $this->getLocaleOrNotLocaleRouteUrl($localeName, $name, $parameters, $absolute);
+    }
 
-        return $localeUrl;
+    protected function getLocaleOrNotLocaleRouteUrl($localeName = null, $name = null, $parameters = [], $absolute = true)
+    {
+        try {
+            $url = $this->url->route($localeName, $parameters, $absolute);
+        } catch (InvalidArgumentException $e) {
+            $url = $this->url->route($name, $parameters, $absolute);
+        }
+
+        $url = rtrim($url, '?');
+
+        return $url;
     }
 
     private function translateParameters($locale, $parameters)

@@ -8,7 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Next]
 ### To add
 
-- Implementing pull requests.
+- Implementing localized parameters pull request.
+
+## [1.4.0] – 2018-05-05
+### Added
+- Laravel 5.6 support.
+- Support of trailing methods after LocaleRoute call (ex.: `LocaleRoute::get([...])->where([...]);`)
+
+## [1.3.0] – 2017-09-01
+### Added
+- Laravel 5.5 Package Discovery parameters in composer.json for automatic adding of service provider and ```LocaleRoute``` façade.
+
+## [1.2.1] – 2017-04-02
+### Changed
+
+- Helpers functions now fall back to default route handling when no locale route is available. This keeps *other_locale* helper function from raising errors in unlocalized pages.
 
 ## [1.2.0] – 2017-04-01
 ### Added

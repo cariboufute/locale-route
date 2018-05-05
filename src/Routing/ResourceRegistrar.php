@@ -7,6 +7,8 @@ use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use Illuminate\Routing\ResourceRegistrar as IlluminateResourceRegistrar;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Translation\Translator;
+use CaribouFute\LocaleRoute\Routing\RouteCollection;
+use Illuminate\Support\Str;
 
 class ResourceRegistrar extends IlluminateResourceRegistrar
 {
@@ -30,10 +32,10 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
     /**
      *  Get resource name for both Laravel 5.4 (getResourceRouteName) and Laravel <5.4 (getResourceName)
-     *  @param string $resource : the resource name
-     *  @param string $method : the controller method
-     *  @param array $options : different options
-     *  @return string
+     * @param string $resource : the resource name
+     * @param string $method : the controller method
+     * @param array $options : different options
+     * @return string
      */
     protected function getResourceName($resource, $method, $options)
     {
@@ -98,5 +100,55 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         $action = $this->getLocaleResourceAction($controller, 'edit');
 
         return $this->localeRouter->get($name, $action, $uris);
+    }
+
+    /**
+     * Route a resource to a controller.
+     *
+     * @param  string $name
+     * @param  string $controller
+     * @param  array $options
+     * @return \Illuminate\Routing\RouteCollection
+     */
+    public function register($name, $controller, array $options = [])
+    {
+        if (isset($options['parameters']) && !isset($this->parameters)) {
+            $this->parameters = $options['parameters'];
+        }
+
+        // If the resource name contains a slash, we will assume the developer wishes to
+        // register these resource routes with a prefix so we will set that up out of
+        // the box so they don't have to mess with it. Otherwise, we will continue.
+        if (Str::contains($name, '/')) {
+            $this->prefixedResource($name, $controller, $options);
+
+            return;
+        }
+
+        // We need to extract the base resource from the resource name. Nested resources
+        // are supported in the framework, but we need to know what name to use for a
+        // place-holder on the route parameters, which should be the base resources.
+        $base = $this->getResourceWildcard(last(explode('.', $name)));
+
+        $defaults = $this->resourceDefaults;
+
+        $collection = new RouteCollection;
+
+        foreach ($this->getResourceMethods($defaults, $options) as $m) {
+            $routes = $this->{'addResource' . ucfirst($m)}($name, $base, $controller, $options);
+
+            if (is_a($routes, RouteCollection::class)) {
+                foreach ($routes->getRoutes() as $route) {
+                    $collection->add($route);
+                }
+            } else {
+                $collection->add($route);
+            }
+            /*$collection->add($this->{'addResource' . ucfirst($m)}(
+                $name, $base, $controller, $options
+            ));*/
+        }
+
+        return $collection;
     }
 }

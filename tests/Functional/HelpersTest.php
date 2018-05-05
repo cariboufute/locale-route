@@ -5,6 +5,7 @@ namespace Tests\Functional;
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Orchestra\Testbench\TestCase;
+use Route;
 use Session;
 use Lang;
 
@@ -34,10 +35,32 @@ class HelpersTest extends TestCase
             return 'route';
         }, ['fr' => 'article/{id}', 'en' => 'article/{id}']);
 
-        $response = $this->call('get', 'fr/article/2');
+        $this->assertSame(url('fr/article/2'), locale_route('fr', 'article.show', ['id' => 2]));
+        $this->assertSame(url('en/article/2'), locale_route('en', 'article.show', ['id' => 2]));
+    }
 
-        $this->assertSame(url('fr/article'), locale_route('fr', 'article.show'));
-        $this->assertSame(url('en/article'), locale_route('en', 'article.show'));
+    public function testLocaleRouteWithNonLocaleRouteReturnsItsUrl()
+    {
+        Route::get('route', ['as' => 'route', 'uses' => function () {
+            return 'route';
+        }]);
+
+        $this->assertSame(url('route'), locale_route('fr', 'route'));
+        $this->assertSame(url('route'), locale_route('en', 'route'));
+    }
+
+    public function testLocaleRouteWithLocaleAndNonLocaleRoutesReturnsLocaleRouteUrl()
+    {
+        LocaleRoute::get('route', function () {
+            return 'route';
+        }, ['fr' => 'route_fr', 'en' => 'route_en']);
+
+        Route::get('route', ['as' => 'route', 'uses' => function () {
+            return 'route';
+        }]);
+
+        $this->assertSame(url('fr/route_fr'), locale_route('fr', 'route'));
+        $this->assertSame(url('en/route_en'), locale_route('en', 'route'));
     }
 
     public function testOtherLocaleWithDefaultParameters()
@@ -50,6 +73,18 @@ class HelpersTest extends TestCase
 
         $this->assertSame(url('fr/article/2'), other_locale('fr'));
         $this->assertSame(url('en/article/2'), other_locale('en'));
+    }
+
+    public function testOtherLocaleReturnsNonLocaleUrlWhenNotLocalized()
+    {
+        Route::get('route', ['as' => 'route', 'uses' => function () {
+            return 'route';
+        }]);
+
+        $response = $this->call('get', 'route');
+
+        $this->assertSame(url('route'), other_locale('fr'));
+        $this->assertSame(url('route'), other_locale('en'));
     }
 
     public function testOtherRouteWithEmptyParameters()
