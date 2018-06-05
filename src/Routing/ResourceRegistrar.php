@@ -151,5 +151,4 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
 
         return $collection;
     }
-
 }

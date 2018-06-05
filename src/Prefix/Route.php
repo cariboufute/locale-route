@@ -3,6 +3,7 @@
 namespace CaribouFute\LocaleRoute\Prefix;
 
 use App;
+use Lang;
 use CaribouFute\LocaleRoute\Prefix\Base;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
@@ -24,7 +25,7 @@ class Route extends Base
     {
         $locale = $locale ?: App::getLocale();
         $name = $name ?: $this->getCurrentRouteName();
-        $localeName = $this->switchLocale($locale, $name);
+        $parameters = $this->translateParameters($locale, $parameters);
 
         return $this->getLocaleOrNotLocaleRouteUrl($localeName, $name, $parameters, $absolute);
     }
@@ -40,6 +41,23 @@ class Route extends Base
         $url = rtrim($url, '?');
 
         return $url;
+    }
+
+    private function translateParameters($locale, $parameters)
+    {
+        if (!is_array($parameters)) {
+            $parameters = array($parameters);
+        }
+
+        $translated_parameters = array();
+        foreach ($parameters as $parameter) {
+            if (!is_numeric($parameter) && Lang::has('routes.!parameters.'.$parameter, $locale)) {
+                $translated_parameters[] = Lang::get('routes.!parameters.'.$parameter, [], $locale);
+            } else {
+                $translated_parameters[] = $parameter;
+            }
+        }
+        return $translated_parameters;
     }
 
     public function getCurrentRouteName()

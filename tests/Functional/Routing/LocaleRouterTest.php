@@ -117,10 +117,9 @@ class LocaleRouterTest extends TestCase
         $response = $this->call('get', '/en/group/create');
         $this->assertSame(200, $response->getStatusCode());
 
+
         $response = $this->call('post', '/group/store');
         $this->assertSame(302, $response->getStatusCode());
-        //$this->assertRedirectedTo('en/group/create');
-
     }
 
     public function testGetWithRouteddRouteToUrlOption()
@@ -142,7 +141,6 @@ class LocaleRouterTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
         $response = $this->call('get', '/en/delete');
         $this->assertSame(200, $response->getStatusCode());
-
     }
 
     public function testGetWithRouteLocalesOption()
