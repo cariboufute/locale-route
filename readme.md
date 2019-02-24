@@ -19,8 +19,12 @@ Please see [changelog](changelog.md) for more information what has changed recen
 
 ## Requirements
 
-- PHP 5.6 or later, fully compatible with PHP 7.0 and later.
-- Laravel 5.1 or later
+Please choose your version of LocaleRoute according to your version of Laravel.
+
+| Laravel | LocaleRoute |
+|:-------:|:-----------:|
+| 5.5 - 5.7 | 2.* |
+| 5.1 - 5.4 | 1.* |
 
 ## Install
 
