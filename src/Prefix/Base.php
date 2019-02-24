@@ -3,6 +3,7 @@
 namespace CaribouFute\LocaleRoute\Prefix;
 
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
+use Illuminate\Support\Str;
 
 abstract class Base
 {
@@ -31,7 +32,7 @@ abstract class Base
         foreach ($this->locales() as $locale) {
             $prefix = $locale . $this->separator;
 
-            if (starts_with($string, $prefix)) {
+            if (Str::startsWith($string, $prefix)) {
                 return $prefix;
             }
         }
