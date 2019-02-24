@@ -4,9 +4,9 @@ namespace Tests\Functional;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Orchestra\Testbench\TestCase;
-use Route;
-use Session;
 
 class HelpersTest extends TestCase
 {
@@ -40,9 +40,12 @@ class HelpersTest extends TestCase
 
     public function testLocaleRouteWithNonLocaleRouteReturnsItsUrl()
     {
-        Route::get('route', ['as' => 'route', 'uses' => function () {
-            return 'route';
-        }]);
+        Route::get('route', [
+            'as' => 'route',
+            'uses' => function () {
+                return 'route';
+            }
+        ]);
 
         $this->assertSame(url('route'), locale_route('fr', 'route'));
         $this->assertSame(url('route'), locale_route('en', 'route'));
@@ -54,9 +57,12 @@ class HelpersTest extends TestCase
             return 'route';
         }, ['fr' => 'route_fr', 'en' => 'route_en']);
 
-        Route::get('route', ['as' => 'route', 'uses' => function () {
-            return 'route';
-        }]);
+        Route::get('route', [
+            'as' => 'route',
+            'uses' => function () {
+                return 'route';
+            }
+        ]);
 
         $this->assertSame(url('fr/route_fr'), locale_route('fr', 'route'));
         $this->assertSame(url('en/route_en'), locale_route('en', 'route'));
@@ -76,9 +82,12 @@ class HelpersTest extends TestCase
 
     public function testOtherLocaleReturnsNonLocaleUrlWhenNotLocalized()
     {
-        Route::get('route', ['as' => 'route', 'uses' => function () {
-            return 'route';
-        }]);
+        Route::get('route', [
+            'as' => 'route',
+            'uses' => function () {
+                return 'route';
+            }
+        ]);
 
         $response = $this->call('get', 'route');
 
