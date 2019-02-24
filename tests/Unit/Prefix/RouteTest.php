@@ -2,20 +2,25 @@
 
 namespace Tests\Unit\Prefix;
 
-use App;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
-use Config;
+use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
-use Illuminate\Translation\Translator;
+use Illuminate\Support\Facades\Config;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
 class RouteTest extends TestCase
 {
     use EnvironmentSetUp;
+
+    protected $route;
+    protected $url;
+    protected $router;
+    protected $app;
+    protected $prefixRoute;
 
     public function setUp()
     {
@@ -25,9 +30,11 @@ class RouteTest extends TestCase
 
         $this->url = Mockery::mock(UrlGenerator::class);
         $this->router = Mockery::mock(Router::class);
-        $this->translator = Mockery::mock(Translator::class);
+        $this->app = Mockery::mock(Application::class);
 
-        $this->prefixRoute = Mockery::mock(PrefixRoute::class, [$this->url, $this->router, $this->translator])->makePartial();
+        $this->app->shouldReceive('flush');
+
+        $this->prefixRoute = Mockery::mock(PrefixRoute::class, [$this->url, $this->router, $this->app])->makePartial();
     }
 
     public function testLocales()
@@ -45,9 +52,9 @@ class RouteTest extends TestCase
         $localeRoute = $locale . '.' . $route;
         $localeUrl = 'fr/route_fr';
 
+        $this->app->shouldReceive('getLocale')->once()->andReturn($locale);
         $this->route->shouldReceive('getName')->once()->andReturn($localeRoute);
 
-        App::shouldReceive('getLocale')->once()->andReturn($locale);
         $this->router->shouldReceive('current')->once()->andReturn($this->route);
         $this->prefixRoute->shouldReceive('switchLocale')->with($locale, $localeRoute)->once()->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
@@ -68,7 +75,11 @@ class RouteTest extends TestCase
         $this->route->shouldReceive('getName')->once()->andReturn($currentLocaleRoute);
 
         $this->router->shouldReceive('current')->once()->andReturn($this->route);
-        $this->prefixRoute->shouldReceive('switchLocale')->with($locale, $currentLocaleRoute)->once()->andReturn($localeRoute);
+        $this->prefixRoute
+            ->shouldReceive('switchLocale')
+            ->with($locale, $currentLocaleRoute)
+            ->once()
+            ->andReturn($localeRoute);
         $this->url->shouldReceive('route')->with($localeRoute, [], true)->once()->andReturn($localeUrl);
 
         $this->assertSame($localeUrl, $this->prefixRoute->localeRoute($locale));

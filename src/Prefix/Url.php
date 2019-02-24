@@ -22,7 +22,10 @@ class Url extends Base
 
     public function rawRouteUrl($locale, $route, array $options = [])
     {
-        $unlocaleUrl = isset($options[$locale]) ? $options[$locale] : $this->translator->get('routes.' . $route, [], $locale);
+        $unlocaleUrl = isset($options[$locale]) ?
+            $options[$locale] :
+            $this->translator->get('routes.' . $route, [], $locale);
+
         return $this->trimUrl($unlocaleUrl);
     }
 
@@ -36,7 +39,10 @@ class Url extends Base
 
     public function addLocale($locale, $unlocalized, $options = [])
     {
-        $localized = $this->getAddLocaleToUrl($options) ? parent::addLocale($locale, $unlocalized) : $unlocalized;
+        $localized = $this->getAddLocaleToUrl($options) ?
+            parent::addLocale($locale, $unlocalized) :
+            $unlocalized;
+
         return $this->trimUrl($localized);
     }
 }

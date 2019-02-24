@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use App;
+use Illuminate\Foundation\Application;
 use CaribouFute\LocaleRoute\Prefix\Base;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
@@ -13,16 +13,18 @@ class Route extends Base
     protected $separator = '.';
     protected $url;
     protected $router;
+    protected $app;
 
-    public function __construct(UrlGenerator $url, IlluminateRouter $router)
+    public function __construct(UrlGenerator $url, IlluminateRouter $router, Application $app)
     {
         $this->url = $url;
         $this->router = $router;
+        $this->app = $app;
     }
 
     public function localeRoute($locale = null, $name = null, $parameters = [], $absolute = true)
     {
-        $locale = $locale ?: App::getLocale();
+        $locale = $locale ?: $this->app->getLocale();
         $name = $name ?: $this->getCurrentRouteName();
         $localeName = $this->switchLocale($locale, $name);
 
