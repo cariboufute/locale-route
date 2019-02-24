@@ -3,47 +3,78 @@
 namespace Tests\Unit\Session;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
-use Config;
+use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Foundation\Application;
+use Illuminate\Session\Store;
 use Mockery;
 use Orchestra\Testbench\TestCase;
-use Session;
 
 class LocaleTest extends TestCase
 {
+    protected $fallbackLocale;
+    protected $store;
+    protected $config;
+    protected $app;
+    protected $sessionLocale;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->fallbackLocale = 'fr';
-        $this->config = Mockery::mock('Illuminate\Contracts\Config\Repository');
-        $this->config->shouldReceive('get')->with('app.fallback_locale')->andReturn($this->fallbackLocale);
+        $this->store = Mockery::mock(Store::class);
+        $this->config = $this->getConfig();
+        $this->app = $this->getApp();
 
-        $this->locale = new SessionLocale($this->config);
+        $this->sessionLocale = new SessionLocale(
+            $this->store,
+            $this->config,
+            $this->app
+        );
+    }
+
+    protected function getConfig(): Config
+    {
+        $config = Mockery::mock(Config::class);
+        $config->shouldReceive('get')->with('app.fallback_locale')->andReturn($this->fallbackLocale);
+
+        return $config;
+    }
+
+    protected function getApp(): Application
+    {
+        $app = Mockery::mock(Application::class);
+        $app->shouldReceive('flush');
+
+        return $app;
     }
 
     public function testGet()
     {
         $locale = 'fr';
-        Session::shouldReceive('get')->with('locale')->andReturn($locale);
+        $this->store->shouldReceive('get')->with('locale')->andReturn($locale);
 
-        $this->assertSame($locale, $this->locale->get());
+        $this->assertSame($locale, $this->sessionLocale->get());
     }
 
     public function testSet()
     {
         $locale = 'es';
-        Session::shouldReceive('put')->with('locale', $locale);
-        Session::shouldReceive('get')->with('locale')->andReturn($locale);
-        $this->locale->set($locale);
+        $this->store->shouldReceive('put')->with('locale', $locale);
+        $this->store->shouldReceive('get')->with('locale')->andReturn($locale);
+        $this->app->shouldReceive('setLocale')->with($locale);
 
-        $this->assertSame($locale, $this->locale->get());
+        $this->sessionLocale->set($locale);
+
+        $this->assertSame($locale, $this->sessionLocale->get());
     }
 
     public function testGetFallbackLocaleIfNone()
     {
-        Session::shouldReceive('get')->with('locale')->andReturn(null);
-        Session::shouldReceive('put')->with('locale', $this->fallbackLocale);
+        $this->store->shouldReceive('get')->with('locale')->andReturn(null);
+        $this->store->shouldReceive('put')->with('locale', $this->fallbackLocale);
+        $this->app->shouldReceive('setLocale')->with($this->fallbackLocale);
 
-        $this->assertSame($this->fallbackLocale, $this->locale->get());
+        $this->assertSame($this->fallbackLocale, $this->sessionLocale->get());
     }
 }

@@ -3,12 +3,14 @@
 namespace Tests\Functional\Session;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
-use Config;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Orchestra\Testbench\TestCase;
-use Session;
 
 class LocaleTest extends TestCase
 {
+    protected $locale;
+
     public function setUp()
     {
         parent::setUp();

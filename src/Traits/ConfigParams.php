@@ -8,8 +8,8 @@ trait ConfigParams
 {
     public function locales(array $options = [])
     {
-        return isset($options['locales']) ? $options['locales'] : Config::get('localeroute.locales');
+        return isset($options['locales']) ?
+            $options['locales'] :
+            Config::get('localeroute.locales');
     }
-
-
 }

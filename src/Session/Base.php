@@ -2,25 +2,31 @@
 
 namespace CaribouFute\LocaleRoute\Session;
 
-use Session;
+use Illuminate\Session\Store;
 
 abstract class Base
 {
+    protected $store;
     protected $key;
+
+    public function __construct(Store $store)
+    {
+        $this->store = $store;
+    }
 
     public function get()
     {
-        return Session::get($this->key) ?: $this->setAndGetDefault();
+        return $this->store->get($this->key) ?: $this->setAndGetDefault();
     }
 
-    public function set($value)
+    public function set($value): void
     {
-        return $this->put($value);
+        $this->put($value);
     }
 
-    public function put($value)
+    public function put($value): void
     {
-        return Session::put($this->key, $value);
+        $this->store->put($this->key, $value);
     }
 
     protected function setAndGetDefault()
