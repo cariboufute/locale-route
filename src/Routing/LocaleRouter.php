@@ -6,6 +6,7 @@ use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use Closure;
+use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 
 class LocaleRouter
@@ -15,12 +16,18 @@ class LocaleRouter
     protected $router;
     protected $prefixRoute;
     protected $prefixUrl;
+    protected $app;
 
-    public function __construct(Router $router, PrefixRoute $prefixRoute, PrefixUrl $prefixUrl)
-    {
+    public function __construct(
+        Router $router,
+        PrefixRoute $prefixRoute,
+        PrefixUrl $prefixUrl,
+        Application $app
+    ) {
         $this->router = $router;
         $this->prefixRoute = $prefixRoute;
         $this->prefixUrl = $prefixUrl;
+        $this->app = $app;
     }
 
     public function any($route, $action, $options = []): RouteCollection
@@ -119,7 +126,7 @@ class LocaleRouter
 
     public function resource($route, $controller, $options = [])
     {
-        $registrar = app()->make(ResourceRegistrar::class);
+        $registrar = $this->app->make(ResourceRegistrar::class);
         $registrar->register($route, $controller, $options);
     }
 }
