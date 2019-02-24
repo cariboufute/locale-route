@@ -4,16 +4,12 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use CaribouFute\LocaleRoute\Routing\ResourceRegistrar;
-use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\Traits\ConfigParams;
-use CaribouFute\LocaleRoute\Traits\ConvertToControllerAction;
+use Closure;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Collection;
 
 class LocaleRouter
 {
-    use ConvertToControllerAction;
     use ConfigParams;
 
     protected $router;
@@ -100,6 +96,13 @@ class LocaleRouter
             ->middleware($middleware);
 
         return $route;
+    }
+
+    protected function convertToControllerAction($action)
+    {
+        return is_string($action) || is_a($action, Closure::class) ?
+            ['uses' => $action] :
+            $action;
     }
 
     protected function fillAction($locale, $route, $action, $options): array

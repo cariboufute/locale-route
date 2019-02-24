@@ -2,8 +2,8 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\Prefix\Base;
 use Illuminate\Translation\Translator;
+use Illuminate\Support\Facades\Config;
 
 class Url extends Base
 {
@@ -44,5 +44,12 @@ class Url extends Base
             $unlocalized;
 
         return $this->trimUrl($localized);
+    }
+
+    public function getAddLocaleToUrl(array $options = [])
+    {
+        return isset($options['add_locale_to_url']) ?
+            $options['add_locale_to_url'] :
+            Config::get('localeroute.add_locale_to_url');
     }
 }

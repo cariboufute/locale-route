@@ -11,8 +11,5 @@ trait ConfigParams
         return isset($options['locales']) ? $options['locales'] : Config::get('localeroute.locales');
     }
 
-    public function getAddLocaleToUrl(array $options = [])
-    {
-        return isset($options['add_locale_to_url']) ? $options['add_locale_to_url'] : Config::get('localeroute.add_locale_to_url');
-    }
+
 }
