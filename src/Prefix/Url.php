@@ -10,13 +10,11 @@ class Url extends Base
 {
     protected $separator = '/';
     protected $translator;
-    protected $config;
 
-    public function __construct(LocaleConfig $localeConfig, Translator $translator, Config $config)
+    public function __construct(LocaleConfig $localeConfig, Translator $translator)
     {
         parent::__construct($localeConfig);
         $this->translator = $translator;
-        $this->config = $config;
     }
 
     public function trimUrl($url)
