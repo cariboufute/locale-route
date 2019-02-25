@@ -20,20 +20,20 @@ class LocaleConfigTest extends TestCase
         $this->localeConfig = new LocaleConfig($this->config);
     }
 
-    public function testLocalesWhenLocalesOption()
+    public function testLocalesWhenPassedOption()
     {
-        $localeConfig = ['en', 'js'];
-        $options = ['locales' => $localeConfig];
+        $configLocales = ['en', 'js'];
+        $options = ['locales' => $configLocales];
 
         $testLocales = $this->localeConfig->locales($options);
 
-        $this->assertSame($localeConfig, $testLocales);
+        $this->assertSame($configLocales, $testLocales);
     }
 
-    public function testLocalesWhenNoLocalesOption()
+    public function testLocalesWhenNoPassedOption()
     {
         $configLocales = ['fr'];
-        $this->options = [];
+
         $this->config->shouldReceive('get')
             ->with('localeroute.locales')
             ->once()
@@ -42,5 +42,29 @@ class LocaleConfigTest extends TestCase
         $testLocales = $this->localeConfig->locales();
 
         $this->assertSame($configLocales, $testLocales);
+    }
+
+    public function testAddLocaleToUrlWhenPassedOption()
+    {
+        $addLocaleToUrl = false;
+        $options = ['add_locale_to_url' => $addLocaleToUrl];
+
+        $testAddLocaleToUrl = $this->localeConfig->addLocaleToUrl($options);
+
+        $this->assertSame($addLocaleToUrl, $testAddLocaleToUrl);
+    }
+
+    public function testAddLocaleToUrlWhenNoPassedOption()
+    {
+        $addLocaleToUrl = false;
+
+        $this->config->shouldReceive('get')
+            ->with('localeroute.add_locale_to_url')
+            ->once()
+            ->andReturn($addLocaleToUrl);
+
+        $testAddLocaleToUrl = $this->localeConfig->addLocaleToUrl();
+
+        $this->assertSame($addLocaleToUrl, $testAddLocaleToUrl);
     }
 }

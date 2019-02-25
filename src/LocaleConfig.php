@@ -30,4 +30,8 @@ class LocaleConfig
         return $this->config->get('localeroute.' . $key);
     }
 
+    public function addLocaleToUrl(array $options = [])
+    {
+        return $this->getOptionOrConfig('add_locale_to_url', $options);
+    }
 }
