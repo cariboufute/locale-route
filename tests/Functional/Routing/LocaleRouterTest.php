@@ -11,6 +11,24 @@ class LocaleRouterTest extends TestCase
 {
     use EnvironmentSetUp;
 
+    public function testAny()
+    {
+        $callback = function () {
+            return 'Yé!';
+        };
+        $routes = ['fr' => 'francais', 'en' => 'english'];
+
+        LocaleRoute::any('index', $callback, $routes);
+
+        foreach (['get', 'post', 'put', 'patch', 'delete', 'options'] as $method) {
+            $response = $this->call($method, '/fr/francais');
+            $this->assertSame(200, $response->getStatusCode(), 'No OK response for ' . $method . ' FR route.');
+
+            $response = $this->call($method, '/en/english');
+            $this->assertSame(200, $response->getStatusCode(), 'No OK response for ' . $method . ' EN route.');
+        }
+    }
+
     public function testGet()
     {
         $this->makeMethodTest('get');
