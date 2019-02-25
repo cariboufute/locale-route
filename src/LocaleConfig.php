@@ -15,14 +15,19 @@ class LocaleConfig
 
     public function locales(array $options = [])
     {
-        return isset($options['locales']) ?
-            $options['locales'] :
-            $this->getConfig();
+        return $this->getOptionOrConfig('locales', $options);
     }
 
-    public function getConfig()
+    protected function getOptionOrConfig(string $key, array $options)
     {
-        return $this->config->get('localeroute.locales');
+        return isset($options[$key]) ?
+            $options[$key] :
+            $this->getConfig($key);
+    }
+
+    public function getConfig(string $key)
+    {
+        return $this->config->get('localeroute.' . $key);
     }
 
 }
