@@ -39,7 +39,7 @@ class UrlTest extends TestCase
 
     public function testSwitchLocale()
     {
-        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
+        $this->localeConfig->shouldReceive('addLocaleToUrl')->once()->andReturn(true);
 
         $url = 'en/url';
         $locale = 'fr';
@@ -50,7 +50,7 @@ class UrlTest extends TestCase
 
     public function testAddLocaleWithConfigAddLocaleToUrlToTrue()
     {
-        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
+        $this->localeConfig->shouldReceive('addLocaleToUrl')->once()->andReturn(true);
 
         $locale = 'fr';
         $url = 'url';
@@ -63,7 +63,7 @@ class UrlTest extends TestCase
 
     public function testAddLocaleWithConfigAddLocaleToUrlToFalse()
     {
-        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(false);
+        $this->localeConfig->shouldReceive('addLocaleToUrl')->once()->andReturn(false);
 
         $locale = 'fr';
         $url = 'url';

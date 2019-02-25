@@ -12,9 +12,9 @@ class Url extends Base
     protected $translator;
     protected $config;
 
-    public function __construct(LocaleConfig $locales, Translator $translator, Config $config)
+    public function __construct(LocaleConfig $localeConfig, Translator $translator, Config $config)
     {
-        parent::__construct($locales);
+        parent::__construct($localeConfig);
         $this->translator = $translator;
         $this->config = $config;
     }
@@ -43,17 +43,10 @@ class Url extends Base
 
     public function addLocale($locale, $unlocalized, $options = [])
     {
-        $localized = $this->getAddLocaleToUrl($options) ?
+        $localized = $this->localeConfig->addLocaleToUrl($options) ?
             parent::addLocale($locale, $unlocalized) :
             $unlocalized;
 
         return $this->trimUrl($localized);
-    }
-
-    public function getAddLocaleToUrl(array $options = [])
-    {
-        return isset($options['add_locale_to_url']) ?
-            $options['add_locale_to_url'] :
-            $this->config->get('localeroute.add_locale_to_url');
     }
 }
