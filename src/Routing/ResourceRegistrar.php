@@ -32,7 +32,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $controller . '@' . $method;
     }
 
-    protected function addResourceIndex($name, $base, $controller, $options)
+    protected function addResourceIndex($name, $base, $controller, $options): RouteCollection
     {
         $uri = $this->getResourceUri($name);
         $name = $this->getResourceRouteName($name, 'index', $options);
@@ -41,7 +41,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $this->localeRouter->get($name, $action, $uri);
     }
 
-    protected function addResourceCreate($name, $base, $controller, $options)
+    protected function addResourceCreate($name, $base, $controller, $options): RouteCollection
     {
         $base = $this->getResourceUri($name);
         $uris = $this->getLocaleUris($base, 'create', $options);
@@ -69,7 +69,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $translated === $untranslated ? $label : $translated;
     }
 
-    protected function addResourceShow($name, $base, $controller, $options)
+    protected function addResourceShow($name, $base, $controller, $options): RouteCollection
     {
         $uri = $this->getResourceUri($name) . '/{' . $base . '}';
         $name = $this->getResourceRouteName($name, 'show', $options);
@@ -78,7 +78,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         return $this->localeRouter->get($name, $action, $uri);
     }
 
-    protected function addResourceEdit($name, $base, $controller, $options)
+    protected function addResourceEdit($name, $base, $controller, $options): RouteCollection
     {
         $base = $this->getResourceUri($name) . '/{' . $base . '}';
         $uris = $this->getLocaleUris($base, 'edit', $options);
@@ -121,21 +121,31 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
         $collection = new RouteCollection;
 
         foreach ($this->getResourceMethods($defaults, $options) as $m) {
-            $routes = $this->{'addResource' . ucfirst($m)}($name, $base, $controller, $options);
-
-            if (is_a($routes, RouteCollection::class)) {
-                foreach ($routes->getRoutes() as $route) {
-                    $collection->add($route);
-                }
-            } else {
-                $collection->add($route);
-            }
-            /*$collection->add($this->{'addResource' . ucfirst($m)}(
-                $name, $base, $controller, $options
-            ));*/
+            $collection = $this->registerMethod($m, $name, $base, $controller, $options, $collection);
         }
 
         return $collection;
     }
 
+    protected function registerMethod(
+        string $method,
+        $name,
+        $base,
+        $controller,
+        $options,
+        RouteCollection $collection
+    ): RouteCollection {
+        $addResourceMethod = 'addResource' . ucfirst($method);
+        $routeCollection = $this->$addResourceMethod($name, $base, $controller, $options);
+
+        $routeArray = is_a($routeCollection, RouteCollection::class) ?
+            $routeCollection->getRoutes() :
+            [$routeCollection];
+
+        foreach ($routeArray as $route) {
+            $collection->add($route);
+        }
+
+        return $collection;
+    }
 }
