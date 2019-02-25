@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
-use CaribouFute\LocaleRoute\Traits\ConfigParams;
+use CaribouFute\LocaleRoute\Locales;
 use Illuminate\Routing\ResourceRegistrar as IlluminateResourceRegistrar;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Support\Str;
@@ -10,13 +10,17 @@ use Illuminate\Translation\Translator;
 
 class ResourceRegistrar extends IlluminateResourceRegistrar
 {
-    use ConfigParams;
-
+    protected $locales;
     protected $localeRouter;
     protected $translator;
 
-    public function __construct(LocaleRouter $localeRouter, IlluminateRouter $router, Translator $translator)
-    {
+    public function __construct(
+        Locales $locales,
+        LocaleRouter $localeRouter,
+        IlluminateRouter $router,
+        Translator $translator
+    ) {
+        $this->locales = $locales;
         $this->localeRouter = $localeRouter;
         $this->translator = $translator;
 
@@ -51,7 +55,7 @@ class ResourceRegistrar extends IlluminateResourceRegistrar
     {
         $uris = [];
 
-        foreach ($this->locales($options) as $locale) {
+        foreach ($this->locales->get($options) as $locale) {
             $uris[$locale] = $base . '/' . $this->getTranslation($locale, $label);
         }
 

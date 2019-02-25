@@ -2,28 +2,29 @@
 
 namespace CaribouFute\LocaleRoute\Routing;
 
+use CaribouFute\LocaleRoute\Locales;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use CaribouFute\LocaleRoute\Traits\ConfigParams;
 use Closure;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 
 class LocaleRouter
 {
-    use ConfigParams;
-
+    protected $locales;
     protected $router;
     protected $prefixRoute;
     protected $prefixUrl;
     protected $app;
 
     public function __construct(
+        Locales $locales,
         Router $router,
         PrefixRoute $prefixRoute,
         PrefixUrl $prefixUrl,
         Application $app
     ) {
+        $this->locales = $locales;
         $this->router = $router;
         $this->prefixRoute = $prefixRoute;
         $this->prefixUrl = $prefixUrl;
@@ -70,7 +71,7 @@ class LocaleRouter
         $options = is_string($options) ? $this->convertOptionUrlsToArray($options) : $options;
         $routeCollection = new RouteCollection();
 
-        foreach ($this->locales($options) as $locale) {
+        foreach ($this->locales->get($options) as $locale) {
             $routeObject = $this->makeRoute($locale, $method, $route, $action, $options);
             $routeCollection->add($routeObject);
         }
@@ -82,7 +83,7 @@ class LocaleRouter
     {
         $newOptions = [];
 
-        foreach ($this->locales() as $locale) {
+        foreach ($this->locales->get() as $locale) {
             $newOptions[$locale] = $options;
         }
 

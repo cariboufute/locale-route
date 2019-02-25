@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\ConfigParams;
+namespace Tests\Unit;
 
-use CaribouFute\LocaleRoute\ConfigParams\Locales;
+use CaribouFute\LocaleRoute\Locales;
 use Illuminate\Config\Repository;
 use Mockery;
 use Orchestra\Testbench\TestCase;

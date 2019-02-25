@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Prefix;
 
-use CaribouFute\LocaleRoute\ConfigParams\Locales;
+use CaribouFute\LocaleRoute\Locales;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Translation\Translator;

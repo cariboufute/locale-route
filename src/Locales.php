@@ -1,6 +1,6 @@
 <?php
 
-namespace CaribouFute\LocaleRoute\ConfigParams;
+namespace CaribouFute\LocaleRoute;
 
 use Illuminate\Config\Repository as Config;
 

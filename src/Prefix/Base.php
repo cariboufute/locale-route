@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\ConfigParams\Locales;
+use CaribouFute\LocaleRoute\Locales;
 use Illuminate\Support\Str;
 
 abstract class Base

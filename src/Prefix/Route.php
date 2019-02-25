@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\ConfigParams\Locales;
+use CaribouFute\LocaleRoute\Locales;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
