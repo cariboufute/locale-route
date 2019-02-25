@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\Locales;
+use CaribouFute\LocaleRoute\LocaleConfig;
 use Illuminate\Translation\Translator;
 use Illuminate\Config\Repository as Config;
 
@@ -12,7 +12,7 @@ class Url extends Base
     protected $translator;
     protected $config;
 
-    public function __construct(Locales $locales, Translator $translator, Config $config)
+    public function __construct(LocaleConfig $locales, Translator $translator, Config $config)
     {
         parent::__construct($locales);
         $this->translator = $translator;

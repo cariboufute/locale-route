@@ -2,35 +2,35 @@
 
 namespace Tests\Unit;
 
-use CaribouFute\LocaleRoute\Locales;
+use CaribouFute\LocaleRoute\LocaleConfig;
 use Illuminate\Config\Repository;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
-class LocalesTest extends TestCase
+class LocaleConfigTest extends TestCase
 {
     protected $config;
-    protected $locales;
+    protected $localeConfig;
 
     public function setUp()
     {
         parent::setUp();
         $this->config = Mockery::mock(Repository::class);
 
-        $this->locales = new Locales($this->config);
+        $this->localeConfig = new LocaleConfig($this->config);
     }
 
-    public function testGetWhenLocalesOption()
+    public function testLocalesWhenLocalesOption()
     {
-        $locales = ['en', 'js'];
-        $options = ['locales' => $locales];
+        $localeConfig = ['en', 'js'];
+        $options = ['locales' => $localeConfig];
 
-        $testLocales = $this->locales->get($options);
+        $testLocales = $this->localeConfig->locales($options);
 
-        $this->assertSame($locales, $testLocales);
+        $this->assertSame($localeConfig, $testLocales);
     }
 
-    public function testGetWhenNoLocalesOption()
+    public function testLocalesWhenNoLocalesOption()
     {
         $configLocales = ['fr'];
         $this->options = [];
@@ -39,7 +39,7 @@ class LocalesTest extends TestCase
             ->once()
             ->andReturn($configLocales);
 
-        $testLocales = $this->locales->get();
+        $testLocales = $this->localeConfig->locales();
 
         $this->assertSame($configLocales, $testLocales);
     }

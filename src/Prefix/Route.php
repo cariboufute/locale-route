@@ -2,7 +2,7 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\Locales;
+use CaribouFute\LocaleRoute\LocaleConfig;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Routing\UrlGenerator;
@@ -11,13 +11,16 @@ use InvalidArgumentException;
 class Route extends Base
 {
     protected $separator = '.';
+
+    protected $localeConfig;
     protected $url;
     protected $router;
     protected $app;
 
-    public function __construct(Locales $locales, UrlGenerator $url, IlluminateRouter $router, Application $app)
+    public function __construct(LocaleConfig $localeConfig, UrlGenerator $url, IlluminateRouter $router, Application
+    $app)
     {
-        parent::__construct($locales);
+        parent::__construct($localeConfig);
         $this->url = $url;
         $this->router = $router;
         $this->app = $app;

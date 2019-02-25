@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Prefix;
 
-use CaribouFute\LocaleRoute\Locales;
+use CaribouFute\LocaleRoute\LocaleConfig;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Translation\Translator;
@@ -11,21 +11,21 @@ use Orchestra\Testbench\TestCase;
 
 class UrlTest extends TestCase
 {
-    protected $locales;
+    protected $localeConfig;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->locales = Mockery::mock(Locales::class);
-        $this->locales
-            ->shouldReceive('get')
+        $this->localeConfig = Mockery::mock(LocaleConfig::class);
+        $this->localeConfig
+            ->shouldReceive('locales')
             ->andReturn(['fr', 'en']);
 
         $this->translator = Mockery::mock(Translator::class);
         $this->config = Mockery::mock(Config::class);
 
-        $this->url = new PrefixUrl($this->locales, $this->translator, $this->config);
+        $this->url = new PrefixUrl($this->localeConfig, $this->translator, $this->config);
     }
 
     public function testLocale()

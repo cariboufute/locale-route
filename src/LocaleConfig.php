@@ -4,7 +4,7 @@ namespace CaribouFute\LocaleRoute;
 
 use Illuminate\Config\Repository as Config;
 
-class Locales
+class LocaleConfig
 {
     protected $config;
 
@@ -13,7 +13,7 @@ class Locales
         $this->config = $config;
     }
 
-    public function get(array $options = [])
+    public function locales(array $options = [])
     {
         return isset($options['locales']) ?
             $options['locales'] :

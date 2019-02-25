@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Prefix;
 
-use CaribouFute\LocaleRoute\Locales;
+use CaribouFute\LocaleRoute\LocaleConfig;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Foundation\Application;
@@ -18,7 +18,7 @@ class RouteTest extends TestCase
 
     protected $route;
 
-    protected $locales;
+    protected $localeConfig;
     protected $url;
     protected $router;
     protected $app;
@@ -31,9 +31,9 @@ class RouteTest extends TestCase
 
         $this->route = Mockery::mock(Route::class);
 
-        $this->locales = Mockery::mock(Locales::class);
-        $this->locales
-            ->shouldReceive('get')
+        $this->localeConfig = Mockery::mock(LocaleConfig::class);
+        $this->localeConfig
+            ->shouldReceive('locales')
             ->andReturn(['fr', 'en']);
 
         $this->url = Mockery::mock(UrlGenerator::class);
@@ -45,7 +45,7 @@ class RouteTest extends TestCase
         $this->prefixRoute = Mockery::mock(
             PrefixRoute::class,
             [
-                $this->locales,
+                $this->localeConfig,
                 $this->url,
                 $this->router,
                 $this->app
