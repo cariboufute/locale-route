@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Prefix;
 
+use CaribouFute\LocaleRoute\ConfigParams\Locales;
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Config;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
@@ -17,9 +17,12 @@ class RouteTest extends TestCase
     use EnvironmentSetUp;
 
     protected $route;
+
+    protected $locales;
     protected $url;
     protected $router;
     protected $app;
+
     protected $prefixRoute;
 
     public function setUp()
@@ -28,21 +31,27 @@ class RouteTest extends TestCase
 
         $this->route = Mockery::mock(Route::class);
 
+        $this->locales = Mockery::mock(Locales::class);
+        $this->locales
+            ->shouldReceive('get')
+            ->andReturn(['fr', 'en']);
+
         $this->url = Mockery::mock(UrlGenerator::class);
         $this->router = Mockery::mock(Router::class);
         $this->app = Mockery::mock(Application::class);
 
         $this->app->shouldReceive('flush');
 
-        $this->prefixRoute = Mockery::mock(PrefixRoute::class, [$this->url, $this->router, $this->app])->makePartial();
-    }
-
-    public function testLocales()
-    {
-        $locales = 'locales';
-        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn($locales);
-
-        $this->assertSame($locales, $this->prefixRoute->locales());
+        $this->prefixRoute = Mockery::mock(
+            PrefixRoute::class,
+            [
+                $this->locales,
+                $this->url,
+                $this->router,
+                $this->app
+            ]
+        )
+            ->makePartial();
     }
 
     public function testLocaleRouteWithNoParamsReturnsCurrentUrl()

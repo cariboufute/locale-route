@@ -2,14 +2,18 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
-use CaribouFute\LocaleRoute\Traits\ConfigParams;
+use CaribouFute\LocaleRoute\ConfigParams\Locales;
 use Illuminate\Support\Str;
 
 abstract class Base
 {
-    use ConfigParams;
-
+    protected $locales;
     protected $separator;
+
+    public function __construct(Locales $locales)
+    {
+        $this->locales = $locales;
+    }
 
     public function switchLocale($locale, $string)
     {
@@ -29,7 +33,7 @@ abstract class Base
 
     public function prefix($string)
     {
-        foreach ($this->locales() as $locale) {
+        foreach ($this->locales->get() as $locale) {
             $prefix = $locale . $this->separator;
 
             if (Str::startsWith($string, $prefix)) {

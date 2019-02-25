@@ -1,25 +1,35 @@
 <?php
 
-namespace Tests\Unit\Locale;
+namespace Tests\Unit\Prefix;
 
+use CaribouFute\LocaleRoute\ConfigParams\Locales;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use Config;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Translation\Translator;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 
 class UrlTest extends TestCase
 {
+    protected $locales;
+
     public function setUp()
     {
         parent::setUp();
+
+        $this->locales = Mockery::mock(Locales::class);
+        $this->locales
+            ->shouldReceive('get')
+            ->andReturn(['fr', 'en']);
+
         $this->translator = Mockery::mock(Translator::class);
-        $this->url = new PrefixUrl($this->translator);
+        $this->config = Mockery::mock(Config::class);
+
+        $this->url = new PrefixUrl($this->locales, $this->translator, $this->config);
     }
 
     public function testLocale()
     {
-        Config::shouldReceive('get')->with('localeroute.locales')->twice()->andReturn(['fr', 'en']);
         $localeUrl = 'fr/test';
         $noLocaleUrl = 'test';
 
@@ -29,8 +39,7 @@ class UrlTest extends TestCase
 
     public function testSwitchLocale()
     {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
-        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
+        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
 
         $url = 'en/url';
         $locale = 'fr';
@@ -41,7 +50,7 @@ class UrlTest extends TestCase
 
     public function testAddLocaleWithConfigAddLocaleToUrlToTrue()
     {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
+        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(true);
 
         $locale = 'fr';
         $url = 'url';
@@ -54,7 +63,7 @@ class UrlTest extends TestCase
 
     public function testAddLocaleWithConfigAddLocaleToUrlToFalse()
     {
-        Config::shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(false);
+        $this->config->shouldReceive('get')->with('localeroute.add_locale_to_url')->once()->andReturn(false);
 
         $locale = 'fr';
         $url = 'url';
@@ -66,8 +75,6 @@ class UrlTest extends TestCase
 
     public function testRemoveLocale()
     {
-        Config::shouldReceive('get')->with('localeroute.locales')->once()->andReturn(['fr', 'en']);
-
         $locale = 'fr';
         $url = 'url';
         $localeUrl = $locale . '/' . $url;

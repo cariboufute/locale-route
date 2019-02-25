@@ -2,17 +2,21 @@
 
 namespace CaribouFute\LocaleRoute\Prefix;
 
+use CaribouFute\LocaleRoute\ConfigParams\Locales;
 use Illuminate\Translation\Translator;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Config\Repository as Config;
 
 class Url extends Base
 {
     protected $separator = '/';
     protected $translator;
+    protected $config;
 
-    public function __construct(Translator $translator)
+    public function __construct(Locales $locales, Translator $translator, Config $config)
     {
+        parent::__construct($locales);
         $this->translator = $translator;
+        $this->config = $config;
     }
 
     public function trimUrl($url)
@@ -50,6 +54,6 @@ class Url extends Base
     {
         return isset($options['add_locale_to_url']) ?
             $options['add_locale_to_url'] :
-            Config::get('localeroute.add_locale_to_url');
+            $this->config->get('localeroute.add_locale_to_url');
     }
 }
