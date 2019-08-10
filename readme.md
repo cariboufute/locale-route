@@ -23,7 +23,7 @@ Please choose your version of LocaleRoute according to your version of Laravel.
 
 | Laravel | LocaleRoute |
 |:-------:|:-----------:|
-| 5.5 - 5.7 | 2.* |
+| 5.5 - 5.8 | 2.* |
 | 5.1 - 5.4 | 1.* |
 
 ## Install
@@ -76,8 +76,11 @@ Finally install the config file of the package by typing this line in the termin
 
 ``` bash
 php artisan vendor:publish
+```
 
-#if for some reason, you only want to get locale-route config file, type this line instead
+To bypass the package selection prompt, type this line instead.
+
+``` bash
 php artisan vendor:publish --provider "CaribouFute\LocaleRoute\LocaleRouteServiceProvider"
 ```
 
@@ -345,6 +348,29 @@ Will give these routes :
 */
 ```
 
+###API resource
+
+You can also use ```LocaleRoute::apiResource()``` for the localized version of ```Route::apiResource()```, which
+ corresponds to ```LocaleRoute::resource()``` without the ```create``` and ```edit``` pages. The translated route
+  labels will be the same as for ```LocaleRoute::resource()```.
+  
+  ```php 
+  // routes/web.php or app/Http/routes.php
+  
+  LocaleRoute::apiResource('article', 'ArticleController');
+  
+  /*
+  Will give these routes :
+  
+  [fr.article.index]  => GET/HEAD     "/fr/article"                   => ArticleController::index()
+  [en.article.index]  => GET/HEAD     "/en/article"                   => ArticleController::index()
+  [fr.article.show]   => GET/HEAD     "/fr/article/{article}"         => ArticleController::show()
+  [en.article.show]   => GET/HEAD     "/en/article/{article}"         => ArticleController::show()
+  [article.store]     => POST         "/article"                      => ArticleController::store()
+  [article.update]    => PUT/PATCH    "/article/{article}"            => ArticleController::update()
+  [article.destroy]   => DELETE       "/article/{article}"            => ArticleController::destroy()
+  */
+  ```
 
 ### Overriding options
 

@@ -12,7 +12,7 @@ class LocaleConfigTest extends TestCase
     protected $config;
     protected $localeConfig;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->config = Mockery::mock(Repository::class);
