@@ -12,7 +12,7 @@ class RouteCollectionTest extends TestCase
 {
     use EnvironmentSetUp;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->router = app()->make(Router::class);

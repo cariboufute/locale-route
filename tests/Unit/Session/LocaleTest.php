@@ -17,7 +17,7 @@ class LocaleTest extends TestCase
     protected $app;
     protected $sessionLocale;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

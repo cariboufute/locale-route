@@ -13,7 +13,7 @@ class UrlTest extends TestCase
 {
     protected $localeConfig;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
