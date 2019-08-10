@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [2.1.0] – 2019-08-09
+### Added
+- Localized version of ```apiResource``` method.
+
+## [2.0.0] – 2019-02-24
+### Changed
+- Removed old routing class name checking from Laravel pre-5.5, so now the code is cleaner, but Laravel pre-5.5 is lost.
+
 ## [1.4.0] – 2018-05-05
 ### Added
 - Laravel 5.6 support.
