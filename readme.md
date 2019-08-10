@@ -348,7 +348,7 @@ Will give these routes :
 */
 ```
 
-###API resource
+### API resource
 
 You can also use ```LocaleRoute::apiResource()``` for the localized version of ```Route::apiResource()```, which
  corresponds to ```LocaleRoute::resource()``` without the ```create``` and ```edit``` pages. The translated route
