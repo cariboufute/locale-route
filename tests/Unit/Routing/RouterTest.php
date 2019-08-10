@@ -12,7 +12,7 @@ use Orchestra\Testbench\TestCase;
 
 class RouterTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->illuminateRouter = Mockery::mock(IlluminateRouter::class);

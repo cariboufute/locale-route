@@ -8,7 +8,7 @@ checks:
 build:
     environment:
         php:
-            version: 7.1.3
+            version: 7.3.0
     tests:
         override:
             -

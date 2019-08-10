@@ -57,6 +57,53 @@ class ResourceRegistrarTest extends TestCase
         $this->assertDeleteRoute($routeInfo, false);
     }
 
+    public function testApiResource()
+    {
+        LocaleRoute::apiResource('article', 'ArticleController');
+        $routeInfo = $this->getRouteInfo();
+
+        $this->assertLocaleIndexRoutes($routeInfo);
+        $this->assertLocaleCreateRoutes($routeInfo, false);
+        $this->assertLocaleShowRoutes($routeInfo);
+        $this->assertLocaleEditRoutes($routeInfo, false);
+
+        $this->assertStoreRoute($routeInfo);
+        $this->assertUpdateRoute($routeInfo);
+        $this->assertDeleteRoute($routeInfo);
+    }
+
+    public function testApiResourceWithExcept()
+    {
+        LocaleRoute::apiResource('article', 'ArticleController', ['except' => 'index']);
+
+        $routeInfo = $this->getRouteInfo();
+
+        $this->assertLocaleIndexRoutes($routeInfo, false);
+        $this->assertLocaleCreateRoutes($routeInfo, false);
+        $this->assertLocaleShowRoutes($routeInfo);
+        $this->assertLocaleEditRoutes($routeInfo, false);
+
+        $this->assertStoreRoute($routeInfo);
+        $this->assertUpdateRoute($routeInfo);
+        $this->assertDeleteRoute($routeInfo);
+    }
+
+    public function testApiResourceWithOnly()
+    {
+        LocaleRoute::apiResource('article', 'ArticleController', ['only' => ['show', 'store']]);
+
+        $routeInfo = $this->getRouteInfo();
+
+        $this->assertLocaleIndexRoutes($routeInfo, false);
+        $this->assertLocaleCreateRoutes($routeInfo, false);
+        $this->assertLocaleShowRoutes($routeInfo);
+        $this->assertLocaleEditRoutes($routeInfo, false);
+
+        $this->assertStoreRoute($routeInfo);
+        $this->assertUpdateRoute($routeInfo, false);
+        $this->assertDeleteRoute($routeInfo, false);
+    }
+
     public function assertLocaleIndexRoutes($routeInfo, $contains = true)
     {
         $this->assertLocaleRoutes($routeInfo, 'index', '', $contains);

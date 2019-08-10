@@ -130,4 +130,17 @@ class LocaleRouter
         $registrar = $this->app->make(ResourceRegistrar::class);
         $registrar->register($route, $controller, $options);
     }
+
+    public function apiResource($route, $controller, array $options = [])
+    {
+        $only = ['index', 'show', 'store', 'update', 'destroy'];
+
+        if (isset($options['except'])) {
+            $only = array_diff($only, (array) $options['except']);
+        }
+
+        $this->resource($route, $controller, array_merge([
+            'only' => $only,
+        ], $options));
+    }
 }
