@@ -7,7 +7,8 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**LocaleRoute** is a package to make testable localized routes with Laravel 5. It comes from the need to have localized routes that are fully testable.
+**LocaleRoute** is a package to make testable localized routes with Laravel 5 and 6. It comes from the need to have
+ localized routes that are fully testable.
 
 LocaleRoute has a syntax close to the original Laravel routing methods, so the installation and learning curve should be quite easy.
 
@@ -36,7 +37,8 @@ composer require cariboufute/locale-route
 
 ### For Laravel 5.4 and earlier
 
-In Laravel 5.5, Package Discovery installs service provider and ```LocaleRoute``` alias automatically. But if you have Laravel 5.4 and earlier, add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
+Since Laravel 5.5, Package Discovery installs service provider and ```LocaleRoute``` alias automatically. But if you
+ have Laravel 5.4 and earlier, add the service provider and the ```LocaleRoute``` alias in ```config/app.php```.
 
 ``` php
 // config/app.php
