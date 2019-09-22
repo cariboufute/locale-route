@@ -23,7 +23,7 @@ Please choose your version of LocaleRoute according to your version of Laravel.
 
 | Laravel | LocaleRoute |
 |:-------:|:-----------:|
-| 5.5 - 5.8 | 2.* |
+| 5.5 - 6.0 | 2.* |
 | 5.1 - 5.4 | 1.* |
 
 ## Install

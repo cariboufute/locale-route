@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [2.1.1] – 2019-09-22
+### Verified
+- Laravel 6.0 support (no code change needed).
+- Documentation to inform Laravel 6.0 support.
+
 ## [2.1.0] – 2019-08-09
 ### Added
 - Localized version of ```apiResource``` method.
