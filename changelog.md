@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [2.1.2] – 2019-09-22
+### Updated
+- Packages, including Symfony packages having security issues. The updated versions fix these issues.
+
 ## [2.1.1] – 2019-09-22
 ### Verified
 - Laravel 6.0 support (no code change needed).
