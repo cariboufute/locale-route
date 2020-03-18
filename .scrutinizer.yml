@@ -16,10 +16,10 @@ build:
             environment:
                 php:
                     version: 7.4.0
-                tests:
-                    override:
-                        -
-                            command: 'vendor/bin/phpunit --coverage-clover=some-file'
-                            coverage:
-                                file: 'some-file'
-                                format: 'clover'
+            tests:
+                override:
+                    -
+                        command: 'vendor/bin/phpunit --coverage-clover=some-file'
+                        coverage:
+                            file: 'some-file'
+                            format: 'clover'
