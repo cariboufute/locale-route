@@ -31,6 +31,4 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
-
-    <formatter type="clover" usefile="false"/>
 </phpunit>
