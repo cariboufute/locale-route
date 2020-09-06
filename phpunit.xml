@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
+         convertWarningsToExceptions="true" processIsolation="false"
          stopOnFailure="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-    <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory suffix="Test.php">./tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src/config</directory>
             <directory suffix=".php">./src/Facades</directory>
             <directory suffix=".php">./src/Prefix</directory>
             <directory suffix=".php">./src/Routing</directory>
             <directory suffix=".php">./src/Session</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
+
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
 
     <php>
         <env name="APP_ENV" value="testing"/>
