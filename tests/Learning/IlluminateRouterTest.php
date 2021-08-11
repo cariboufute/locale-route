@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Learning;
+namespace Tests\CaribouFute\LocaleRoute\Learning;
 
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
 use Illuminate\Routing\Router;

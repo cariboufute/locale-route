@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Prefix;
+namespace Tests\CaribouFute\LocaleRoute\Unit\Prefix;
 
 use CaribouFute\LocaleRoute\LocaleConfig;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Routing;
+namespace Tests\CaribouFute\LocaleRoute\Unit\Routing;
 
 use CaribouFute\LocaleRoute\Routing\RouteCollection;
 use CaribouFute\LocaleRoute\Routing\Router;

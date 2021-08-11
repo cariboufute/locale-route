@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Session;
+namespace Tests\CaribouFute\LocaleRoute\Functional\Session;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
 use Illuminate\Support\Facades\Config;

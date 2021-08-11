@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Session;
+namespace Tests\CaribouFute\LocaleRoute\Unit\Session;
 
 use CaribouFute\LocaleRoute\Session\Locale as SessionLocale;
 use Illuminate\Contracts\Config\Repository as Config;
