@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [3.0.0] - 2021-08-12
+### Updated
+
+- Changed requirements for security issues.
+- Updated packages for security issues.
+- Tested Laravel 8 with actual code, no problem detected.
+
 ## [2.1.3] - 2020-03-17
 ### Updated
 

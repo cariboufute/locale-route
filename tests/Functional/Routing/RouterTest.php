@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Functional\Routing;
+namespace Tests\CaribouFute\LocaleRoute\Functional\Routing;
 
 use CaribouFute\LocaleRoute\Routing\Router;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
-use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase;
 
 class RouterTest extends TestCase

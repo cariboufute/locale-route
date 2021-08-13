@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Routing;
+namespace Tests\CaribouFute\LocaleRoute\Functional\Routing;
 
 use CaribouFute\LocaleRoute\Facades\LocaleRoute;
 use CaribouFute\LocaleRoute\TestHelpers\EnvironmentSetUp;
