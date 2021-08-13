@@ -14,11 +14,12 @@ build:
         test-and-coverage:
             environment:
                 php:
-                    version: 7.4.0
+                    version: 8.0.9
+                    ini:
+                        'xdebug.mode': 'coverage'
             tests:
                 override:
-                    -
-                        command: 'vendor/bin/phpunit --coverage-clover=some-file'
+                    -   command: 'vendor/bin/phpunit --coverage-clover=code-coverage'
                         coverage:
-                            file: 'some-file'
+                            file: 'code-coverage'
                             format: 'clover'

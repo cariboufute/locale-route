@@ -4,7 +4,6 @@ namespace CaribouFute\LocaleRoute\Prefix;
 
 use CaribouFute\LocaleRoute\LocaleConfig;
 use Illuminate\Translation\Translator;
-use Illuminate\Config\Repository as Config;
 
 class Url extends Base
 {
@@ -24,8 +23,7 @@ class Url extends Base
 
     public function rawRouteUrl($locale, $route, array $options = [])
     {
-        $unlocaleUrl = isset($options[$locale]) ?
-            $options[$locale] :
+        $unlocaleUrl = $options[$locale] ??
             $this->translator->get('routes.' . $route, [], $locale);
 
         return $this->trimUrl($unlocaleUrl);
