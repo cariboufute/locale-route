@@ -14,7 +14,7 @@ build:
         test-and-coverage:
             environment:
                 php:
-                    version: 7.4.0
+                    version: 8.0.9
             tests:
                 override:
                     -
