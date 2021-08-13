@@ -12,6 +12,9 @@ use Orchestra\Testbench\TestCase;
 class UrlTest extends TestCase
 {
     protected $localeConfig;
+    protected $translator;
+    protected $config;
+    protected $url;
 
     public function setUp(): void
     {
@@ -35,6 +38,36 @@ class UrlTest extends TestCase
 
         $this->assertSame('fr', $this->url->locale($localeUrl));
         $this->assertSame('', $this->url->locale($noLocaleUrl));
+    }
+
+    public function testRawRouteUrlWithLocaleOption()
+    {
+        $url = 'url';
+        $untrimmedUrl = '/' . $url . '/';
+        $locale = 'fr';
+        $route = 'unusedRoute';
+        $options = [$locale => $untrimmedUrl];
+
+        $testUrl = $this->url->rawRouteUrl($locale, $route, $options);
+
+        $this->assertSame($url, $testUrl);
+    }
+
+    public function testRawRouteUrlWithTranslator()
+    {
+        $url = 'url';
+        $untrimmedUrl = '/' . $url . '/';
+        $locale = 'fr';
+        $route = 'route';
+
+        $this->translator
+            ->shouldReceive('get')
+            ->with('routes.' . $route, [], $locale)
+            ->andReturn($untrimmedUrl);
+
+        $testUrl = $this->url->rawRouteUrl($locale, $route);
+
+        $this->assertSame($url, $testUrl);
     }
 
     public function testSwitchLocale()
