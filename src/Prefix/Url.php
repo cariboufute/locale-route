@@ -16,12 +16,12 @@ class Url extends Base
         $this->translator = $translator;
     }
 
-    public function trimUrl($url)
+    public function trimUrl($url): string
     {
         return trim($url, '/ ') ?: '/';
     }
 
-    public function rawRouteUrl($locale, $route, array $options = [])
+    public function rawRouteUrl($locale, $route, array $options = []): string
     {
         $unlocaleUrl = $options[$locale] ??
             $this->translator->get('routes.' . $route, [], $locale);
@@ -29,7 +29,7 @@ class Url extends Base
         return $this->trimUrl($unlocaleUrl);
     }
 
-    public function switchLocale($locale, $url, array $options = [])
+    public function switchLocale($locale, $url, array $options = []): string
     {
         $unlocalized = $this->removeLocale($url);
         $localized = $this->addLocale($locale, $unlocalized, $options);
@@ -37,7 +37,7 @@ class Url extends Base
         return $this->trimUrl($localized);
     }
 
-    public function addLocale($locale, $unlocalized, $options = [])
+    public function addLocale($locale, $unlocalized, $options = []): string
     {
         $localized = $this->localeConfig->addLocaleToUrl($options) ?
             parent::addLocale($locale, $unlocalized) :
