@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e8db299ac913b84dde03406a81e6918",
+    "content-hash": "2950561ac376a61ce6911a2ea28d4239",
     "packages": [
         {
             "name": "brick/math",
@@ -4915,22 +4915,22 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v6.19.0",
+            "version": "v6.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "4e3ee38295d793f0d4864203d5e1f0b952635d1b"
+                "reference": "b9f7b932a5533739effa7c0da8a54d9217476c24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/4e3ee38295d793f0d4864203d5e1f0b952635d1b",
-                "reference": "4e3ee38295d793f0d4864203d5e1f0b952635d1b",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/b9f7b932a5533739effa7c0da8a54d9217476c24",
+                "reference": "b9f7b932a5533739effa7c0da8a54d9217476c24",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^8.26",
+                "laravel/framework": "^8.54",
                 "mockery/mockery": "^1.4.2",
-                "orchestra/testbench-core": "^6.23",
+                "orchestra/testbench-core": "^6.24",
                 "php": "^7.3 || ^8.0",
                 "phpunit/phpunit": "^8.4 || ^9.3.3",
                 "spatie/laravel-ray": "^1.18"
@@ -4964,7 +4964,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v6.19.0"
+                "source": "https://github.com/orchestral/testbench/tree/v6.20.0"
             },
             "funding": [
                 {
@@ -4976,20 +4976,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-07-01T02:50:07+00:00"
+            "time": "2021-08-12T00:53:59+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v6.23.1",
+            "version": "v6.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "239bc0d99ae44f76c024e74ced0fc5aabfa00be3"
+                "reference": "fdd33d553480ff2192755806fca641bcd79ab04b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/239bc0d99ae44f76c024e74ced0fc5aabfa00be3",
-                "reference": "239bc0d99ae44f76c024e74ced0fc5aabfa00be3",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/fdd33d553480ff2192755806fca641bcd79ab04b",
+                "reference": "fdd33d553480ff2192755806fca641bcd79ab04b",
                 "shasum": ""
             },
             "require": {
@@ -4999,7 +4999,7 @@
                 "vlucas/phpdotenv": "^5.1"
             },
             "require-dev": {
-                "laravel/framework": "^8.26",
+                "laravel/framework": "^8.54",
                 "laravel/laravel": "8.x-dev",
                 "mockery/mockery": "^1.4.2",
                 "orchestra/canvas": "^6.1",
@@ -5008,7 +5008,7 @@
                 "symfony/process": "^5.0"
             },
             "suggest": {
-                "laravel/framework": "Required for testing (^8.26).",
+                "laravel/framework": "Required for testing (^8.54).",
                 "mockery/mockery": "Allow using Mockery for testing (^1.4.2).",
                 "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^6.0).",
                 "orchestra/testbench-dusk": "Allow using Laravel Dusk for testing (^6.0).",
@@ -5063,7 +5063,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2021-07-14T02:34:48+00:00"
+            "time": "2021-08-12T00:45:07+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -7658,10 +7658,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.1.3"
+        "php": "^7.3|^8.0"
     },
-    "platform-dev": {
-        "php": ">=8.0"
-    },
+    "platform-dev": [],
     "plugin-api-version": "2.1.0"
 }
