@@ -96,7 +96,6 @@ class LocaleRouter
 
         $action = $this->convertToControllerAction($action);
         $action = $this->fillAction($locale, $route, $action, $options);
-
         $middleware = $options['middleware'] ?? [];
 
         return $this->router->$method($url, $action)->middleware($middleware);
@@ -104,7 +103,11 @@ class LocaleRouter
 
     protected function convertToControllerAction($action)
     {
-        return is_string($action) || is_array($action) || is_a($action, Closure::class) ?
+        if (is_array($action) && count($action) >= 2) {
+            return ['uses' => $action[0] . '@' . $action[1]];
+        }
+
+        return is_string($action) || is_a($action, Closure::class) ?
             ['uses' => $action] :
             $action;
     }
