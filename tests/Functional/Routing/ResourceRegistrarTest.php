@@ -10,6 +10,14 @@ class ResourceRegistrarTest extends TestCase
 {
     use EnvironmentSetUp;
 
+    public function testGetWithActionArray()
+    {
+        LocaleRoute::get('article.index', ['ArticleController', 'index'], 'article');
+        $routeInfo = $this->getRouteInfo();
+
+        $this->assertLocaleIndexRoutes($routeInfo);
+    }
+
     public function testResource()
     {
         LocaleRoute::resource('article', 'ArticleController');
