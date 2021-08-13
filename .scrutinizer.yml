@@ -19,5 +19,5 @@ build:
                 override:
                     -   command: 'vendor/bin/phpunit --coverage-clover=code-coverage'
                         coverage:
-                            file: './code-coverage.xml'
+                            file: 'code-coverage.xml'
                             format: 'clover'
