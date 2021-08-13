@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [3.0.1] - 2021-08-13
+
+- Fixed non converted array actions in route declaration.
+
 ## [3.0.0] - 2021-08-12
 ### Updated
 

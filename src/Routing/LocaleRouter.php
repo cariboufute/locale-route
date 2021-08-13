@@ -97,18 +97,14 @@ class LocaleRouter
         $action = $this->convertToControllerAction($action);
         $action = $this->fillAction($locale, $route, $action, $options);
 
-        $middleware = isset($options['middleware']) ? $options['middleware'] : [];
+        $middleware = $options['middleware'] ?? [];
 
-        $route = $this->router
-            ->$method($url, $action)
-            ->middleware($middleware);
-
-        return $route;
+        return $this->router->$method($url, $action)->middleware($middleware);
     }
 
     protected function convertToControllerAction($action)
     {
-        return is_string($action) || is_a($action, Closure::class) ?
+        return is_string($action) || is_array($action) || is_a($action, Closure::class) ?
             ['uses' => $action] :
             $action;
     }
@@ -136,11 +132,15 @@ class LocaleRouter
         $only = ['index', 'show', 'store', 'update', 'destroy'];
 
         if (isset($options['except'])) {
-            $only = array_diff($only, (array) $options['except']);
+            $only = array_diff($only, (array)$options['except']);
         }
 
-        $this->resource($route, $controller, array_merge([
-            'only' => $only,
-        ], $options));
+        $this->resource(
+            $route,
+            $controller,
+            array_merge([
+                            'only' => $only,
+                        ], $options)
+        );
     }
 }
