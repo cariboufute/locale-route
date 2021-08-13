@@ -40,6 +40,14 @@ class UrlTest extends TestCase
         $this->assertSame('', $this->url->locale($noLocaleUrl));
     }
 
+    public function testTrimUrl()
+    {
+        $this->assertSame('url', $this->url->trimUrl('url'));
+        $this->assertSame('url', $this->url->trimUrl(' url '));
+        $this->assertSame('url', $this->url->trimUrl('/url/'));
+        $this->assertSame('url', $this->url->trimUrl(' / url / '));
+    }
+
     public function testRawRouteUrlWithLocaleOption()
     {
         $url = 'url';
