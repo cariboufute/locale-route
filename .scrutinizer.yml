@@ -15,6 +15,8 @@ build:
             environment:
                 php:
                     version: 8.0.9
+                    ini:
+                        'xdebug.mode': 'coverage'
             tests:
                 override:
                     -   command: 'vendor/bin/phpunit --coverage-clover=code-coverage'
