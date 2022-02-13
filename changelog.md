@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [3.0.2] - 2022-02-13
+
+- Tested Laravel 9 with actual code, no problem detected.
+
 ## [3.0.1] - 2021-08-13
 
 - Fixed non converted array actions in route declaration.
