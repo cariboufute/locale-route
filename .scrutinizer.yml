@@ -1,9 +1,7 @@
 # .scrutinizer.yml
 
 checks:
-    php:
-        code_rating: true
-        duplication: true
+    php: true
 
 build:
     nodes:
@@ -11,10 +9,11 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run
+                    - phpcs-run
         test-and-coverage:
             environment:
                 php:
-                    version: 8.0.2
+                    version: 8.1
                     ini:
                         'xdebug.mode': 'coverage'
             tests:
