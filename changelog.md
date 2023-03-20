@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implementing localized parameters pull request.
 
+## [3.0.3] - 2023-02-20
+
+- Tested Laravel 10 with actual code, no problem detected.
+- 
 ## [3.0.2] - 2022-02-13
 
 - Tested Laravel 9 with actual code, no problem detected.
