@@ -135,15 +135,15 @@ class LocaleRouter
         $only = ['index', 'show', 'store', 'update', 'destroy'];
 
         if (isset($options['except'])) {
-            $only = array_diff($only, (array)$options['except']);
+            $only = array_diff($only, (array) $options['except']);
         }
 
         $this->resource(
             $route,
             $controller,
             array_merge([
-                            'only' => $only,
-                        ], $options)
+                'only' => $only,
+            ], $options)
         );
     }
 }
