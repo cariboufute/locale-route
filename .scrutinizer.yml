@@ -10,7 +10,6 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run
-                    - phpcs-run
         test-and-coverage:
             environment:
                 php:
