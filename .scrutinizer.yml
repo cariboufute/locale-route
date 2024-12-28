@@ -4,7 +4,6 @@ checks:
     php: true
 
 build:
-    image: default-jammy
     nodes:
         analysis:
             tests:
