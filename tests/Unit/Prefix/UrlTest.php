@@ -7,7 +7,7 @@ use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Translation\Translator;
 use Mockery;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class UrlTest extends TestCase
 {

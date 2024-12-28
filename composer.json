@@ -25,10 +25,10 @@
         "laravel/framework": ">=v8.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=9.0",
         "mockery/mockery": "^1.5.1",
-        "squizlabs/php_codesniffer": ">=3.0",
-        "orchestra/testbench": ">=8.0"
+        "orchestra/testbench": "^9.9",
+        "phpunit/phpunit": ">=9.0",
+        "squizlabs/php_codesniffer": ">=3.0"
     },
     "autoload": {
         "files": [
@@ -40,13 +40,32 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\CaribouFute\\LocaleRoute\\": "tests"
+            "Tests\\CaribouFute\\LocaleRoute\\": "tests",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
         "phpunit": "vendor/phpunit/phpunit/phpunit",
         "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "test": [
+            "@clear",
+            "@php vendor/bin/phpunit"
+        ]
     },
     "extra": {
         "laravel": {
