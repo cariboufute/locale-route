@@ -109,5 +109,4 @@ class HelpersTest extends TestCase
 
         $this->assertSame(url('en/articles'), other_route('articles'));
     }
-
 }

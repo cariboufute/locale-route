@@ -10,7 +10,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use Mockery;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RouteTest extends TestCase
 {
@@ -78,7 +78,6 @@ class RouteTest extends TestCase
         $route = 'route';
         $currentLocaleRoute = $currentLocale . '.' . $route;
         $localeRoute = $locale . '.' . $route;
-        $currentUrl = 'en/route_en';
         $localeUrl = 'fr/route_fr';
 
         $this->route->shouldReceive('getName')->once()->andReturn($currentLocaleRoute);

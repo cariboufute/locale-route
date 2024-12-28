@@ -7,7 +7,7 @@ use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Foundation\Application;
 use Illuminate\Session\Store;
 use Mockery;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LocaleTest extends TestCase
 {
