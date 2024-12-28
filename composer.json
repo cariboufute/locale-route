@@ -40,10 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\CaribouFute\\LocaleRoute\\": "tests",
-            "Workbench\\App\\": "workbench/app/",
-            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
-            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+            "Tests\\CaribouFute\\LocaleRoute\\": "tests"
         }
     },
     "scripts": {
