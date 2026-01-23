@@ -31,7 +31,11 @@ class IlluminateRouterTest extends TestCase
             $this->router->get('test', ['as' => 'route', 'uses' => 'Controller@action']);
         });
 
-        $this->assertSame($locale, $this->router->getRoutes()->getRoutes()[0]->getAction()['locale']);
+        $routes = collect($this->router->getRoutes()->getRoutes());
+        $route = $routes->firstWhere('uri', 'group/test');
+        $routeLocale = $route->getAction()['locale'];
+
+        $this->assertSame($locale, $routeLocale);
     }
 
     public function testRouteGroupAndGetCombineBothLocalesIntoArray()
@@ -40,7 +44,10 @@ class IlluminateRouterTest extends TestCase
             $this->router->get('test', ['locale' => 'en', 'as' => 'route', 'uses' => 'Controller@action']);
         });
 
-        $locales = $this->router->getRoutes()->getRoutes()[0]->getAction()['locale'];
-        $this->assertSame(['fr', 'en'], $locales);
+        $routes = collect($this->router->getRoutes()->getRoutes());
+        $route = $routes->firstWhere('uri', 'group/test');
+        $routeLocales = $route->getAction()['locale'];
+
+        $this->assertSame(['fr', 'en'], $routeLocales);
     }
 }
