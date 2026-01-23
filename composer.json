@@ -1,7 +1,7 @@
 {
     "name": "cariboufute/locale-route",
     "type": "library",
-    "description": "A testable route package with localization for Laravel 5 to 10",
+    "description": "A testable route package with localization for Laravel 5 to 12",
     "keywords": [
         "cariboufute",
         "locale-route",
@@ -26,8 +26,8 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "orchestra/testbench": "^10.x-dev",
-        "phpunit/phpunit": ">=9.0",
+        "orchestra/testbench": "^10",
+        "phpunit/phpunit": "^12.3.11",
         "squizlabs/php_codesniffer": ">=3.0"
     },
     "autoload": {
