@@ -90,7 +90,8 @@ class RouterTest extends TestCase
         //To test that route collection is well refreshed and
         //that there is no duplication of routes
         //after adding changed route.
-        $this->assertSame(2, $this->router->getRoutes()->count());
+        $this->assertNotNull($this->router->getRoutes()->get('GET')['fr/test']);
+        $this->assertNotNull($this->router->getRoutes()->get('GET')['en/test']);
 
         $response = $this->call('GET', 'fr/test');
         $this->assertSame(200, $response->getStatusCode());

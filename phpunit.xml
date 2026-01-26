@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         backupGlobals="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
-         cacheDirectory=".phpunit.cache"
-         backupStaticProperties="false"
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
 >
-    <coverage>
-        <include>
-            <directory suffix=".php">./src/config</directory>
-            <directory suffix=".php">./src/Facades</directory>
-            <directory suffix=".php">./src/Prefix</directory>
-            <directory suffix=".php">./src/Routing</directory>
-            <directory suffix=".php">./src/Session</directory>
-        </include>
-    </coverage>
-
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -31,4 +22,14 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
+
+    <source>
+        <include>
+            <directory suffix=".php">./src/config</directory>
+            <directory suffix=".php">./src/Facades</directory>
+            <directory suffix=".php">./src/Prefix</directory>
+            <directory suffix=".php">./src/Routing</directory>
+            <directory suffix=".php">./src/Session</directory>
+        </include>
+    </source>
 </phpunit>
