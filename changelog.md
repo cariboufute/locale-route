@@ -5,22 +5,32 @@ All Notable changes to `locale-route` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Next]
-### To add
+## [3.0.6] - 2026-01-25
+### Updated
+- README file.
+- Packages.
+- PHPUnit config file for new conventions.
 
-- Implementing localized parameters pull request.
+## [3.0.5] - 2025-02-24
+### Updated
+- README file for Laravel 12.
+- Packages.
+
+## [3.0.4] - 2024-12-27
+### Updated
+- README file for Laravel 11.
 
 ## [3.0.3] - 2023-02-20
+### Updated
+- Orchestra Testbench to test Laravel 10 with actual code, no problem detected.
 
-- Tested Laravel 10 with actual code, no problem detected.
-- 
 ## [3.0.2] - 2022-02-13
-
-- Tested Laravel 9 with actual code, no problem detected.
+### Updated
+- Orchestra Testbench to test Laravel 9 with actual code, no problem detected.
 
 ## [3.0.1] - 2021-08-13
-
-- Fixed non converted array actions in route declaration.
+### Fixed
+- Non converted array actions in route declaration.
 
 ## [3.0.0] - 2021-08-12
 ### Updated
