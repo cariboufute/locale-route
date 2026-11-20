@@ -135,9 +135,12 @@ class RouterTest extends TestCase
         $locale = 'fr';
         $uri = 'uri';
         $newUri = $locale . '/' . $uri;
+        $action = ['uses' => 'Controller@action'];
 
         $route = Mockery::mock(Route::class);
         $route->shouldReceive('uri')->once()->andReturn($uri);
+        $route->shouldReceive('getAction')->once()->andReturn($action);
+        $route->shouldReceive('setAction')->with($action)->once();
         $this->url->shouldReceive('switchLocale')->with($locale, $uri, [])->once()->andReturn($newUri);
         $route->shouldReceive('setUri')->with($locale . '/' . $uri)->once();
 

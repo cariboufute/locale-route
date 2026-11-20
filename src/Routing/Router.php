@@ -4,7 +4,6 @@ namespace CaribouFute\LocaleRoute\Routing;
 
 use CaribouFute\LocaleRoute\Prefix\Route as PrefixRoute;
 use CaribouFute\LocaleRoute\Prefix\Url as PrefixUrl;
-use CaribouFute\LocaleRoute\Routing\RouteCollection;
 use Illuminate\Contracts\Routing\Registrar as IlluminateRouter;
 use Illuminate\Routing\Route;
 
@@ -120,9 +119,27 @@ class Router
     public function switchUrlLocale($locale, Route $route, array $action = [])
     {
         $uri = $this->url->switchLocale($locale, $route->uri(), $action);
+        $localizedAction = $this->getActionWithLocalizedPrefix($locale, $route, $action);
+
+        $route->setAction($localizedAction);
         $route->setUri($uri);
 
         return $route;
+    }
+
+    public function getActionWithLocalizedPrefix($locale, Route $route, array $action = []): array
+    {
+        $routeAction = $route->getAction();
+        $routeActionPrefix = $routeAction['prefix'] ?? null;
+
+        if (!$routeActionPrefix) {
+            return $routeAction;
+        }
+
+        $unlocalizedPrefix = trim($routeActionPrefix, '/') . '/';
+        $routeAction['prefix'] = $this->url->switchLocale($locale, $unlocalizedPrefix, $action);
+
+        return $routeAction;
     }
 
     public function makeSetSessionLocale($locale)
