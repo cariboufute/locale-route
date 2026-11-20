@@ -1,7 +1,7 @@
 {
     "name": "cariboufute/locale-route",
     "type": "library",
-    "description": "A testable route package with localization for Laravel 5 to 12",
+    "description": "A testable route package with localization for Laravel 5 to 13",
     "keywords": [
         "cariboufute",
         "locale-route",
