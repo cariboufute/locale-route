@@ -5,6 +5,11 @@ All Notable changes to `locale-route` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.7] - 2026-11-20
+### Fixed
+- Wrong URL rendering when routes were cached. A URL that was supposed to be '/fr/api/item' was rendered as 
+  '/api/item/item'. Fixed now.
+
 ## [3.0.6] - 2026-01-25
 ### Updated
 - README file.
@@ -146,12 +151,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0-alpha] - 2016-11-09
 ### Added
 - *LocaleRoute::resource* method
-
+- *LocaleRoute::group* method
+- Functional tests for all *LocaleGroup* methods
+- 
 ### Changed
 - *locale_route*, *other_locale* and *other_route* keep current parameters by default when not declared.
 
-## [1.0.0-alpha] - 2016-11-07
-### Added
-- *LocaleRoute::group* method
-- Functional tests for all *LocaleGroup* methods
-
+[3.0.7]: https://github.com/cariboufute/locale-route/compare/3.0.6...3.0.7
+[3.0.6]: https://github.com/cariboufute/locale-route/compare/3.0.5...3.0.6
+[3.0.5]: https://github.com/cariboufute/locale-route/compare/3.0.4...3.0.5
+[3.0.4]: https://github.com/cariboufute/locale-route/compare/3.0.3...3.0.4
+[3.0.3]: https://github.com/cariboufute/locale-route/compare/3.0.2...3.0.3
+[3.0.2]: https://github.com/cariboufute/locale-route/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/cariboufute/locale-route/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/cariboufute/locale-route/compare/2.1.3...3.0.0
+[2.1.3]: https://github.com/cariboufute/locale-route/compare/2.1.2...2.1.3
+[2.1.2]: https://github.com/cariboufute/locale-route/compare/2.1.1...2.1.2
+[2.1.1]: https://github.com/cariboufute/locale-route/compare/2.1.0...2.1.1
+[2.1.0]: https://github.com/cariboufute/locale-route/compare/2.0.0...2.1.0
+[2.0.0]: https://github.com/cariboufute/locale-route/compare/1.4.0...2.0.0
+[1.4.0]: https://github.com/cariboufute/locale-route/compare/1.3.0...1.4.0
+[1.3.0]: https://github.com/cariboufute/locale-route/compare/1.2.1...1.3.0
+[1.2.1]: https://github.com/cariboufute/locale-route/compare/1.2.0...1.2.1
+[1.2.0]: https://github.com/cariboufute/locale-route/compare/1.1.1...1.2.0
+[1.1.1]: https://github.com/cariboufute/locale-route/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/cariboufute/locale-route/compare/1.0.0...1.1.0
+[1.0.0]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta6...1.0.0
+[1.0.0-beta6]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta5...1.0.0-beta6
+[1.0.0-beta5]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta4...1.0.0-beta5
+[1.0.0-beta4]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta3...1.0.0-beta4
+[1.0.0-beta3]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta2...1.0.0-beta3
+[1.0.0-beta2]: https://github.com/cariboufute/locale-route/compare/1.0.0-beta...1.0.0-beta2
+[1.0.0-beta]: https://github.com/cariboufute/locale-route/compare/1.0.0-alpha...1.0.0-beta
+[1.0.0-alpha]: https://github.com/cariboufute/locale-route/releases/tag/1.0.0-alpha
